@@ -60,8 +60,6 @@ class TwoferWalker implements Consumer<Node> {
 
     @Override
     public void accept(Node node) {
-        System.out.println(node.getClass());
-        System.out.println(node);
         if (node instanceof ClassOrInterfaceDeclaration) {
             this.hasClassTwofer = ((ClassOrInterfaceDeclaration) node).getName().toString().equals("Twofer");
         } else if (node instanceof MethodDeclaration) {
