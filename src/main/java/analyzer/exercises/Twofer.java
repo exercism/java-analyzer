@@ -3,11 +3,8 @@ package analyzer.exercises;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.BinaryExpr;
-import com.github.javaparser.ast.expr.ConditionalExpr;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
-import com.github.javaparser.ast.stmt.IfStmt;
-import com.github.javaparser.ast.stmt.ReturnStmt;
+import com.github.javaparser.ast.expr.*;
+import com.github.javaparser.ast.stmt.*;
 
 import java.util.function.Consumer;
 
@@ -33,13 +30,17 @@ public class Twofer extends Exercise {
                 if (walker.usesStringConcatenation) {
                     this.statusObject.put("status", "disapprove_with_comment");
                     this.comments.put("java.general.stringConcatenation");
+                } else if (walker.usesLambda) {
+                    this.statusObject.put("status", "refer_to_mentor");
+                } else if (walker.usesLoops) {
+                    this.statusObject.put("status", "refer_to_mentor");
+                } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
+                    this.statusObject.put("status", "disapprove_with_comment");
+                    this.comments.put("java.two-fer.noConditionsOrMethodCalls");
                 } else {
-                    if (walker.usesIfStatement) {
+                    if (walker.usesIfStatement || walker.usesConditional) {
                         this.statusObject.put("status", "approve_with_comment");
-                        this.comments.put("java.two-fer.useTernaryExpression");
-                    } else if (walker.usesConditional) {
-                        this.statusObject.put("status", "approve_with_comment");
-                        this.comments.put("java.two-fer.useOptional");
+                        this.comments.put("java.two-fer.useTernaryExpressionOrOptional");
                     } else {
                         this.statusObject.put("status", "approve_as_optimal");
                     }
@@ -57,6 +58,9 @@ class TwoferWalker implements Consumer<Node> {
     boolean usesStringConcatenation;
     boolean usesIfStatement;
     boolean usesConditional;
+    boolean hasMethodCall;
+    boolean usesLambda;
+    boolean usesLoops;
 
     @Override
     public void accept(Node node) {
@@ -74,6 +78,12 @@ class TwoferWalker implements Consumer<Node> {
             this.usesIfStatement = true;
         } else if (node instanceof ConditionalExpr) {
             this.usesConditional = true;
+        } else if (node instanceof MethodCallExpr) {
+            this.hasMethodCall = true;
+        } else if (node instanceof LambdaExpr) {
+            this.usesLambda = true;
+        } else if (node instanceof WhileStmt || node instanceof ForStmt || node instanceof ForEachStmt) {
+            this.usesLoops = true;
         }
     }
 }
