@@ -26,25 +26,21 @@ public class Twofer extends Exercise {
             } else if (walker.hasHardCodedTestCases) {
                 this.statusObject.put("status", "disapprove_with_comment");
                 this.comments.put("java.general.hardCodedTestCases");
+            } else if (walker.usesStringConcatenation) {
+                this.statusObject.put("status", "disapprove_with_comment");
+                this.comments.put("java.general.stringConcatenation");
+            } else if (walker.usesLambda) {
+                this.statusObject.put("status", "refer_to_mentor");
+            } else if (walker.usesLoops) {
+                this.statusObject.put("status", "refer_to_mentor");
+            } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
+                this.statusObject.put("status", "disapprove_with_comment");
+                this.comments.put("java.two-fer.noConditionsOrMethodCalls");
+            } else if (walker.usesIfStatement || walker.usesConditional) {
+                this.statusObject.put("status", "approve_with_comment");
+                this.comments.put("java.two-fer.useTernaryExpressionOrOptional");
             } else {
-                if (walker.usesStringConcatenation) {
-                    this.statusObject.put("status", "disapprove_with_comment");
-                    this.comments.put("java.general.stringConcatenation");
-                } else if (walker.usesLambda) {
-                    this.statusObject.put("status", "refer_to_mentor");
-                } else if (walker.usesLoops) {
-                    this.statusObject.put("status", "refer_to_mentor");
-                } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
-                    this.statusObject.put("status", "disapprove_with_comment");
-                    this.comments.put("java.two-fer.noConditionsOrMethodCalls");
-                } else {
-                    if (walker.usesIfStatement || walker.usesConditional) {
-                        this.statusObject.put("status", "approve_with_comment");
-                        this.comments.put("java.two-fer.useTernaryExpressionOrOptional");
-                    } else {
-                        this.statusObject.put("status", "approve_as_optimal");
-                    }
-                }
+                this.statusObject.put("status", "approve_as_optimal");
             }
         }
     }
