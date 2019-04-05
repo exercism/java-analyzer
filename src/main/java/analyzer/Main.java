@@ -5,7 +5,7 @@ import analyzer.exercises.Twofer;
 
 public class Main {
     public static void main(String... args) {
-	if (args.length == 2) {
+	if (args.length >= 2) {
             String slug = args[0];
             String dir = args[1];
             Exercise ex = null;

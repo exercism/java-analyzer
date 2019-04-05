@@ -2,13 +2,14 @@ FROM gradle:jdk-alpine
 
 USER root
 
-RUN apk add bash
+COPY . ./
+RUN gradle installDist --stacktrace
+
+FROM openjdk:8-jre-alpine
 
 RUN mkdir -p /opt/analyzer
 
-COPY . /opt/analyzer
+COPY build/install/java-analyzer/ /opt/analyzer
 WORKDIR /opt/analyzer
 
-RUN gradle installDist --stacktrace
-
-ENTRYPOINT ["./bin/analyze.sh"]
+ENTRYPOINT ["java", "-classpath", "lib/*", "analyzer.Main"]
