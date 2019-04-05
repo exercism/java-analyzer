@@ -3,5 +3,4 @@
 # Usage:
 # ./bin/analyze.sh two_fer ~/test/
 
-./build/install/java-analyzer/bin/java-analyzer $@
-
+./gradlew run -q -Pargs="$1 $2"
