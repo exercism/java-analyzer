@@ -21,6 +21,11 @@ public class Statistics {
             String type = (String)ex.getAnalysis().get("status");
             JSONArray comments = (JSONArray)ex.getAnalysis().get("comments");
             statuses.put(type, statuses.getOrDefault(type, 0)+1);
+            //ex.writeAnalysisToFile();
+
+            /*if (type.equals("approve_as_optimal")) {
+                System.out.println(i);
+            }*/
 
             for (Object comment : comments) {
                 if (type.equals("disapprove_with_comment")) {
