@@ -10,6 +10,8 @@ FROM openjdk:8-jre-alpine
 RUN mkdir -p /opt/analyzer
 
 COPY build/install/java-analyzer/ /opt/analyzer
+COPY bin/analyze.sh /opt/analyzer/bin
+
 WORKDIR /opt/analyzer
 
-ENTRYPOINT ["java", "-classpath", "lib/*", "analyzer.Main"]
+ENTRYPOINT ["./bin/analyzer.sh"]
