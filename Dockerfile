@@ -14,4 +14,4 @@ COPY bin/analyze.sh /opt/analyzer/bin
 
 WORKDIR /opt/analyzer
 
-ENTRYPOINT ["./bin/analyzer.sh"]
+ENTRYPOINT ["./bin/analyze.sh"]
