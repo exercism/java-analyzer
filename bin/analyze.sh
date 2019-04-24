@@ -3,5 +3,4 @@
 # Usage:
 # ./bin/analyze.sh two_fer ~/test/
 
-./gradlew run -q -Pargs="$1 $2"
-
+java -classpath "lib/*" analyzer.Main
