@@ -1,5 +1,6 @@
 package analyzer.exercises;
 
+import analyzer.solutions.*;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -7,6 +8,8 @@ import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 
 import java.util.function.Consumer;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Twofer extends Exercise {
     public Twofer(String dir) {
@@ -15,6 +18,7 @@ public class Twofer extends Exercise {
 
     @Override
     public void parse() {
+        boolean foundOpt = false;
         if (this.cu != null) {
             TwoferWalker walker = new TwoferWalker();
 
@@ -43,7 +47,24 @@ public class Twofer extends Exercise {
                 if (walker.usesIfStatement) {
                     this.comments.put("java.two-fer.useTernaryExpression");
                 }
-
+                if (walker.returnStmts.size() == 1) {
+                    if (OptimalFormat.checkReturn(walker.returnStmts)) {
+                        this.statusObject.put("status", "approve_as_optimal");
+                        foundOpt = true;
+                    }
+                    if (!foundOpt && OptimalMessage.checkReturn(walker.returnStmts)) {
+                        this.statusObject.put("status", "approve_as_optimal");
+                        foundOpt = true;
+                    }
+                    if (!foundOpt && OptimalOptional.checkReturn(walker.returnStmts)) {
+                        this.statusObject.put("status", "approve_as_optimal");
+                        foundOpt = true;
+                    }
+                    if (!foundOpt && OptimalObjects.checkReturn(walker.returnStmts)) {
+                        this.statusObject.put("status", "approve_as_optimal");
+                        foundOpt = true;
+                    }
+                }
                 if (this.comments.length() == 0) {
                     this.statusObject.put("status", "approve_as_optimal");
                 } else {
@@ -64,7 +85,7 @@ class TwoferWalker implements Consumer<Node> {
     boolean usesLambda;
     boolean usesLoops;
     boolean usesFormat;
-    int returnCount;
+    List<ReturnStmt> returnStmts = new ArrayList<ReturnStmt>();
 
     @Override
     public void accept(Node node) {
@@ -75,7 +96,7 @@ class TwoferWalker implements Consumer<Node> {
         } else if (node instanceof StringLiteralExpr && !this.hasHardCodedTestCases) {
             this.hasHardCodedTestCases = node.toString().contains("Alice") || node.toString().contains("Bob");
         } else if (node instanceof ReturnStmt) {
-            this.returnCount++;
+            this.returnStmts.add((ReturnStmt)node);
         } else if (node instanceof IfStmt) {
             this.usesIfStatement = true;
         } else if (node instanceof ConditionalExpr) {
