@@ -40,7 +40,7 @@ public class Twofer extends Exercise {
             } else if (walker.usesFormat) {
                 this.statusObject.put("status", "disapprove_with_comment");
                 this.comments.put("java.two-fer.stringFormatPerformance");
-            } else if (walker.returnCount > 1) {
+            } else if (walker.returnStmts.size() > 1) {
                 this.statusObject.put("status", "disapprove_with_comment");
                 this.comments.put("java.two-fer.multipleReturns");
             } else {
