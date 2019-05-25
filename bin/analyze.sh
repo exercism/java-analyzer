@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 # Usage:
 # ./bin/analyze.sh two_fer ~/test/
 
-java -classpath "lib/*" analyzer.Main
+java -classpath "lib/*" analyzer.Main "$@"

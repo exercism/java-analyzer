@@ -1,17 +1,15 @@
-FROM gradle:jdk-alpine
+FROM gradle:jdk-alpine as build
 
-USER root
-
-COPY . ./
+COPY --chown=gradle:gradle . .
 RUN gradle installDist --stacktrace
 
 FROM openjdk:8-jre-alpine
 
 RUN mkdir -p /opt/analyzer
 
-COPY build/install/java-analyzer/ /opt/analyzer
+COPY --from=build /home/gradle/build/install/gradle /opt/analyzer
 COPY bin/analyze.sh /opt/analyzer/bin
 
 WORKDIR /opt/analyzer
 
-ENTRYPOINT ["./bin/analyze.sh"]
+ENTRYPOINT ["/opt/analyzer/bin/analyze.sh"]
