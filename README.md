@@ -12,5 +12,5 @@ docker build -t exercism/java-analyzer .
 ```
 2. Run the image
 ```
-docker run -v -v <~/a/local/solution>:/solution <slug> /solution
+docker run -v <~/a/local/solution>:/solution <slug> /solution
 ```
