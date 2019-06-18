@@ -25,12 +25,13 @@ public abstract class Exercise {
         this.statusObject.put("comments", this.comments);
 
         try {
-            this.cu = JavaParser.parse(new File(dir + "/" + solutionFile));
+            this.cu = JavaParser.parse(new File(dir + "/src/main/java/" + solutionFile));
         } catch (ParseProblemException e) {
             this.statusObject.put("status", "disapprove_with_comment");
             this.comments.put("java.general.failedParse");
         } catch (FileNotFoundException e) {
             this.statusObject.put("status", "refer_to_mentor");
+            this.comments.put("java.general.fileNotFound");
         }
     }
 
