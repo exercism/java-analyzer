@@ -25,7 +25,7 @@ public abstract class Exercise {
         this.statusObject.put("comments", this.comments);
 
         try {
-            this.cu = JavaParser.parse(new File(dir + "/src/main/java/" + solutionFile));
+            this.cu = JavaParser.parse(new File(dir + "src/main/java/" + solutionFile));
         } catch (ParseProblemException e) {
             this.statusObject.put("status", "disapprove_with_comment");
             this.comments.put("java.general.failedParse");
