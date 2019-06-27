@@ -21,35 +21,30 @@ public class Twofer extends Exercise {
             this.cu.walk(walker);
 
             if (!(walker.hasClassTwofer && walker.hasMethodTwofer)) {
-                this.statusObject.put("status", "disapprove_with_comment");
+                this.statusObject.put("status", "disapprove");
                 this.comments.put("java.general.properClassAndMethodNames");
             } else if (walker.hasHardCodedTestCases) {
-                this.statusObject.put("status", "disapprove_with_comment");
+                this.statusObject.put("status", "disapprove");
                 this.comments.put("java.general.hardCodedTestCases");
             } else if (walker.usesLambda) {
                 this.statusObject.put("status", "refer_to_mentor");
             } else if (walker.usesLoops) {
                 this.statusObject.put("status", "refer_to_mentor");
             } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
-                this.statusObject.put("status", "disapprove_with_comment");
+                this.statusObject.put("status", "disapprove");
                 this.comments.put("java.two-fer.noConditionsOrMethodCalls");
             } else if (walker.usesFormat) {
-                this.statusObject.put("status", "disapprove_with_comment");
+                this.statusObject.put("status", "disapprove");
                 this.comments.put("java.two-fer.stringFormatPerformance");
             } else if (walker.returnCount > 1) {
-                this.statusObject.put("status", "disapprove_with_comment");
+                this.statusObject.put("status", "disapprove");
                 this.comments.put("java.two-fer.multipleReturns");
             } else {
                 if (walker.usesIfStatement) {
                     this.comments.put("java.two-fer.useTernaryExpression");
                 }
 
-                if (this.comments.length() == 0) {
-                    this.statusObject.put("status", "approve_as_optimal");
-                } else {
-                    this.statusObject.put("status", "approve_with_comment");
-                }
-            }
+                this.statusObject.put("status", "approve");            }
         }
     }
 }
