@@ -44,7 +44,8 @@ public class Twofer extends Exercise {
                     this.comments.put("java.two-fer.useTernaryExpression");
                 }
 
-                this.statusObject.put("status", "approve");            }
+                this.statusObject.put("status", "approve");
+            }
         }
     }
 }
