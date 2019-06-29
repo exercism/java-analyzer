@@ -28,10 +28,12 @@ public abstract class Exercise {
             this.cu = JavaParser.parse(new File(dir + "src/main/java/" + solutionFile));
         } catch (ParseProblemException e) {
             this.statusObject.put("status", "disapprove_with_comment");
-            this.comments.put("java.general.failedParse");
+            this.comments.put("java.general.failed_parse");
         } catch (FileNotFoundException e) {
             this.statusObject.put("status", "refer_to_mentor");
-            this.comments.put("java.general.fileNotFound");
+            this.comments.put(new JSONObject()
+                .put("comment", "java.general.file_not_found")
+                .put("params", new JSONObject().put("solutionFile", solutionFile)));
         }
     }
 
