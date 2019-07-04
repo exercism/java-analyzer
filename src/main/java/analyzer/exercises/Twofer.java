@@ -49,7 +49,7 @@ public class Twofer extends Exercise {
                 this.comments.put("java.two-fer.use_one_return");
             } else {
                 if (walker.usesIfStatement) {
-                    this.comments.put("java.two-fer.use_ternary_expression");
+                    this.comments.put("java.two-fer.use_ternary_operator");
                 }
 
                 this.statusObject.put("status", "approve");
