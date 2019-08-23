@@ -1,4 +1,10 @@
+.gitignore
+
 out
 build
+bin/
 .gradle/
 .idea/
+.settings/
+.project
+.classpath
