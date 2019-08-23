@@ -1,10 +1,9 @@
 package analyzer;
 
 import analyzer.exercises.Exercise;
-import analyzer.exercises.Twofer;
+import analyzer.exercises.twofer.Twofer;
 import org.json.JSONArray;
-import org.json.JSONObject;
-
+   
 import java.util.HashMap;
 
 public class Statistics {
@@ -18,9 +17,9 @@ public class Statistics {
         for (int i = 0; i < 500; i++) {
             Exercise ex = new Twofer(archive + "/" + i);
             ex.parse();
-            String type = (String)ex.getAnalysis().get("status");
+            String status = (String)ex.getAnalysis().get("status");
             JSONArray comments = (JSONArray)ex.getAnalysis().get("comments");
-            statuses.put(type, statuses.getOrDefault(type, 0)+1);
+            statuses.put(status, statuses.getOrDefault(status, 0)+1);
             //ex.writeAnalysisToFile();
 
             /*if (type.equals("approve_as_optimal")) {
@@ -28,9 +27,9 @@ public class Statistics {
             }*/
 
             for (Object comment : comments) {
-                if (type.equals("disapprove_with_comment")) {
+                if (status.equals("disapprove")) {
                     failComments.put((String)comment, failComments.getOrDefault(comment, 0)+1);
-                } else if (type.equals("approve_with_comment")) {
+                } else if (status.equals("approve")) {
                     passComments.put((String)comment, passComments.getOrDefault(comment, 0)+1);
                 }
             }
