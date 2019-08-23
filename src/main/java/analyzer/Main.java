@@ -1,7 +1,7 @@
 package analyzer;
 
 import analyzer.exercises.Exercise;
-import analyzer.exercises.Twofer;
+import analyzer.exercises.twofer.Twofer;
 
 public class Main {
     public static void main(String... args) {
