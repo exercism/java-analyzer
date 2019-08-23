@@ -12,20 +12,20 @@ import java.io.FileWriter;
 
 public abstract class Exercise {
     CompilationUnit cu;
-    JSONObject statusObject;
-    JSONArray comments;
-    String dir;
+    private final JSONObject statusObject;
+    private final JSONArray comments;
+    private final String directory;
 
-    Exercise(String dir, String solutionFile) {
+    Exercise(String directory, String solutionFile) {
+        this.directory = directory;
 
         this.statusObject = new JSONObject();
         this.comments = new JSONArray();
-        this.dir = dir;
 
         this.statusObject.put("comments", this.comments);
 
         try {
-            this.cu = JavaParser.parse(new File(dir + "src/main/java/" + solutionFile));
+            this.cu = JavaParser.parse(new File(directory + "src/main/java/" + solutionFile));
         } catch (ParseProblemException e) {
             this.statusObject.put("status", "disapprove_with_comment");
             this.comments.put("java.general.failed_parse");
@@ -39,14 +39,18 @@ public abstract class Exercise {
 
     abstract public void parse();
 
+    protected setStatus(Status status) {
+        statusObject.put(STATUS, status.getStatusString());
+    }
+
     public JSONObject getAnalysis() {
-        return this.statusObject;
+        return statusObject;
     }
 
     public void writeAnalysisToFile() {
         try {
-            FileWriter fileWriter = new FileWriter(this.dir + "/analysis.json");
-            fileWriter.write(this.statusObject.toString());
+            FileWriter fileWriter = new FileWriter(directory + "/analysis.json");
+            fileWriter.write(statusObject.toString());
             fileWriter.flush();
         } catch (Exception e) {
             e.printStackTrace();
