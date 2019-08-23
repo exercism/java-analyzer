@@ -36,15 +36,6 @@ public abstract class Exercise {
         try {
             this.cu = JavaParser.parse(solutionFile);
         } catch (ParseProblemException e) {
-<<<<<<< HEAD
-            this.statusObject.put("status", "disapprove");
-            this.comments.put("java.general.failed_parse");
-        } catch (FileNotFoundException e) {
-            this.statusObject.put("status", "refer_to_mentor");
-            this.comments.put(new JSONObject()
-                .put("comment", "java.general.file_not_found")
-                .put("params", new JSONObject().put("solutionFile", solutionFile)));
-=======
             setStatus(Status.DISAPPROVE);
             addComment(GeneralComment.FAILED_PARSE);
         }catch (FileNotFoundException e) {
@@ -64,7 +55,6 @@ public abstract class Exercise {
             return new FileWriter(directory + "/analysis.json");
         } catch (IOException e) {
             return null;
->>>>>>> b2ea1790211766d6250501ffdaf1f2d4658d8797
         }
     }
 
