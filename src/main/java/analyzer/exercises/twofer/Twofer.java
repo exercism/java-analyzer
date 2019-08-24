@@ -2,6 +2,8 @@ package analyzer.exercises.twofer;
 
 import java.io.File;
 
+import com.github.javaparser.ast.CompilationUnit;
+
 import analyzer.exercises.Exercise;
 import analyzer.exercises.Status;
 import analyzer.exercises.GeneralComment;
@@ -18,24 +20,21 @@ public class Twofer extends Exercise {
     }
 
     @Override
-    public void parse() {
-        if (this.cu == null) {
-            return;
-        }
+    public void parse(CompilationUnit compilationUnit) {
         TwoferWalker walker = new TwoferWalker();
 
-        this.cu.walk(walker);
+        compilationUnit.walk(walker);
 
         if (!walker.hasClassTwofer) {
             setStatus(Status.DISAPPROVE);
             addComment(
                 GeneralComment.USE_PROPER_CLASS_NAME,
-                Params.newBuilder().addParam("className", "Twofer").build());
+                Params.newBuilder().addParam(GeneralComment.CLASS_NAME, "Twofer").build());
         } else if (!walker.hasMethodTwofer) {
             setStatus(Status.DISAPPROVE);
             addComment(
                 GeneralComment.USE_PROPER_METHOD_NAME,
-                Params.newBuilder().addParam("methodName", "twofer").build());
+                Params.newBuilder().addParam(GeneralComment.METHOD_NAME, "twofer").build());
         } else if (walker.hasHardCodedTestCases) {
             setStatus(Status.DISAPPROVE);
             addComment(GeneralComment.AVOID_HARD_CODED_TEST_CASES);

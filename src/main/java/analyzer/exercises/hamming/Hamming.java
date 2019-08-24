@@ -1,61 +1,76 @@
 package analyzer.exercises.hamming;
 
 import analyzer.exercises.Exercise;
+import analyzer.exercises.GeneralComment;
+import analyzer.exercises.Params;
+import analyzer.exercises.Status;
+
+import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.Node;
-import java.util.function.Consumer;
-import org.json.JSONObject;
+
+import java.io.File;
 
 public class Hamming extends Exercise {
     public Hamming(String dir) {
         super(dir, "Hamming.java");
     }
 
-    @Override
-    public void parse() {
-        if (this.cu != null) {
-            TwoferWalker walker = new TwoferWalker();
-
-            this.cu.walk(walker);
-
-            if (!walker.hasClassTwofer) {
-                this.statusObject.put("status", "disapprove");
-                this.comments.put(
-                    new JSONObject().put("comment", "java.general.use_proper_class_name")
-                        .put("params", new JSONObject().put("className", "Twofer")));
-            } else if (!walker.hasMethodTwofer) {
-                this.statusObject.put("status", "disapprove");
-                this.comments.put(
-                    new JSONObject().put("comment", "java.general.use_proper_method_name")
-                        .put("params", new JSONObject().put("methodName", "twofer")));
-            } else if (walker.hasHardCodedTestCases) {
-                this.statusObject.put("status", "disapprove");
-                this.comments.put("java.general.avoid_hard_coded_test_cases");
-            } else if (walker.usesLambda) {
-                this.statusObject.put("status", "refer_to_mentor");
-            } else if (walker.usesLoops) {
-                this.statusObject.put("status", "refer_to_mentor");
-            } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
-                this.statusObject.put("status", "disapprove");
-                this.comments.put("java.two-fer.use_conditional_logic");
-            } else if (walker.usesFormat) {
-                this.statusObject.put("status", "disapprove");
-                this.comments.put("java.two-fer.avoid_string_format");
-            } else if (walker.returnCount > 1) {
-                this.statusObject.put("status", "disapprove");
-                this.comments.put("java.two-fer.use_one_return");
-            } else {
-                if (walker.usesIfStatement) {
-                    this.comments.put("java.two-fer.use_ternary_operator");
-                }
-
-                this.statusObject.put("status", "approve");
-            }
-        }
+    /** For testing. */
+    public Hamming(File solutionFile) {
+        super(solutionFile);
     }
-}
 
-class TwoferWalker implements Consumer<Node> {
-    // TODO
+    @Override
+    public void parse(CompilationUnit compilationUnit) {
+        HammingWalker walker = new HammingWalker();
+
+        compilationUnit.walk(ClassOrInterfaceDeclaration.class, walker);
+
+        if (!walker.hasHammingClass()) {
+            setStatus(Status.DISAPPROVE);
+            addComment(
+                GeneralComment.USE_PROPER_CLASS_NAME,
+                Params.newBuilder().addParam(GeneralComment.CLASS_NAME, "Hamming").build());
+            return;
+        }
+
+        if (!walker.hasGetHammingDistanceMethod()) {
+            setStatus(Status.DISAPPROVE);
+            addComment(
+                GeneralComment.USE_PROPER_METHOD_NAME,
+                Params.newBuilder().addParam(GeneralComment.METHOD_NAME, "getHammingDistance").build());
+            return;
+        }
+
+        if (!walker.hasConstructor()) {
+            setStatus(Status.DISAPPROVE);
+            addComment(HammingComment.MUST_USE_CONSTRUCTOR);
+            return;
+        }
+
+        if (!walker.constructorHasIfStatements() && !walker.constructorHasMethodCalls()) {
+            setStatus(Status.DISAPPROVE);
+            addComment(HammingComment.MUST_USE_CONDITIONAL_LOGIC_IN_CONSTRUCTOR);
+            return;
+        }
+
+        if (!walker.constructorThrowsIllegalArgument()) {
+            setStatus(Status.DISAPPROVE);
+            addComment(HammingComment.MUST_THROW_IN_CONSTRUCTOR);
+            return;
+        }
+
+        if (!walker.getHammingDistanceMethodMayCalculateDistance()
+            && !walker.constructorMayCalculateDistance()) {
+            setStatus(Status.DISAPPROVE);
+            addComment(HammingComment.MUST_CALCULATE_HAMMING_DISTANCE);
+            return;
+        }
+
+        if (!walker.constructorMayCalculateDistance()) {
+            addComment(HammingComment.CALCULATE_DISTANCE_IN_CONSTRUCTOR);
+        }
+
+        setStatus(Status.APPROVE);
+    }
 }

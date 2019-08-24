@@ -7,6 +7,9 @@ public enum GeneralComment implements Comment {
     USE_PROPER_CLASS_NAME,
     USE_PROPER_METHOD_NAME;
 
+    public static String CLASS_NAME = "className";
+    public static String METHOD_NAME = "methodName";
+
     @Override
     public String toJson() {
         return "java.general." + name().toLowerCase();

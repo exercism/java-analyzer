@@ -3,7 +3,6 @@ package analyzer.exercises;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -17,7 +16,7 @@ public abstract class Exercise {
     private static final String COMMENT = "comment";
     private static final String PARAMS = "params";
 
-    protected CompilationUnit cu;
+    private CompilationUnit compilationUnit;
 
     private final JSONObject analysis = new JSONObject();
     private final FileWriter fileWriter;
@@ -34,7 +33,7 @@ public abstract class Exercise {
         this.fileWriter = fileWriter;
 
         try {
-            this.cu = JavaParser.parse(solutionFile);
+            this.compilationUnit = JavaParser.parse(solutionFile);
         } catch (ParseProblemException e) {
             setStatus(Status.DISAPPROVE);
             addComment(GeneralComment.FAILED_PARSE);
@@ -58,7 +57,14 @@ public abstract class Exercise {
         }
     }
 
-    abstract public void parse();
+    public final void parse() {
+        if (compilationUnit == null) {
+            return;
+        }
+        parse(compilationUnit);
+    }
+
+    abstract public void parse(CompilationUnit compilationUnit);
 
     protected void setStatus(Status status) {
         analysis.put(STATUS, status.toJson());
