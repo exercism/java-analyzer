@@ -7,6 +7,7 @@ import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
+import com.github.javaparser.ast.stmt.ThrowStmt;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimaps;
@@ -40,9 +41,12 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     private void walkHammingClass() {
+        methods = Multimaps.index(
+            hammingClass.findAll(MethodDeclaration.class),
+            MethodDeclaration::getNameAsString);
+
         findConstructor().ifPresent(this::walkConstructor);
 
-        methods = Multimaps.index(hammingClass.findAll(MethodDeclaration.class), MethodDeclaration::getNameAsString);
         findGetHammingDistanceMethod().ifPresent(this::walkGetHammingDistanceMethod);
 
     }
@@ -76,9 +80,13 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     private boolean isThrowNewIllegalArgument(Statement statement) {
-        return statement.isThrowStmt()
-            && statement.asThrowStmt().getExpression().isObjectCreationExpr()
-            && statement.asThrowStmt()
+        return statement.findAll(ThrowStmt.class).stream()
+            .anyMatch(this::isCreatingIllegalArgumentException);
+    }
+
+    private boolean isCreatingIllegalArgumentException(ThrowStmt throwStmt) {
+        return throwStmt.getExpression().isObjectCreationExpr()
+            && throwStmt
                 .getExpression()
                 .asObjectCreationExpr()
                 .getType()
@@ -126,9 +134,10 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     private void recursivelyAddMethodsCalled(
         String methodName,
         Set<String> methodsCalled) {
-        if (!methodsCalled.add(methodName)) {
+        if (methodsCalled.contains(methodName)) {
             return;
         }
+        methodsCalled.add(methodName);
 
         getMethodsCalledBy(methodName)
             .distinct()

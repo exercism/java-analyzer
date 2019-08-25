@@ -115,6 +115,22 @@ public class HammingTest {
     }
 
     @Test
+    public void nestedValidation() {
+        Exercise hamming =
+            new Hamming(getTestFileFromResource("NestedValidation.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(
+                new JSONObject()
+                    .put("status", "approve")
+                    .put(
+                        "comments",
+                        new JSONArray().put("java.hamming.calculate_distance_in_constructor"))
+                    .toString(INDENTATION_LEVEL));
+    }
+
+    @Test
     public void optimalWithCalculationInGetHammingDistance() {
         Exercise hamming =
             new Hamming(
