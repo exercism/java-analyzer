@@ -15,18 +15,30 @@ public abstract class Exercise {
     private static final String COMMENTS = "comments";
     private static final String COMMENT = "comment";
     private static final String PARAMS = "params";
+    private static final FileWriter NO_FILE_WRITER = null;
 
     private CompilationUnit compilationUnit;
 
     private final JSONObject analysis = new JSONObject();
     private final FileWriter fileWriter;
 
+    public static enum WriteAnalysisToFile { YES, NO }
+
     protected Exercise(String directory, String solutionFile) {
-        this(getSolutionFile(directory, solutionFile), getFileWriter(directory));
+        this(directory, solutionFile, WriteAnalysisToFile.YES);
+    }
+
+    protected Exercise(
+        String directory,
+        String solutionFile,
+        WriteAnalysisToFile writeAnalysisToFile) {
+        this(
+            getSolutionFile(directory, solutionFile),
+            getFileWriter(directory, writeAnalysisToFile));
     }
 
     protected Exercise(File solutionFile) {
-        this(solutionFile, null);
+        this(solutionFile, NO_FILE_WRITER);
     }
 
     private Exercise(File solutionFile, FileWriter fileWriter) {
@@ -49,7 +61,11 @@ public abstract class Exercise {
         return new File(directory + "src/main/java/" + solutionFile);
     }
 
-    private static FileWriter getFileWriter(String directory) {
+    private static FileWriter getFileWriter(
+        String directory, WriteAnalysisToFile writeAnalysisToFile) {
+        if (writeAnalysisToFile == WriteAnalysisToFile.NO) {
+            return null;
+        }
         try {
             return new FileWriter(directory + "analysis.json");
         } catch (IOException e) {

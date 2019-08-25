@@ -12,7 +12,11 @@ import java.io.File;
 
 public class Hamming extends Exercise {
     public Hamming(String dir) {
-        super(dir, "Hamming.java");
+        this(dir, WriteAnalysisToFile.YES);
+    }
+
+    public Hamming(String dir, WriteAnalysisToFile writeAnalysisToFile) {
+        super(dir, "Hamming.java", writeAnalysisToFile);
     }
 
     /** For testing. */

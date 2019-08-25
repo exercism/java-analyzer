@@ -1,6 +1,7 @@
 package analyzer;
 
 import analyzer.exercises.Exercise;
+import analyzer.exercises.Exercise.WriteAnalysisToFile;
 import analyzer.exercises.twofer.Twofer;
 import analyzer.exercises.hamming.Hamming;
 import org.json.JSONArray;
@@ -21,12 +22,12 @@ public class Statistics {
         Function<String, Exercise> constructor;
         switch(slug) {
             case "hamming":
-                constructor = Hamming::new;
+                constructor = dir -> new Hamming(dir, WriteAnalysisToFile.NO);
                 break;
             case "twofer": // fallthrough
             default:
                 slug = "twofer";
-                constructor = Twofer::new;
+                constructor = dir -> new Twofer(dir, WriteAnalysisToFile.NO);
         }
 
         for (int i = 0; i < 500; i++) {
@@ -56,11 +57,16 @@ public class Statistics {
             }
         }
 
-        System.out.printf("===> statuses:%n%n");
-        System.out.println(statuses);
-        System.out.printf("%n===> failComments:%n%n");
-        System.out.println(failComments);
-        System.out.printf("%n===> passComments:%n%n");
-        System.out.println(passComments);
+        System.out.printf("===> STATUSES:%n%n");
+        System.out.println(formatMultisetWithNewLines(statuses));
+        System.out.printf("%n===> FAIL COMMENTS:%n%n");
+        System.out.println(formatMultisetWithNewLines(failComments));
+        System.out.printf("%n===> PASS COMMENTS:%n%n");
+        System.out.println(formatMultisetWithNewLines(passComments));
+    }
+
+    private static String formatMultisetWithNewLines(
+        Multiset<String> multiset) {
+        return String.join(",\n ", multiset.toString().split(", "));
     }
 }

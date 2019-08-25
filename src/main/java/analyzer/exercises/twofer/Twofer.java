@@ -11,7 +11,11 @@ import analyzer.exercises.Params;
 
 public class Twofer extends Exercise {
     public Twofer(String directory) {
-        super(directory, "Twofer.java");
+        this(directory, WriteAnalysisToFile.YES);
+    }
+
+    public Twofer(String directory, WriteAnalysisToFile writeAnalysisToFile) {
+        super(directory, "Twofer.java", writeAnalysisToFile);
     }
 
     /** For testing. */
