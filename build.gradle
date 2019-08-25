@@ -25,3 +25,13 @@ run {
         args findProperty('args').split(" ")
     }
 }
+
+task runStats(type: JavaExec) {
+    group = "Execution"
+    description = "Run the Statistics class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'analyzer.Statistics'
+    if (project.hasProperty('args')) {
+        args findProperty('args').split(" ")
+    }
+}
