@@ -51,8 +51,9 @@ public abstract class Exercise {
 
     private static FileWriter getFileWriter(String directory) {
         try {
-            return new FileWriter(directory + "/analysis.json");
+            return new FileWriter(directory + "analysis.json");
         } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
     }

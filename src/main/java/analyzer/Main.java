@@ -2,6 +2,7 @@ package analyzer;
 
 import analyzer.exercises.Exercise;
 import analyzer.exercises.twofer.Twofer;
+import analyzer.exercises.hamming.Hamming;
 
 public class Main {
     public static void main(String... args) {
@@ -14,6 +15,9 @@ public class Main {
                 case "two-fer":
                     ex = new Twofer(dir);
                     break;
+                case "hamming":
+                    ex = new Hamming(dir);
+                    break;
 
                 default:
                     System.err.println("Exercise not found");
@@ -23,7 +27,7 @@ public class Main {
             ex.parse();
             ex.writeAnalysisToFile();
 	} else {
-	    System.err.println("Pass a exercise and directory");
+	    System.err.println("Pass an exercise and directory");
 	}
     }
 }

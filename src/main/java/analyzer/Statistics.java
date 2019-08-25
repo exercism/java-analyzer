@@ -2,41 +2,65 @@ package analyzer;
 
 import analyzer.exercises.Exercise;
 import analyzer.exercises.twofer.Twofer;
+import analyzer.exercises.hamming.Hamming;
 import org.json.JSONArray;
+import org.json.JSONObject;
    
-import java.util.HashMap;
+import java.util.function.Function;
+
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 
 public class Statistics {
     public static void main(String... args) {
-        String archive = "archive";
+        Multiset<String> statuses = HashMultiset.create();
+        Multiset<String> failComments = HashMultiset.create();
+        Multiset<String> passComments = HashMultiset.create();
 
-        HashMap<String, Integer> statuses = new HashMap<>();
-        HashMap<String, Integer> failComments = new HashMap<>();
-        HashMap<String, Integer> passComments = new HashMap<>();
+        String slug = args.length > 0 ? args[0] : "hamming";
+        Function<String, Exercise> constructor;
+        switch(slug) {
+            case "hamming":
+                constructor = Hamming::new;
+                break;
+            case "twofer": // fallthrough
+            default:
+                slug = "twofer";
+                constructor = Twofer::new;
+        }
 
         for (int i = 0; i < 500; i++) {
-            Exercise ex = new Twofer(archive + "/" + i);
+            Exercise ex = constructor.apply("archive/" + slug + "/" + i + "/");
             ex.parse();
-            String status = (String)ex.getAnalysis().get("status");
-            JSONArray comments = (JSONArray)ex.getAnalysis().get("comments");
-            statuses.put(status, statuses.getOrDefault(status, 0)+1);
-            //ex.writeAnalysisToFile();
+            JSONObject analysis = ex.getAnalysis();
+            String status = analysis.get("status").toString();
+            statuses.add(status);
 
-            /*if (type.equals("approve_as_optimal")) {
-                System.out.println(i);
-            }*/
+            if (!analysis.has("comments")) {
+                continue;
+            }
+            JSONArray comments = (JSONArray) analysis.get("comments");
 
-            for (Object comment : comments) {
+            for (Object commentObj : comments) {
+                String comment;
+                if (commentObj instanceof String) {
+                    comment = (String) commentObj;
+                } else {
+                    comment = ((JSONObject) commentObj).get("comment").toString();
+                }
                 if (status.equals("disapprove")) {
-                    failComments.put((String)comment, failComments.getOrDefault(comment, 0)+1);
+                    failComments.add(comment);
                 } else if (status.equals("approve")) {
-                    passComments.put((String)comment, passComments.getOrDefault(comment, 0)+1);
+                    passComments.add(comment);
                 }
             }
         }
 
+        System.out.printf("===> statuses:%n%n");
         System.out.println(statuses);
+        System.out.printf("%n===> failComments:%n%n");
         System.out.println(failComments);
+        System.out.printf("%n===> passComments:%n%n");
         System.out.println(passComments);
     }
 }
