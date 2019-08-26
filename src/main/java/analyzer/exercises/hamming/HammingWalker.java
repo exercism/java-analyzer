@@ -6,8 +6,11 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.stmt.ForEachStmt;
+import com.github.javaparser.ast.stmt.ForStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.ThrowStmt;
+import com.github.javaparser.ast.stmt.WhileStmt;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimaps;
@@ -162,14 +165,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
             .flatMap(this::getMethodCallNames);
     }
 
-    private boolean isLoopStatement(Statement statement) {
-        return statement.isForStmt() || statement.isForEachStmt() || statement.isWhileStmt();
-    }
-
-    private boolean hasLambdaExpression(Statement statement) {
-        return !statement.findAll(LambdaExpr.class).isEmpty();
-    }
-
     public boolean hasHammingClass() {
         return hammingClass != null;
     }
@@ -253,6 +248,16 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     private boolean statementMayCalculateHammingDistance(Statement statement) {
-        return isLoopStatement(statement) || hasLambdaExpression(statement);
+        return hasLoopStatement(statement) || hasLambdaExpression(statement);
+    }
+
+    private boolean hasLoopStatement(Statement statement) {
+        return !statement.findAll(ForStmt.class).isEmpty()
+            || !statement.findAll(ForEachStmt.class).isEmpty()
+            || !statement.findAll(WhileStmt.class).isEmpty();
+    }
+
+    private boolean hasLambdaExpression(Statement statement) {
+        return !statement.findAll(LambdaExpr.class).isEmpty();
     }
 }

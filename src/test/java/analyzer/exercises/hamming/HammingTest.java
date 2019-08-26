@@ -131,6 +131,16 @@ public class HammingTest {
     }
 
     @Test
+    public void nestedCalculation() {
+        Exercise hamming =
+            new Hamming(getTestFileFromResource("NestedCalculation.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(new JSONObject().put("status", "approve").toString(INDENTATION_LEVEL));
+    }
+
+    @Test
     public void optimalWithCalculationInGetHammingDistance() {
         Exercise hamming =
             new Hamming(
