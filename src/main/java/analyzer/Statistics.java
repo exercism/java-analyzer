@@ -90,6 +90,6 @@ public class Statistics {
                     multimap.get(comment).stream()
                         .limit(5)
                         .collect(toImmutableList())));
-        System.out.printf("%n}%n");
+        System.out.printf("}%n");
     }
 }
