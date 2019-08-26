@@ -71,6 +71,12 @@ public class Hamming extends Exercise {
             return;
         }
 
+        if (walker.usesCharacterLiterals()) {
+            setStatus(Status.DISAPPROVE);
+            addComment(HammingComment.AVOID_CHARACTER_LITERALS);
+            return;
+        }
+
         if (!walker.constructorMayCalculateDistance()) {
             addComment(HammingComment.CALCULATE_DISTANCE_IN_CONSTRUCTOR);
         }

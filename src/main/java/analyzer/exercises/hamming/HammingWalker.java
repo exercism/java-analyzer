@@ -4,6 +4,7 @@ import com.github.javaparser.Range;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.expr.CharLiteralExpr;
 import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithRange;
@@ -281,5 +282,9 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     private boolean isLongNode(NodeWithRange<?> node) {
         return node.getRange().map(Range::getLineCount).orElse(0) > 20;
+    }
+
+    public boolean usesCharacterLiterals() {
+        return !hammingClass.findAll(CharLiteralExpr.class).isEmpty();
     }
 }

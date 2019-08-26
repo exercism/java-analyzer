@@ -115,6 +115,22 @@ public class HammingTest {
     }
 
     @Test
+    public void usesCharacterLiterals() {
+        Exercise hamming =
+            new Hamming(getTestFileFromResource("UsesCharacterLiterals.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(
+                new JSONObject()
+                    .put("status", "disapprove")
+                    .put(
+                        "comments",
+                        new JSONArray().put("java.hamming.avoid_character_literals"))
+                    .toString(INDENTATION_LEVEL));
+    }
+
+    @Test
     public void nestedValidation() {
         Exercise hamming =
             new Hamming(getTestFileFromResource("NestedValidation.java.txt"));
