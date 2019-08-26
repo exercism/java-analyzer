@@ -15,9 +15,9 @@ class Hamming {
                     distance++;
                 }
             }
-        } else if (leftStrand.length() == 0 ) {
+        } else if (leftStrand.isEmpty()) {
             throw new IllegalArgumentException("left strand must not be empty.");
-        } else if (rightStrand.length() == 0) {
+        } else if (rightStrand.isEmpty()) {
             throw new IllegalArgumentException("right strand must not be empty.");
         } else {
             throw new IllegalArgumentException("leftStrand and rightStrand must be of equal length.");
