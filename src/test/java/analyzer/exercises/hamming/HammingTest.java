@@ -157,6 +157,24 @@ public class HammingTest {
     }
 
     @Test
+    public void shouldUseIsEmpty() {
+        Exercise hamming =
+            new Hamming(
+                getTestFileFromResource(
+                    "ShouldUseIsEmpty.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(
+                new JSONObject()
+                    .put("status", "approve")
+                    .put(
+                        "comments",
+                        new JSONArray().put("java.hamming.should_use_is_empty"))
+                    .toString(INDENTATION_LEVEL));
+    }
+
+    @Test
     public void optimalWithCalculationInGetHammingDistance() {
         Exercise hamming =
             new Hamming(

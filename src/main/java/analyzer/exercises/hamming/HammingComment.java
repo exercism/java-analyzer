@@ -8,7 +8,8 @@ public enum HammingComment implements Comment {
     MUST_THROW_IN_CONSTRUCTOR,
     MUST_CALCULATE_HAMMING_DISTANCE,
     CALCULATE_DISTANCE_IN_CONSTRUCTOR,
-    AVOID_CHARACTER_LITERALS;
+    AVOID_CHARACTER_LITERALS,
+    SHOULD_USE_IS_EMPTY;
 
     @Override
     public String toJson() {

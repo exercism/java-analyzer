@@ -287,4 +287,9 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     public boolean usesCharacterLiterals() {
         return !hammingClass.findAll(CharLiteralExpr.class).isEmpty();
     }
+
+    public boolean usesStringIsEmpty() {
+        return methodsCalledByConstructor.contains("isEmpty")
+            || methodsCalledByGetHammingDistance.contains("isEmpty");
+    }
 }
