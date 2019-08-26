@@ -161,7 +161,7 @@ public class HammingTest {
         Exercise hamming =
             new Hamming(
                 getTestFileFromResource(
-                    "ShouldUseIsEmpty.java.txt"));
+                    "ShouldUseStringIsEmpty.java.txt"));
         hamming.parse();
 
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
@@ -170,7 +170,25 @@ public class HammingTest {
                     .put("status", "approve")
                     .put(
                         "comments",
-                        new JSONArray().put("java.hamming.should_use_is_empty"))
+                        new JSONArray().put("java.hamming.should_use_string_is_empty"))
+                    .toString(INDENTATION_LEVEL));
+    }
+
+    @Test
+    public void avoidStringToCharArray() {
+        Exercise hamming =
+            new Hamming(
+                getTestFileFromResource(
+                    "AvoidStringToCharArray.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(
+                new JSONObject()
+                    .put("status", "approve")
+                    .put(
+                        "comments",
+                        new JSONArray().put("java.hamming.avoid_string_to_char_array"))
                     .toString(INDENTATION_LEVEL));
     }
 

@@ -289,7 +289,15 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     public boolean usesStringIsEmpty() {
-        return methodsCalledByConstructor.contains("isEmpty")
-            || methodsCalledByGetHammingDistance.contains("isEmpty");
+        return usesMethod("isEmpty");
+    }
+
+    public boolean usesStringToCharArray() {
+        return usesMethod("toCharArray");
+    }
+
+    private boolean usesMethod(String methodName) {
+        return methodsCalledByConstructor.contains(methodName)
+        || methodsCalledByGetHammingDistance.contains(methodName);
     }
 }

@@ -82,7 +82,11 @@ public class Hamming extends Exercise {
         }
 
         if (!walker.usesStringIsEmpty()) {
-            addComment(HammingComment.SHOULD_USE_IS_EMPTY);
+            addComment(HammingComment.SHOULD_USE_STRING_IS_EMPTY);
+        }
+
+        if (walker.usesStringToCharArray()) {
+            addComment(HammingComment.AVOID_STRING_TO_CHAR_ARRAY);
         }
 
         if (walker.hasLongConstructor()) {
