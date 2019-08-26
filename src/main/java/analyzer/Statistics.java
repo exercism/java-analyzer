@@ -76,9 +76,9 @@ public class Statistics {
         System.out.printf("===> STATUSES:%n%n");
         System.out.println(formatMultisetWithNewLines(statuses));
         System.out.printf("%n===> APPROVE COMMENTS:%n%n");
-        System.out.println(formatMultisetWithNewLines(disapproveComments));
-        System.out.printf("%n===> DISAPPROVE COMMENTS:%n%n");
         System.out.println(formatMultisetWithNewLines(approveComments));
+        System.out.printf("%n===> DISAPPROVE COMMENTS:%n%n");
+        System.out.println(formatMultisetWithNewLines(disapproveComments));
         System.out.printf("%n===> ARCHIVE SAMPLES BY COMMENT:%n%n");
         sampleArchivesAndPrint(archiveByComment);
         System.out.printf("%n===> APPROVED ARCHIVE SAMPLES:%n%n");
