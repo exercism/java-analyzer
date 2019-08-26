@@ -10,20 +10,22 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Function;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.SetMultimap;
 
 public class Statistics {
     public static void main(String... args) {
         Multiset<String> statuses = HashMultiset.create();
-        Multiset<String> failComments = HashMultiset.create();
-        Multiset<String> passComments = HashMultiset.create();
+        Multiset<String> disapproveComments = HashMultiset.create();
+        Multiset<String> approveComments = HashMultiset.create();
         SetMultimap<String, Integer> archiveByComment = HashMultimap.create();
         List<Integer> passingArchives = new ArrayList<>();
 
@@ -64,22 +66,22 @@ public class Statistics {
                 }
                 archiveByComment.put(comment, archive);
                 if (status.equals("disapprove")) {
-                    failComments.add(comment);
+                    disapproveComments.add(comment);
                 } else if (status.equals("approve")) {
-                    passComments.add(comment);
+                    approveComments.add(comment);
                 }
             }
         }
 
         System.out.printf("===> STATUSES:%n%n");
         System.out.println(formatMultisetWithNewLines(statuses));
-        System.out.printf("%n===> FAIL COMMENTS:%n%n");
-        System.out.println(formatMultisetWithNewLines(failComments));
-        System.out.printf("%n===> PASS COMMENTS:%n%n");
-        System.out.println(formatMultisetWithNewLines(passComments));
+        System.out.printf("%n===> APPROVE COMMENTS:%n%n");
+        System.out.println(formatMultisetWithNewLines(disapproveComments));
+        System.out.printf("%n===> DISAPPROVE COMMENTS:%n%n");
+        System.out.println(formatMultisetWithNewLines(approveComments));
         System.out.printf("%n===> ARCHIVE SAMPLES BY COMMENT:%n%n");
         sampleArchivesAndPrint(archiveByComment);
-        System.out.printf("%n===> PASSING ARCHIVE SAMPLES:%n%n");
+        System.out.printf("%n===> APPROVED ARCHIVE SAMPLES:%n%n");
         samplePassingArchivesAndPrint(passingArchives);
     }
 
@@ -97,10 +99,7 @@ public class Statistics {
                 System.out.printf(
                     " %s=%s,%n",
                     comment,
-                    archivesByComment.get(comment).stream()
-                        .limit(5)
-                        .sorted()
-                        .collect(toImmutableList())));
+                    getSortedSample(archivesByComment.get(comment), 5)));
         System.out.printf("}%n");
     }
 
@@ -109,7 +108,22 @@ public class Statistics {
             System.out.println("No passing archives.");
             return;
         }
-        Collections.shuffle(passingArchives);
-        System.out.println(passingArchives.stream().limit(5).sorted().collect(toImmutableList()));
+        System.out.println(getSortedSample(passingArchives, 10));
+    }
+
+    private static List<Integer> getSortedSample(Collection<Integer> archives, int limit) {
+        ImmutableList<Integer> sortedArchives =
+            archives.stream().sorted().collect(toImmutableList());
+        if (archives.size() <= limit) {
+            return sortedArchives;
+        }
+
+        return new Random().ints(0, archives.size())
+            .map(sortedArchives::get)
+            .distinct()
+            .limit(limit)
+            .sorted()
+            .boxed()
+            .collect(toImmutableList());
     }
 }
