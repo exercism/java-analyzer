@@ -1,6 +1,6 @@
 import java.util.stream.IntStream;
 
-/** Optimial solution using a method for validation. */
+/** Optimal solution using a method for validation. */
 class Hamming {
     private final int hammingDistance;
 

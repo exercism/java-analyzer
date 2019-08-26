@@ -1,16 +1,19 @@
 package analyzer.exercises.hamming;
 
+import com.github.javaparser.Range;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.nodeTypes.NodeWithRange;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ForEachStmt;
 import com.github.javaparser.ast.stmt.ForStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.ThrowStmt;
 import com.github.javaparser.ast.stmt.WhileStmt;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimaps;
@@ -18,6 +21,7 @@ import com.google.common.collect.Multimaps;
 import static com.google.common.collect.MoreCollectors.toOptional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -25,6 +29,7 @@ import java.util.stream.Stream;
 
 class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     private ClassOrInterfaceDeclaration hammingClass;
+    private List<ConstructorDeclaration> constructors = ImmutableList.of();
     private ConstructorDeclaration constructor;
     private ListMultimap<String, MethodDeclaration> methods = ImmutableListMultimap.of();
     private Set<String> methodsCalledByConstructor = new HashSet<>();
@@ -44,14 +49,19 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     private void walkHammingClass() {
-        methods = Multimaps.index(
-            hammingClass.findAll(MethodDeclaration.class),
-            MethodDeclaration::getNameAsString);
+        methods = getMethodsByName();
+        constructors = hammingClass.getConstructors();
 
         findConstructor().ifPresent(this::walkConstructor);
 
         findGetHammingDistanceMethod().ifPresent(this::walkGetHammingDistanceMethod);
 
+    }
+
+    private ListMultimap<String, MethodDeclaration> getMethodsByName() {
+        return Multimaps.index(
+            hammingClass.findAll(MethodDeclaration.class),
+            MethodDeclaration::getNameAsString);
     }
 
     private Optional<ConstructorDeclaration> findConstructor() {
@@ -259,5 +269,17 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     private boolean hasLambdaExpression(Statement statement) {
         return !statement.findAll(LambdaExpr.class).isEmpty();
+    }
+
+    public boolean hasLongConstructor() {
+        return constructors.stream().anyMatch(this::isLongNode);
+    }
+
+    public boolean hasLongMethod() {
+        return methods.values().stream().anyMatch(this::isLongNode);
+    }
+
+    private boolean isLongNode(NodeWithRange<?> node) {
+        return node.getRange().map(Range::getLineCount).orElse(0) > 20;
     }
 }

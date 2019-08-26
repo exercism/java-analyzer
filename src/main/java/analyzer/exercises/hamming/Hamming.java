@@ -75,6 +75,14 @@ public class Hamming extends Exercise {
             addComment(HammingComment.CALCULATE_DISTANCE_IN_CONSTRUCTOR);
         }
 
+        if (walker.hasLongConstructor()) {
+            addComment(GeneralComment.CONSTRUCTOR_TOO_LONG);
+        }
+
+        if (walker.hasLongMethod()) {
+            addComment(GeneralComment.METHOD_TOO_LONG);
+        }
+
         setStatus(Status.APPROVE);
     }
 }

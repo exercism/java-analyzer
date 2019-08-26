@@ -177,6 +177,40 @@ public class HammingTest {
     }
 
     @Test
+    public void constructorTooLong() {
+        Exercise hamming =
+            new Hamming(
+                getTestFileFromResource("ConstructorTooLong.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(
+                new JSONObject()
+                    .put("status", "approve")
+                    .put(
+                        "comments",
+                        new JSONArray().put("java.general.constructor_too_long"))
+                    .toString(INDENTATION_LEVEL));
+    }
+
+    @Test
+    public void methodTooLong() {
+        Exercise hamming =
+            new Hamming(
+                getTestFileFromResource("MethodTooLong.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(
+                new JSONObject()
+                    .put("status", "approve")
+                    .put(
+                        "comments",
+                        new JSONArray().put("java.general.method_too_long"))
+                    .toString(INDENTATION_LEVEL));
+    }
+
+    @Test
     public void optimalWithCalculationDelegatedFromConstructor() {
         Exercise hamming =
             new Hamming(
