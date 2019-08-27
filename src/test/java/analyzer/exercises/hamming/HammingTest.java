@@ -263,6 +263,23 @@ public class HammingTest {
     }
 
     @Test
+    public void usesStreamReduce() {
+        Exercise hamming =
+            new Hamming(
+                getTestFileFromResource("UsesStreamReduce.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(
+                new JSONObject()
+                    .put("status", "approve")
+                    .put(
+                        "comments",
+                        new JSONArray().put("java.hamming.should_use_stream_filter_and_count"))
+                    .toString(INDENTATION_LEVEL));
+    }
+
+    @Test
     public void optimalWithCalculationDelegatedFromConstructor() {
         Exercise hamming =
             new Hamming(

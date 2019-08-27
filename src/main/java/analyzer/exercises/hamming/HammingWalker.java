@@ -296,6 +296,10 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
         return usesMethod("charAt") || usesMethod("codePointAt");
     }
 
+    public boolean shouldUseStreamFilterAndCount() {
+        return usesMethod("reduce");
+    }
+
     private boolean usesMethod(String methodName) {
         return methodsCalledByConstructor.contains(methodName)
         || methodsCalledByGetHammingDistance.contains(methodName);

@@ -91,6 +91,10 @@ public class Hamming extends Exercise {
             addComment(HammingComment.SHOULD_USE_STRING_IS_EMPTY);
         }
 
+        if (walker.shouldUseStreamFilterAndCount()) {
+            addComment(HammingComment.SHOULD_USE_STREAM_FILTER_AND_COUNT);
+        }
+
         if (walker.hasLongConstructor()) {
             addComment(GeneralComment.CONSTRUCTOR_TOO_LONG);
         }
