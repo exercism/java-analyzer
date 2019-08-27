@@ -131,6 +131,24 @@ public class HammingTest {
     }
 
     @Test
+    public void mustUseCharAtOrCodePointAt() {
+        Exercise hamming =
+            new Hamming(
+                getTestFileFromResource(
+                    "MustUseCharAtOrCodePointAt.java.txt"));
+        hamming.parse();
+
+        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
+            .isEqualTo(
+                new JSONObject()
+                    .put("status", "disapprove")
+                    .put(
+                        "comments",
+                        new JSONArray().put("java.hamming.must_use_string_char_at_or_code_point_at"))
+                    .toString(INDENTATION_LEVEL));
+    }
+
+    @Test
     public void nestedValidation() {
         Exercise hamming =
             new Hamming(getTestFileFromResource("NestedValidation.java.txt"));
@@ -171,24 +189,6 @@ public class HammingTest {
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.should_use_string_is_empty"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void avoidStringToCharArray() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource(
-                    "AvoidStringToCharArray.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put("status", "approve")
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.avoid_string_to_char_array"))
                     .toString(INDENTATION_LEVEL));
     }
 

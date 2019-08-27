@@ -10,7 +10,7 @@ public enum HammingComment implements Comment {
     CALCULATE_DISTANCE_IN_CONSTRUCTOR,
     AVOID_CHARACTER_LITERALS,
     SHOULD_USE_STRING_IS_EMPTY,
-    AVOID_STRING_TO_CHAR_ARRAY;
+    MUST_USE_STRING_CHAR_AT_OR_CODE_POINT_AT;
 
     @Override
     public String toJson() {

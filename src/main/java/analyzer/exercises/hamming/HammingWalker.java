@@ -292,8 +292,8 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
         return usesMethod("isEmpty");
     }
 
-    public boolean usesStringToCharArray() {
-        return usesMethod("toCharArray");
+    public boolean usesStringCharAtOrCodePointAt() {
+        return usesMethod("charAt") || usesMethod("codePointAt");
     }
 
     private boolean usesMethod(String methodName) {

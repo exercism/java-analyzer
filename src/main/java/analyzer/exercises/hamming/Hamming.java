@@ -77,16 +77,18 @@ public class Hamming extends Exercise {
             return;
         }
 
+        if (!walker.usesStringCharAtOrCodePointAt()) {
+            setStatus(Status.DISAPPROVE);
+            addComment(HammingComment.MUST_USE_STRING_CHAR_AT_OR_CODE_POINT_AT);
+            return;
+        }
+
         if (!walker.constructorMayCalculateDistance()) {
             addComment(HammingComment.CALCULATE_DISTANCE_IN_CONSTRUCTOR);
         }
 
         if (!walker.usesStringIsEmpty()) {
             addComment(HammingComment.SHOULD_USE_STRING_IS_EMPTY);
-        }
-
-        if (walker.usesStringToCharArray()) {
-            addComment(HammingComment.AVOID_STRING_TO_CHAR_ARRAY);
         }
 
         if (walker.hasLongConstructor()) {
