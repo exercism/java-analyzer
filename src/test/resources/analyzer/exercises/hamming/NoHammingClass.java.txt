@@ -1,0 +1,4 @@
+package analyzer.exercises.hamming;
+
+/** There must be a Hamming class. */
+public class NoHammingClass {}
