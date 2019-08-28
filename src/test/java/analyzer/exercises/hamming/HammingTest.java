@@ -47,7 +47,9 @@ public class HammingTest {
                             .put(
                                 new JSONObject()
                                     .put("comment", "java.general.use_proper_method_name")
-                                    .put("params", new JSONObject().put("methodName", "getHammingDistance"))))
+                                    .put(
+                                        "params",
+                                        new JSONObject().put("methodName", "getHammingDistance"))))
                     .toString(INDENTATION_LEVEL));
     }
 
@@ -144,7 +146,8 @@ public class HammingTest {
                     .put("status", "disapprove")
                     .put(
                         "comments",
-                        new JSONArray().put("java.hamming.must_use_string_char_at_or_code_point_at"))
+                        new JSONArray().put(
+                            "java.hamming.must_use_string_char_at_or_code_point_at"))
                     .toString(INDENTATION_LEVEL));
     }
 
@@ -238,10 +241,16 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "approve")
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.general.constructor_too_long"))
+                .put("status", "approve")
+                .put("comments",
+                    new JSONArray()
+                        .put(
+                            new JSONObject()
+                                .put("comment", "java.general.constructor_too_long")
+                                .put(
+                                    "params",
+                                    new JSONObject().put(
+                                        "constructorNames", "Hamming"))))
                     .toString(INDENTATION_LEVEL));
     }
 
@@ -256,9 +265,15 @@ public class HammingTest {
             .isEqualTo(
                 new JSONObject()
                     .put("status", "approve")
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.general.method_too_long"))
+                    .put("comments",
+                        new JSONArray()
+                            .put(
+                                new JSONObject()
+                                    .put("comment", "java.general.method_too_long")
+                                    .put(
+                                        "params",
+                                        new JSONObject().put(
+                                            "methodNames", "calculateHammingDistance"))))
                     .toString(INDENTATION_LEVEL));
     }
 

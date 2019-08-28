@@ -1,5 +1,7 @@
 package analyzer.exercises.hamming;
 
+import static com.google.common.collect.ImmutableSet.toImmutableSet;
+
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
@@ -272,12 +274,18 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
         return !statement.findAll(LambdaExpr.class).isEmpty();
     }
 
-    public boolean hasLongConstructor() {
-        return constructors.stream().anyMatch(this::isLongNode);
+    public Set<String> getLongConstructors() {
+        return constructors.stream()
+            .filter(this::isLongNode)
+            .map(ConstructorDeclaration::getNameAsString)
+            .collect(toImmutableSet());
     }
 
-    public boolean hasLongMethod() {
-        return methods.values().stream().anyMatch(this::isLongNode);
+    public Set<String> getLongMethods() {
+        return methods.values().stream()
+            .filter(this::isLongNode)
+            .map(MethodDeclaration::getNameAsString)
+            .collect(toImmutableSet());
     }
 
     private boolean isLongNode(NodeWithRange<?> node) {

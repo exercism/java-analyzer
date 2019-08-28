@@ -9,6 +9,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
 import java.io.File;
+import java.util.Set;
 
 public class Hamming extends Exercise {
     public Hamming(String dir) {
@@ -95,14 +96,30 @@ public class Hamming extends Exercise {
             addComment(HammingComment.SHOULD_USE_STREAM_FILTER_AND_COUNT);
         }
 
-        if (walker.hasLongConstructor()) {
-            addComment(GeneralComment.CONSTRUCTOR_TOO_LONG);
+        Set<String> longConstructors = walker.getLongConstructors();
+        if (!longConstructors.isEmpty()) {
+            addComment(
+                GeneralComment.CONSTRUCTOR_TOO_LONG,
+                Params.newBuilder()
+                    .addParam(
+                        GeneralComment.CONSTRUCTOR_NAMES, formatNames(longConstructors))
+                    .build());
         }
 
-        if (walker.hasLongMethod()) {
-            addComment(GeneralComment.METHOD_TOO_LONG);
+        Set<String> longMethods = walker.getLongMethods();
+        if (!longMethods.isEmpty()) {
+            addComment(
+                GeneralComment.METHOD_TOO_LONG,
+                Params.newBuilder()
+                    .addParam(
+                        GeneralComment.METHOD_NAMES, formatNames(longMethods))
+                    .build());
         }
 
         setStatus(Status.APPROVE);
+    }
+
+    private static String formatNames(Set<String> names) {
+        return String.join(", ", names);
     }
 }
