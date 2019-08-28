@@ -11,6 +11,8 @@ public enum GeneralComment implements Comment {
 
     public static String CLASS_NAME = "className";
     public static String METHOD_NAME = "methodName";
+    public static String CONSTRUCTOR_NAMES = "constructorNames";
+    public static String METHOD_NAMES = "methodNames";
 
     @Override
     public String toJson() {
