@@ -1,6 +1,7 @@
 package analyzer.exercises.hamming;
 
 import analyzer.exercises.Exercise;
+import analyzer.exercises.ExerciseRegistry;
 import analyzer.exercises.GeneralComment;
 import analyzer.exercises.Params;
 import analyzer.exercises.Status;
@@ -12,6 +13,11 @@ import java.io.File;
 import java.util.Set;
 
 public class Hamming extends Exercise {
+
+    static {
+        ExerciseRegistry.register("hamming", Hamming::new);
+    }
+
     public Hamming(String dir) {
         this(dir, WriteAnalysisToFile.YES);
     }
