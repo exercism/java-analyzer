@@ -5,11 +5,16 @@ import java.io.File;
 import com.github.javaparser.ast.CompilationUnit;
 
 import analyzer.exercises.Exercise;
+import analyzer.exercises.ExerciseRegistry;
 import analyzer.exercises.Status;
 import analyzer.exercises.GeneralComment;
 import analyzer.exercises.Params;
 
 public class Twofer extends Exercise {
+    static {
+        ExerciseRegistry.register("two-fer", Twofer::new);
+    }
+
     public Twofer(String directory) {
         this(directory, WriteAnalysisToFile.YES);
     }
