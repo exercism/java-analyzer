@@ -9,17 +9,17 @@ import analyzer.exercises.Status;
 import analyzer.exercises.GeneralComment;
 import analyzer.exercises.Params;
 
-public class Twofer extends Exercise {
-    public Twofer(String directory) {
+public class TwoFer extends Exercise {
+    public TwoFer(String directory) {
         this(directory, WriteAnalysisToFile.YES);
     }
 
-    public Twofer(String directory, WriteAnalysisToFile writeAnalysisToFile) {
+    public TwoFer(String directory, WriteAnalysisToFile writeAnalysisToFile) {
         super(directory, "Twofer.java", writeAnalysisToFile);
     }
 
     /** For testing. */
-    public Twofer(File solutionFile) {
+    public TwoFer(File solutionFile) {
         super(solutionFile);
     }
 

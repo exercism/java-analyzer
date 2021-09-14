@@ -10,11 +10,11 @@ import org.junit.Test;
 
 import analyzer.exercises.Exercise;
 
-public class TwoferTest {
+public class TwoFerTest {
     @Test
     public void noTwoferClass() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("NoTwoferClass.java.txt"));
+            new TwoFer(getTestFileFromResource("NoTwoferClass.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -33,7 +33,7 @@ public class TwoferTest {
     @Test
     public void noTwoferMethod() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("NoTwoferMethod.java.txt"));
+            new TwoFer(getTestFileFromResource("NoTwoferMethod.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -52,7 +52,7 @@ public class TwoferTest {
     @Test
     public void usesLambda() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("UsesLambda.java.txt"));
+            new TwoFer(getTestFileFromResource("UsesLambda.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -62,7 +62,7 @@ public class TwoferTest {
     @Test
     public void usesLoop() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("UsesLoop.java.txt"));
+            new TwoFer(getTestFileFromResource("UsesLoop.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -72,7 +72,7 @@ public class TwoferTest {
     @Test
     public void hardCodedTestCases() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("HardCodedTestCases.java.txt"));
+            new TwoFer(getTestFileFromResource("HardCodedTestCases.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -87,7 +87,7 @@ public class TwoferTest {
     @Test
     public void noConditionalLogic() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("NoConditionalLogic.java.txt"));
+            new TwoFer(getTestFileFromResource("NoConditionalLogic.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -102,7 +102,7 @@ public class TwoferTest {
     @Test
     public void usesStringFormat() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("UsesStringFormat.java.txt"));
+            new TwoFer(getTestFileFromResource("UsesStringFormat.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -117,7 +117,7 @@ public class TwoferTest {
     @Test
     public void usesMultipleReturns() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("UsesMultipleReturns.java.txt"));
+            new TwoFer(getTestFileFromResource("UsesMultipleReturns.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -132,7 +132,7 @@ public class TwoferTest {
     @Test
     public void optimalNoTernary() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("OptimalNoTernary.java.txt"));
+            new TwoFer(getTestFileFromResource("OptimalNoTernary.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
@@ -147,7 +147,7 @@ public class TwoferTest {
     @Test
     public void optimal() {
         Exercise twofer =
-            new Twofer(getTestFileFromResource("Optimal.java.txt"));
+            new TwoFer(getTestFileFromResource("Optimal.java.txt"));
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())

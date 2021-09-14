@@ -18,6 +18,7 @@ dependencies {
     compile 'com.google.guava:guava:28.0-jre'
     testImplementation "com.google.truth:truth:1.0"
     testImplementation "com.google.truth.extensions:truth-java8-extension:1.0"
+    implementation group: 'org.jetbrains', name: 'annotations', version: '22.0.0'
 }
 
 run {

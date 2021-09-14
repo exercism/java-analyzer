@@ -4,7 +4,7 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import analyzer.exercises.Exercise;
 import analyzer.exercises.Exercise.WriteAnalysisToFile;
-import analyzer.exercises.twofer.Twofer;
+import analyzer.exercises.twofer.TwoFer;
 import analyzer.exercises.hamming.Hamming;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,7 +38,7 @@ public class Statistics {
             case "twofer": // fallthrough
             default:
                 slug = "twofer";
-                constructor = dir -> new Twofer(dir, WriteAnalysisToFile.NO);
+                constructor = dir -> new TwoFer(dir, WriteAnalysisToFile.NO);
         }
 
         for (int archive = 0; archive < 500; archive++) {
