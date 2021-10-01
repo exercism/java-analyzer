@@ -1,7 +1,6 @@
 package analyzer;
 
 import analyzer.exercises.Exercise;
-import analyzer.exercises.ExerciseRegistry;
 import analyzer.exercises.twofer.Twofer;
 import analyzer.exercises.hamming.Hamming;
 
@@ -10,7 +9,21 @@ public class Main {
 	if (args.length >= 2) {
             String slug = args[0];
             String dir = args[1];
-            Exercise ex = ExerciseRegistry.getExercise(slug, dir);
+            Exercise ex = null;
+
+            switch (slug) {
+                case "two-fer":
+                    ex = new Twofer(dir);
+                    break;
+                case "hamming":
+                    ex = new Hamming(dir);
+                    break;
+
+                default:
+                    System.err.println("Exercise not found");
+                    System.exit(-1);
+            }
+
             ex.parse();
             ex.writeAnalysisToFile();
 	} else {
