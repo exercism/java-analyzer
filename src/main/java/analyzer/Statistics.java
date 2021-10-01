@@ -23,9 +23,6 @@ import com.google.common.collect.SetMultimap;
 
 public class Statistics {
     public static void main(String... args) {
-        Multiset<String> statuses = HashMultiset.create();
-        Multiset<String> disapproveComments = HashMultiset.create();
-        Multiset<String> approveComments = HashMultiset.create();
         SetMultimap<String, Integer> archiveByComment = HashMultimap.create();
         List<Integer> passingArchives = new ArrayList<>();
 
@@ -45,16 +42,10 @@ public class Statistics {
             Exercise ex = constructor.apply("archive/" + slug + "/" + archive + "/");
             ex.parse();
             JSONObject analysis = ex.getAnalysis();
-            String status = analysis.get("status").toString();
-            statuses.add(status);
-
-            if (status.equals("approve")) {
-                passingArchives.add(archive);
-            }
-
             if (!analysis.has("comments")) {
                 continue;
             }
+
             JSONArray comments = (JSONArray) analysis.get("comments");
 
             for (Object commentObj : comments) {
@@ -65,24 +56,11 @@ public class Statistics {
                     comment = ((JSONObject) commentObj).get("comment").toString();
                 }
                 archiveByComment.put(comment, archive);
-                if (status.equals("disapprove")) {
-                    disapproveComments.add(comment);
-                } else if (status.equals("approve")) {
-                    approveComments.add(comment);
-                }
             }
         }
 
-        System.out.printf("===> STATUSES:%n%n");
-        System.out.println(formatMultisetWithNewLines(statuses));
-        System.out.printf("%n===> APPROVE COMMENTS:%n%n");
-        System.out.println(formatMultisetWithNewLines(approveComments));
-        System.out.printf("%n===> DISAPPROVE COMMENTS:%n%n");
-        System.out.println(formatMultisetWithNewLines(disapproveComments));
         System.out.printf("%n===> ARCHIVE SAMPLES BY COMMENT:%n%n");
         sampleArchivesAndPrint(archiveByComment);
-        System.out.printf("%n===> APPROVED ARCHIVE SAMPLES:%n%n");
-        samplePassingArchivesAndPrint(passingArchives);
     }
 
     private static String formatMultisetWithNewLines(

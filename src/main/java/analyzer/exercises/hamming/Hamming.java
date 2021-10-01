@@ -3,7 +3,6 @@ package analyzer.exercises.hamming;
 import analyzer.exercises.Exercise;
 import analyzer.exercises.GeneralComment;
 import analyzer.exercises.Params;
-import analyzer.exercises.Status;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -51,7 +50,6 @@ public class Hamming extends Exercise {
         compilationUnit.walk(ClassOrInterfaceDeclaration.class, walker);
 
         if (!walker.hasHammingClass()) {
-            setStatus(Status.DISAPPROVE);
             addComment(
                 GeneralComment.USE_PROPER_CLASS_NAME,
                 Params.newBuilder().addParam(GeneralComment.CLASS_NAME, "Hamming").build());
@@ -59,7 +57,6 @@ public class Hamming extends Exercise {
         }
 
         if (!walker.hasGetHammingDistanceMethod()) {
-            setStatus(Status.DISAPPROVE);
             addComment(
                 GeneralComment.USE_PROPER_METHOD_NAME,
                 Params.newBuilder().addParam(GeneralComment.METHOD_NAME, "getHammingDistance").build());
@@ -67,38 +64,32 @@ public class Hamming extends Exercise {
         }
 
         if (!walker.hasConstructor()) {
-            setStatus(Status.DISAPPROVE);
             addComment(HammingComment.MUST_USE_CONSTRUCTOR);
             return;
         }
 
         if (!walker.constructorHasIfStatements() && !walker.constructorHasMethodCalls()) {
-            setStatus(Status.DISAPPROVE);
             addComment(HammingComment.MUST_USE_CONDITIONAL_LOGIC_IN_CONSTRUCTOR);
             return;
         }
 
         if (!walker.constructorThrowsIllegalArgument()) {
-            setStatus(Status.DISAPPROVE);
             addComment(HammingComment.MUST_THROW_IN_CONSTRUCTOR);
             return;
         }
 
         if (!walker.getHammingDistanceMethodMayCalculateDistance()
             && !walker.constructorMayCalculateDistance()) {
-            setStatus(Status.DISAPPROVE);
             addComment(HammingComment.MUST_CALCULATE_HAMMING_DISTANCE);
             return;
         }
 
         if (walker.usesCharacterLiterals()) {
-            setStatus(Status.DISAPPROVE);
             addComment(HammingComment.AVOID_CHARACTER_LITERALS);
             return;
         }
 
         if (!walker.usesStringCharAtOrCodePointAt()) {
-            setStatus(Status.DISAPPROVE);
             addComment(HammingComment.MUST_USE_STRING_CHAR_AT_OR_CODE_POINT_AT);
             return;
         }
@@ -134,8 +125,6 @@ public class Hamming extends Exercise {
                         GeneralComment.METHOD_NAMES, formatNames(longMethods))
                     .build());
         }
-
-        setStatus(Status.APPROVE);
     }
 
     private static String formatNames(Set<String> names) {

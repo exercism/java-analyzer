@@ -11,7 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public abstract class Exercise {
-    private static final String STATUS = "status";
     private static final String COMMENTS = "comments";
     private static final String COMMENT = "comment";
     private static final String PARAMS = "params";
@@ -42,10 +41,8 @@ public abstract class Exercise {
         try {
             this.compilationUnit = JavaParser.parse(solutionFile);
         } catch (ParseProblemException e) {
-            setStatus(Status.DISAPPROVE);
             addComment(GeneralComment.FAILED_PARSE);
         } catch (FileNotFoundException e) {
-            setStatus(Status.REFER_TO_MENTOR);
             addComment(
                 GeneralComment.FILE_NOT_FOUND,
                 Params.newBuilder().addParam("solutionFile", solutionFile.getName()).build());
@@ -96,10 +93,6 @@ public abstract class Exercise {
     }
 
     abstract public void parse(CompilationUnit compilationUnit);
-
-    protected void setStatus(Status status) {
-        analysis.put(STATUS, status.toJson());
-    }
 
     protected void addComment(Comment comment) {
         addComment(comment, Params.EMPTY);
