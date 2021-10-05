@@ -22,19 +22,14 @@ public abstract class Exercise {
     private final JSONObject analysis = new JSONObject();
     private final FileWriter fileWriter;
 
-    public static enum WriteAnalysisToFile { YES, NO }
+    public enum WriteAnalysisToFile {YES, NO}
 
-    protected Exercise(String directory, String solutionFile) {
-        this(directory, solutionFile, WriteAnalysisToFile.YES);
-    }
-
-    protected Exercise(
-        String directory,
-        String solutionFile,
-        WriteAnalysisToFile writeAnalysisToFile) {
-        this(
-            getSolutionFile(directory, solutionFile),
-            getFileWriter(directory, writeAnalysisToFile));
+    protected Exercise(String directory,
+                       String solutionFile,
+                       String outputDirectory,
+                       WriteAnalysisToFile writeAnalysisToFile) {
+        this(getSolutionFile(directory, solutionFile),
+                getFileWriter(outputDirectory, writeAnalysisToFile));
     }
 
     protected Exercise(File solutionFile) {
@@ -49,12 +44,31 @@ public abstract class Exercise {
         } catch (ParseProblemException e) {
             setStatus(Status.DISAPPROVE);
             addComment(GeneralComment.FAILED_PARSE);
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             setStatus(Status.REFER_TO_MENTOR);
             addComment(
                 GeneralComment.FILE_NOT_FOUND,
                 Params.newBuilder().addParam("solutionFile", solutionFile.getName()).build());
         }
+    }
+
+    /**
+     * @deprecated The output file should no longer be written in the input file directory
+     */
+    @Deprecated
+    protected Exercise(String directory, String solutionFile) {
+        this(directory, solutionFile, WriteAnalysisToFile.YES);
+    }
+
+    /**
+     * @deprecated The output file should no longer be written in the input file directory
+     */
+    @Deprecated
+    protected Exercise(String directory,
+                       String solutionFile,
+                       WriteAnalysisToFile writeAnalysisToFile) {
+        this(getSolutionFile(directory, solutionFile),
+                getFileWriter(directory, writeAnalysisToFile));
     }
 
     private static File getSolutionFile(String directory, String solutionFile) {
