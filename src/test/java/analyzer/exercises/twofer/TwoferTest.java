@@ -20,7 +20,6 @@ public class TwoferTest {
         assertThat(twofer.getAnalysis().toString())
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments",
                         new JSONArray()
                             .put(
@@ -39,7 +38,6 @@ public class TwoferTest {
         assertThat(twofer.getAnalysis().toString())
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments",
                         new JSONArray()
                             .put(
@@ -56,7 +54,7 @@ public class TwoferTest {
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(new JSONObject().put("status", "refer_to_mentor").toString());
+            .isEqualTo(new JSONObject().toString());
     }
 
     @Test
@@ -66,7 +64,7 @@ public class TwoferTest {
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(new JSONObject().put("status", "refer_to_mentor").toString());
+            .isEqualTo(new JSONObject().toString());
     }
 
     @Test
@@ -78,7 +76,6 @@ public class TwoferTest {
         assertThat(twofer.getAnalysis().toString())
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments",
                         new JSONArray().put("java.general.avoid_hard_coded_test_cases"))
                     .toString());
@@ -93,7 +90,6 @@ public class TwoferTest {
         assertThat(twofer.getAnalysis().toString())
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments",
                         new JSONArray().put("java.two-fer.use_conditional_logic"))
                     .toString());
@@ -108,7 +104,6 @@ public class TwoferTest {
         assertThat(twofer.getAnalysis().toString())
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments",
                         new JSONArray().put("java.two-fer.avoid_string_format"))
                     .toString());
@@ -123,7 +118,6 @@ public class TwoferTest {
         assertThat(twofer.getAnalysis().toString())
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments",
                         new JSONArray().put("java.two-fer.use_one_return"))
                     .toString());
@@ -138,7 +132,6 @@ public class TwoferTest {
         assertThat(twofer.getAnalysis().toString())
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "approve")
                     .put("comments",
                         new JSONArray().put("java.two-fer.use_ternary_operator"))
                     .toString());
@@ -151,7 +144,7 @@ public class TwoferTest {
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(new JSONObject().put("status", "approve").toString());
+            .isEqualTo(new JSONObject().toString());
     }
 
     private File getTestFileFromResource(String testFileName) {

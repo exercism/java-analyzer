@@ -22,7 +22,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments",
                         new JSONArray()
                             .put(
@@ -41,7 +40,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments",
                         new JSONArray()
                             .put(
@@ -62,7 +60,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put("comments", new JSONArray().put("java.hamming.must_use_constructor"))
                     .toString(INDENTATION_LEVEL));
     }
@@ -76,7 +73,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put(
                         "comments",
                         new JSONArray()
@@ -93,7 +89,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.must_throw_in_constructor"))
@@ -109,7 +104,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.must_calculate_hamming_distance"))
@@ -125,7 +119,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.avoid_character_literals"))
@@ -143,7 +136,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "disapprove")
                     .put(
                         "comments",
                         new JSONArray().put(
@@ -160,7 +152,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "approve")
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.calculate_distance_in_constructor"))
@@ -174,7 +165,7 @@ public class HammingTest {
         hamming.parse();
 
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(new JSONObject().put("status", "approve").toString(INDENTATION_LEVEL));
+            .isEqualTo(new JSONObject().toString(INDENTATION_LEVEL));
     }
 
     @Test
@@ -188,7 +179,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "approve")
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.should_use_string_is_empty"))
@@ -206,7 +196,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "approve")
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.calculate_distance_in_constructor"))
@@ -224,7 +213,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "approve")
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.calculate_distance_in_constructor"))
@@ -241,7 +229,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                .put("status", "approve")
                 .put("comments",
                     new JSONArray()
                         .put(
@@ -264,7 +251,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "approve")
                     .put("comments",
                         new JSONArray()
                             .put(
@@ -287,7 +273,6 @@ public class HammingTest {
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
                 new JSONObject()
-                    .put("status", "approve")
                     .put(
                         "comments",
                         new JSONArray().put("java.hamming.should_use_stream_filter_and_count"))
@@ -304,7 +289,7 @@ public class HammingTest {
 
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
-                new JSONObject().put("status", "approve").toString(INDENTATION_LEVEL));
+                new JSONObject().toString(INDENTATION_LEVEL));
     }
 
     @Test
@@ -315,7 +300,7 @@ public class HammingTest {
 
         assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
             .isEqualTo(
-                new JSONObject().put("status", "approve").toString(INDENTATION_LEVEL));
+                new JSONObject().toString(INDENTATION_LEVEL));
     }
 
     private File getTestFileFromResource(String testFileName) {
