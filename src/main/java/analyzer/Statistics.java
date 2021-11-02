@@ -3,12 +3,13 @@ package analyzer;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import analyzer.exercises.Exercise;
-import analyzer.exercises.Exercise.WriteAnalysisToFile;
+import analyzer.exercises.SupportedExercise;
 import analyzer.exercises.twofer.Twofer;
 import analyzer.exercises.hamming.Hamming;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.Random;
 import java.util.function.Function;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.SetMultimap;
@@ -26,20 +26,24 @@ public class Statistics {
         SetMultimap<String, Integer> archiveByComment = HashMultimap.create();
         List<Integer> passingArchives = new ArrayList<>();
 
-        String slug = args.length > 0 ? args[0] : "hamming";
-        Function<String, Exercise> constructor;
-        switch(slug) {
-            case "hamming":
-                constructor = dir -> new Hamming(dir, WriteAnalysisToFile.NO);
+        SupportedExercise exercise = args.length > 0 ? SupportedExercise.getBySlug(args[0]) : SupportedExercise.HAMMING;
+        Function<File, Exercise> constructor;
+        switch(exercise) {
+            case HAMMING:
+                constructor = Hamming::new;
                 break;
-            case "twofer": // fallthrough
+            case TWO_FER: // fallthrough
             default:
-                slug = "twofer";
-                constructor = dir -> new Twofer(dir, WriteAnalysisToFile.NO);
+                exercise = SupportedExercise.TWO_FER;
+                constructor = Twofer::new;
         }
 
         for (int archive = 0; archive < 500; archive++) {
-            Exercise ex = constructor.apply("archive/" + slug + "/" + archive + "/");
+            Exercise ex = constructor.apply(new File("archive/"
+                    + exercise.slug
+                    + "/" + archive
+                    + "/" + Main.SOLUTION_FILE_RELATIVE_PATH
+                    + exercise.fileName));
             ex.parse();
             JSONObject analysis = ex.getAnalysis();
             if (!analysis.has("comments")) {

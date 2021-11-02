@@ -10,33 +10,6 @@ import analyzer.exercises.Params;
 
 public class Twofer extends Exercise {
 
-    public Twofer(String inputDirectory, String outputDirectory) {
-        this(inputDirectory, outputDirectory, WriteAnalysisToFile.YES);
-    }
-
-    public Twofer(String inputDirectory,
-                  String outputDirectory,
-                  WriteAnalysisToFile writeAnalysisToFile) {
-        super(inputDirectory, "Twofer.java", outputDirectory, writeAnalysisToFile);
-    }
-
-    /**
-     * @deprecated {@inheritDoc}
-     */
-    @Deprecated
-    public Twofer(String inputDirectory) {
-        this(inputDirectory, WriteAnalysisToFile.YES);
-    }
-
-    /**
-     * @deprecated {@inheritDoc}
-     */
-    @Deprecated
-    public Twofer(String inputDirectory, WriteAnalysisToFile writeAnalysisToFile) {
-        super(inputDirectory, "Twofer.java", writeAnalysisToFile);
-    }
-
-    /** For testing. */
     public Twofer(File solutionFile) {
         super(solutionFile);
     }

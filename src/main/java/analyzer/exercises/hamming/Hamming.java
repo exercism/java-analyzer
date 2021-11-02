@@ -12,33 +12,6 @@ import java.util.Set;
 
 public class Hamming extends Exercise {
 
-    public Hamming(String inputDirectory, String outputDirectory) {
-        this(inputDirectory, outputDirectory, WriteAnalysisToFile.YES);
-    }
-
-    public Hamming(String inputDirectory,
-                   String outputDirectory,
-                   WriteAnalysisToFile writeAnalysisToFile) {
-        super(inputDirectory, "Hamming.java", outputDirectory, writeAnalysisToFile);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Deprecated
-    public Hamming(String inputDirectory) {
-        this(inputDirectory, WriteAnalysisToFile.YES);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Deprecated
-    public Hamming(String inputDirectory, WriteAnalysisToFile writeAnalysisToFile) {
-        super(inputDirectory, "Hamming.java", writeAnalysisToFile);
-    }
-
-    /** For testing. */
     public Hamming(File solutionFile) {
         super(solutionFile);
     }
