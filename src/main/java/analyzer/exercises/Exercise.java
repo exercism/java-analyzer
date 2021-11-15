@@ -43,10 +43,6 @@ public abstract class Exercise {
     }
 
     protected void addComment(Comment comment, Params params) {
-        if (params.isEmpty()) {
-            this.analysis.append(COMMENTS, comment.toJson());
-            return;
-        }
         this.analysis.append(
             COMMENTS,
             new JSONObject()

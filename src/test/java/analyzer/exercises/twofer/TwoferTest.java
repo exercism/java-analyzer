@@ -74,11 +74,12 @@ public class TwoferTest {
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.general.avoid_hard_coded_test_cases"))
-                    .toString());
+                .isEqualTo(new JSONObject()
+                        .put("comments", new JSONArray()
+                                .put(new JSONObject()
+                                        .put("comment", "java.general.avoid_hard_coded_test_cases")
+                                        .put("params", new JSONObject())))
+                        .toString());
     }
 
     @Test
@@ -88,11 +89,12 @@ public class TwoferTest {
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.two-fer.use_conditional_logic"))
-                    .toString());
+                .isEqualTo(new JSONObject()
+                        .put("comments", new JSONArray()
+                                .put(new JSONObject()
+                                        .put("comment", "java.two-fer.use_conditional_logic")
+                                        .put("params", new JSONObject())))
+                        .toString());
     }
 
     @Test
@@ -102,11 +104,12 @@ public class TwoferTest {
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.two-fer.avoid_string_format"))
-                    .toString());
+                .isEqualTo(new JSONObject()
+                        .put("comments", new JSONArray()
+                                .put(new JSONObject()
+                                        .put("comment", "java.two-fer.avoid_string_format")
+                                        .put("params", new JSONObject())))
+                        .toString());
     }
 
     @Test
@@ -116,11 +119,12 @@ public class TwoferTest {
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.two-fer.use_one_return"))
-                    .toString());
+                .isEqualTo(new JSONObject()
+                        .put("comments", new JSONArray()
+                                .put(new JSONObject()
+                                        .put("comment", "java.two-fer.use_one_return")
+                                        .put("params", new JSONObject())))
+                        .toString());
     }
 
     @Test
@@ -130,11 +134,12 @@ public class TwoferTest {
         twofer.parse();
 
         assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.two-fer.use_ternary_operator"))
-                    .toString());
+                .isEqualTo(new JSONObject()
+                        .put("comments", new JSONArray()
+                                .put(new JSONObject()
+                                        .put("comment", "java.two-fer.use_ternary_operator")
+                                        .put("params", new JSONObject())))
+                        .toString());
     }
 
     @Test
