@@ -6,3 +6,4 @@ build
 .git
 .github
 .gitignore
+.gitattributes
