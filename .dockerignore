@@ -2,3 +2,4 @@
 Dockerfile
 archive
 build
+.appends
