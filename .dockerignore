@@ -2,3 +2,9 @@
 Dockerfile
 archive
 build
+.appends
+.git
+.github
+.gitignore
+.gitattributes
+.dockerignore
