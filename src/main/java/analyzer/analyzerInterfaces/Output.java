@@ -18,6 +18,7 @@ public interface Output {
     String toProcessable();
     // TODO: revisit how it's done in the JS analyzer because
     //  it calls on ExecutionOptions.
-    //  Also include Promise class from com.amazonaws.services.simpleworkflow.flow.core
+    //  Also include Promise class from
+    //  com.amazonaws.services.simpleworkflow.flow.core
 
 }
