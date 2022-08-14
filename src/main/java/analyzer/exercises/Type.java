@@ -18,7 +18,8 @@ public class Type {
 
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        // TODO: How to integrate it with the addComment method
+        // TODO: How to integrate it with the
+        //  addComment method within the Exercise class
         return json;
     }
 
