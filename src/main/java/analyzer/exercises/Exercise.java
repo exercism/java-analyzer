@@ -14,6 +14,7 @@ public abstract class Exercise {
     private static final String COMMENTS = "comments";
     private static final String COMMENT = "comment";
     private static final String PARAMS = "params";
+    private static final String TYPE = "type";
     private static final FileWriter NO_FILE_WRITER = null;
 
     private CompilationUnit compilationUnit;
@@ -108,6 +109,7 @@ public abstract class Exercise {
             new JSONObject()
                 .put(COMMENT, comment.toJson())
                 .put(PARAMS, params.toJson()));
+        // TODO: implement type
     }
 
     public JSONObject getAnalysis() {
