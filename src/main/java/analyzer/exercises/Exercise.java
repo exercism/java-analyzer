@@ -15,6 +15,7 @@ public abstract class Exercise {
     private static final String COMMENT = "comment";
     private static final String PARAMS = "params";
     private static final String TYPE = "type";
+    private Type type;
     private static final FileWriter NO_FILE_WRITER = null;
 
     private CompilationUnit compilationUnit;
@@ -46,7 +47,8 @@ public abstract class Exercise {
         } catch (FileNotFoundException e) {
             addComment(
                 GeneralComment.FILE_NOT_FOUND,
-                Params.newBuilder().addParam("solutionFile", solutionFile.getName()).build());
+                Params.newBuilder().addParam("solutionFile", solutionFile.getName()).build(),
+                    Type.DEFAULT);
         }
     }
 
@@ -96,7 +98,7 @@ public abstract class Exercise {
     abstract public void parse(CompilationUnit compilationUnit);
 
     protected void addComment(Comment comment) {
-        addComment(comment, Params.EMPTY);
+        addComment(comment, Params.EMPTY, Type.DEFAULT);
     }
 
     protected void addComment(Comment comment, Params params) {
@@ -109,7 +111,19 @@ public abstract class Exercise {
             new JSONObject()
                 .put(COMMENT, comment.toJson())
                 .put(PARAMS, params.toJson()));
-        // TODO: implement type
+    }
+
+    protected void addComment(Comment comment, Params params, String type) {
+        if (params.isEmpty()) {
+            this.analysis.append(COMMENTS, comment.toJson());
+            return;
+        }
+        this.analysis.append(
+                COMMENTS,
+                new JSONObject()
+                        .put(COMMENT, comment.toJson())
+                        .put(PARAMS, params.toJson())
+                        .put(TYPE, Type.DEFAULT));
     }
 
     public JSONObject getAnalysis() {

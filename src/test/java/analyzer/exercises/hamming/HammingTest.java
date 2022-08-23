@@ -27,7 +27,8 @@ public class HammingTest {
                             .put(
                                 new JSONObject()
                                     .put("comment", "java.general.use_proper_class_name")
-                                    .put("params", new JSONObject().put("className", "Hamming"))))
+                                    .put("params", new JSONObject().put("className", "Hamming"))
+                                        .put("type", "informative")))
                     .toString(INDENTATION_LEVEL));
     }
 
@@ -47,7 +48,8 @@ public class HammingTest {
                                     .put("comment", "java.general.use_proper_method_name")
                                     .put(
                                         "params",
-                                        new JSONObject().put("methodName", "getHammingDistance"))))
+                                        new JSONObject().put("methodName", "getHammingDistance"))
+                                        .put("type", "informative")))
                     .toString(INDENTATION_LEVEL));
     }
 
@@ -237,7 +239,8 @@ public class HammingTest {
                                 .put(
                                     "params",
                                     new JSONObject().put(
-                                        "constructorNames", "Hamming"))))
+                                        "constructorNames", "Hamming"))
+                                    .put("type", "informative")))
                     .toString(INDENTATION_LEVEL));
     }
 
@@ -259,7 +262,8 @@ public class HammingTest {
                                     .put(
                                         "params",
                                         new JSONObject().put(
-                                            "methodNames", "calculateHammingDistance"))))
+                                            "methodNames", "calculateHammingDistance"))
+                                        .put("type", "informative")))
                     .toString(INDENTATION_LEVEL));
     }
 

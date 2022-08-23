@@ -1,26 +1,27 @@
 package analyzer.exercises;
 
-import org.json.JSONObject;
-
-import java.util.Map;
-
-public class Type {
+public class Type implements Comment {
 
     //Types regarding comments given once exercise is submitted.
-    String ESSENTIAL = "essential";
+    public static final String ESSENTIAL = "essential";
 
-    String ACTIONABLE = "actionable";
+    public static final String ACTIONABLE = "actionable";
 
-    String INFORMATIVE = "informative";
+    public static final String INFORMATIVE = "informative";
 
-    String CELEBRATORY = "celebratory";
+    public static final String CELEBRATORY = "celebratory";
 
+    public static final String DEFAULT = "informative";
 
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        // TODO: How to integrate it with the
-        //  addComment method within the Exercise class
-        return json;
+    Type type;
+    public Type type(Type type) {
+        this.type = type;
+        return type;
+    }
+
+    @Override
+    public String toJson() {
+        return "type: " + type;
     }
 
 }

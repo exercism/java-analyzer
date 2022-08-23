@@ -4,6 +4,7 @@ import analyzer.exercises.Exercise;
 import analyzer.exercises.GeneralComment;
 import analyzer.exercises.Params;
 
+import analyzer.exercises.Type;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
@@ -52,14 +53,16 @@ public class Hamming extends Exercise {
         if (!walker.hasHammingClass()) {
             addComment(
                 GeneralComment.USE_PROPER_CLASS_NAME,
-                Params.newBuilder().addParam(GeneralComment.CLASS_NAME, "Hamming").build());
+                Params.newBuilder().addParam(GeneralComment.CLASS_NAME, "Hamming").build(),
+                    Type.ESSENTIAL);
             return;
         }
 
         if (!walker.hasGetHammingDistanceMethod()) {
             addComment(
                 GeneralComment.USE_PROPER_METHOD_NAME,
-                Params.newBuilder().addParam(GeneralComment.METHOD_NAME, "getHammingDistance").build());
+                Params.newBuilder().addParam(GeneralComment.METHOD_NAME, "getHammingDistance").build(),
+                    Type.ESSENTIAL);
             return;
         }
 
@@ -113,7 +116,7 @@ public class Hamming extends Exercise {
                 Params.newBuilder()
                     .addParam(
                         GeneralComment.CONSTRUCTOR_NAMES, formatNames(longConstructors))
-                    .build());
+                    .build(), Type.INFORMATIVE);
         }
 
         Set<String> longMethods = walker.getLongMethods();
@@ -123,7 +126,8 @@ public class Hamming extends Exercise {
                 Params.newBuilder()
                     .addParam(
                         GeneralComment.METHOD_NAMES, formatNames(longMethods))
-                    .build());
+                    .build(),
+                    Type.INFORMATIVE);
         }
     }
 
