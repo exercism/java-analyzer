@@ -2,9 +2,11 @@
 
 out
 build
-bin/
 .gradle/
 .idea/
 .settings/
 .project
 .classpath
+
+tests/**/*/analysis.json
+tests/**/*/tags.json
