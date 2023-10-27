@@ -9,14 +9,40 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  unit_test:
+    name: Unit tests
+    runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
-    - name: Set up JDK
-      uses: actions/setup-java@0ab4596768b603586c0de567f2430c30f5b0d2b0
-      with:
-        java-version: "8"
-        distribution: adopt
-    - name: Test with Gradle
-      run: ./gradlew --no-daemon build
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+      - name: Set up JDK
+        uses: actions/setup-java@0ab4596768b603586c0de567f2430c30f5b0d2b0
+        with:
+          java-version: "8"
+          distribution: adopt
+      - name: Test with Gradle
+        run: ./gradlew --no-daemon --continue test
+
+  smoke_tests:
+    name: Smoke tests
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226
+        with:
+          install: true
+
+      - name: Build Docker image and store in cache
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09
+        with:
+          context: .
+          push: false
+          load: true
+          tags: exercism/java-analyzer
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Tests in Docker
+        run: bin/run-tests-in-docker.sh
