@@ -1,4 +1,4 @@
-FROM gradle:7.2-jdk8 as build
+FROM gradle:8.4-jdk8 as build
 
 COPY --chown=gradle:gradle . .
 RUN gradle installDist --stacktrace
