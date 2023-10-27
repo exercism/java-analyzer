@@ -19,7 +19,9 @@ public abstract class Exercise {
     private CompilationUnit compilationUnit;
 
     private final JSONObject analysis = new JSONObject();
-    private final FileWriter fileWriter;
+    private final JSONObject tags = new JSONObject();
+    private final FileWriter analysisFileWriter;
+    private final FileWriter tagsFileWriter;
 
     public enum WriteAnalysisToFile {YES, NO}
 
@@ -28,15 +30,17 @@ public abstract class Exercise {
                        String outputDirectory,
                        WriteAnalysisToFile writeAnalysisToFile) {
         this(getSolutionFile(directory, solutionFile),
-                getFileWriter(outputDirectory, writeAnalysisToFile));
+                getAnalysisFileWriter(outputDirectory, writeAnalysisToFile),
+                getTagsFileWriter(directory, writeAnalysisToFile));
     }
 
     protected Exercise(File solutionFile) {
-        this(solutionFile, NO_FILE_WRITER);
+        this(solutionFile, NO_FILE_WRITER, NO_FILE_WRITER);
     }
 
-    private Exercise(File solutionFile, FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
+    private Exercise(File solutionFile, FileWriter analysisFileWriter, FileWriter tagsFileWriter) {
+        this.analysisFileWriter = analysisFileWriter;
+        this.tagsFileWriter = tagsFileWriter;
 
         try {
             this.compilationUnit = JavaParser.parse(solutionFile);
@@ -65,20 +69,29 @@ public abstract class Exercise {
                        String solutionFile,
                        WriteAnalysisToFile writeAnalysisToFile) {
         this(getSolutionFile(directory, solutionFile),
-                getFileWriter(directory, writeAnalysisToFile));
+                getAnalysisFileWriter(directory, writeAnalysisToFile),
+                getTagsFileWriter(directory, writeAnalysisToFile));
     }
 
     private static File getSolutionFile(String directory, String solutionFile) {
         return new File(directory + "src/main/java/" + solutionFile);
     }
 
+    private static FileWriter getAnalysisFileWriter(String directory, WriteAnalysisToFile writeAnalysisToFile) {
+        return getFileWriter(directory, writeAnalysisToFile, "analysis.json");
+    }
+
+    private static FileWriter getTagsFileWriter(String directory, WriteAnalysisToFile writeAnalysisToFile) {
+        return getFileWriter(directory, writeAnalysisToFile, "tags.json");
+    }
+
     private static FileWriter getFileWriter(
-        String directory, WriteAnalysisToFile writeAnalysisToFile) {
+        String directory, WriteAnalysisToFile writeAnalysisToFile, String filename) {
         if (writeAnalysisToFile == WriteAnalysisToFile.NO) {
             return null;
         }
         try {
-            return new FileWriter(directory + "analysis.json");
+            return new FileWriter(directory + filename);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -115,13 +128,15 @@ public abstract class Exercise {
     }
 
     public void writeAnalysisToFile() {
-        if (fileWriter == null) {
+        if (analysisFileWriter == null) {
             return;
         }
 
         try {
-            fileWriter.write(analysis.toString());
-            fileWriter.flush();
+            analysisFileWriter.write(analysis.toString());
+            analysisFileWriter.flush();
+            tagsFileWriter.write(tags.toString());
+            tagsFileWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
