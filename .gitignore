@@ -7,3 +7,6 @@ build
 .settings/
 .project
 .classpath
+
+tests/**/*/analysis.json
+tests/**/*/tags.json
