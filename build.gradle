@@ -1,11 +1,12 @@
 plugins {
-    id 'java'
-    id 'application'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "java"
+    id "application"
 }
 
-mainClassName = 'analyzer.Main'
-
-sourceCompatibility = 1.8
+group = "org.exercism"
+version = "1.0-SNAPSHOT"
+mainClassName = "analyzer.Main"
 
 repositories {
     mavenCentral()
@@ -13,25 +14,26 @@ repositories {
 
 dependencies {
     testImplementation "junit:junit:4.13.2"
-    implementation 'org.json:json:20180813'
-    implementation 'com.github.javaparser:javaparser-core:3.12.0'
-    implementation 'com.google.guava:guava:28.0-jre'
+    implementation "org.json:json:20180813"
+    implementation "com.github.javaparser:javaparser-core:3.12.0"
+    implementation "com.google.guava:guava:28.0-jre"
     testImplementation "com.google.truth:truth:1.0"
     testImplementation "com.google.truth.extensions:truth-java8-extension:1.0"
 }
 
-run {
-    if (project.hasProperty('args')) {
-        args findProperty('args').split(" ")
-    }
+shadowJar {
+    mergeServiceFiles()
+    archiveFileName.set("java-analyzer.jar")
 }
 
-task runStats(type: JavaExec) {
-    group = "Execution"
-    description = "Run the Statistics class with JavaExecTask"
-    classpath = sourceSets.main.runtimeClasspath
-    main = 'analyzer.Statistics'
-    if (project.hasProperty('args')) {
-        args findProperty('args').split(" ")
+artifacts {
+    archives shadowJar
+}
+
+test {
+    testLogging {
+        exceptionFormat = "full"
+        showStandardStreams = true
+        events = ["passed", "failed", "skipped"]
     }
 }
