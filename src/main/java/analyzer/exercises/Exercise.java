@@ -43,7 +43,7 @@ public abstract class Exercise {
         this.tagsFileWriter = tagsFileWriter;
 
         try {
-            this.compilationUnit = JavaParser.parse(solutionFile);
+            this.compilationUnit = new JavaParser().parse(solutionFile).getResult().get();
         } catch (ParseProblemException e) {
             addComment(GeneralComment.FAILED_PARSE);
         } catch (FileNotFoundException e) {
