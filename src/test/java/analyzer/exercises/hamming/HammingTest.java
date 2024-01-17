@@ -1,14 +1,14 @@
 package analyzer.exercises.hamming;
 
-import static com.google.common.truth.Truth.assertThat;
+
+import analyzer.exercises.Exercise;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.junit.Test;
-
-import analyzer.exercises.Exercise;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HammingTest {
     private static final int INDENTATION_LEVEL = 1;

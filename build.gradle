@@ -13,12 +13,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation "junit:junit:4.13.2"
     implementation "org.json:json:20231013"
     implementation "com.github.javaparser:javaparser-core:3.25.7"
     implementation "com.google.guava:guava:33.0.0-jre"
-    testImplementation "com.google.truth:truth:1.2.0"
-    testImplementation "com.google.truth.extensions:truth-java8-extension:1.2.0"
+
+    testImplementation platform("org.junit:junit-bom:5.10.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testImplementation "org.assertj:assertj-core:3.25.1"
 }
 
 shadowJar {
@@ -31,6 +32,8 @@ artifacts {
 }
 
 test {
+    useJUnitPlatform()
+
     testLogging {
         exceptionFormat = "full"
         showStandardStreams = true
