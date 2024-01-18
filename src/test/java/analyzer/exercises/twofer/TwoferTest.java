@@ -1,155 +1,45 @@
 package analyzer.exercises.twofer;
 
-import analyzer.exercises.Exercise;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
+import analyzer.Comment;
+import analyzer.comments.AvoidHardCodedTestCases;
+import analyzer.comments.UseProperClassName;
+import analyzer.comments.UseProperMethodName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TwoferTest {
-    @Test
-    public void noTwoferClass() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("NoTwoferClass.java.txt"));
-        twofer.parse();
 
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray()
-                            .put(
-                                new JSONObject()
-                                    .put("comment", "java.general.use_proper_class_name")
-                                    .put("params", new JSONObject().put("className", "Twofer"))))
-                    .toString());
+    private static Stream<Arguments> testCases() {
+        return Stream.of(
+                Arguments.of("NoTwoferClass.java.txt", new Comment[]{new UseProperClassName("Twofer")}),
+                Arguments.of("NoTwoferMethod.java.txt", new Comment[]{new UseProperMethodName("twofer")}),
+                Arguments.of("UsesLambda.java.txt", new Comment[0]),
+                Arguments.of("UsesLoop.java.txt", new Comment[0]),
+                Arguments.of("HardCodedTestCases.java.txt", new Comment[]{new AvoidHardCodedTestCases()}),
+                Arguments.of("NoConditionalLogic.java.txt", new Comment[]{new UseConditionalLogic()}),
+                Arguments.of("UsesStringFormat.java.txt", new Comment[]{new AvoidStringFormat()}),
+                Arguments.of("UsesMultipleReturns.java.txt", new Comment[]{new UseOneReturn()}),
+                Arguments.of("OptimalNoTernary.java.txt", new Comment[]{new UseTernaryOperator()}),
+                Arguments.of("Optimal.java.txt", new Comment[0])
+        );
     }
 
-    @Test
-    public void noTwoferMethod() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("NoTwoferMethod.java.txt"));
+    @MethodSource("testCases")
+    @ParameterizedTest(name = "{0}")
+    public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
+        var twofer = new Twofer(getTestFileFromResource(solutionFile));
         twofer.parse();
 
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray()
-                            .put(
-                                new JSONObject()
-                                    .put("comment", "java.general.use_proper_method_name")
-                                    .put("params", new JSONObject().put("methodName", "twofer"))))
-                    .toString());
-    }
-
-    @Test
-    public void usesLambda() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("UsesLambda.java.txt"));
-        twofer.parse();
-
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(new JSONObject().toString());
-    }
-
-    @Test
-    public void usesLoop() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("UsesLoop.java.txt"));
-        twofer.parse();
-
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(new JSONObject().toString());
-    }
-
-    @Test
-    public void hardCodedTestCases() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("HardCodedTestCases.java.txt"));
-        twofer.parse();
-
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.general.avoid_hard_coded_test_cases"))
-                    .toString());
-    }
-
-    @Test
-    public void noConditionalLogic() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("NoConditionalLogic.java.txt"));
-        twofer.parse();
-
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.two-fer.use_conditional_logic"))
-                    .toString());
-    }
-
-    @Test
-    public void usesStringFormat() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("UsesStringFormat.java.txt"));
-        twofer.parse();
-
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.two-fer.avoid_string_format"))
-                    .toString());
-    }
-
-    @Test
-    public void usesMultipleReturns() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("UsesMultipleReturns.java.txt"));
-        twofer.parse();
-
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.two-fer.use_one_return"))
-                    .toString());
-    }
-
-    @Test
-    public void optimalNoTernary() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("OptimalNoTernary.java.txt"));
-        twofer.parse();
-
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray().put("java.two-fer.use_ternary_operator"))
-                    .toString());
-    }
-
-    @Test
-    public void optimal() {
-        Exercise twofer =
-            new Twofer(getTestFileFromResource("Optimal.java.txt"));
-        twofer.parse();
-
-        assertThat(twofer.getAnalysis().toString())
-            .isEqualTo(new JSONObject().toString());
+        assertThat(twofer.getAnalysis().comments()).containsExactly(expectedComments);
     }
 
     private File getTestFileFromResource(String testFileName) {
-        return new File(
-            getClass()
-                .getResource("/analyzer/exercises/twofer/" + testFileName)
-                .getFile());
+        return new File(getClass().getResource("/analyzer/exercises/twofer/" + testFileName).getFile());
     }
 }

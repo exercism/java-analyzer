@@ -1,312 +1,52 @@
 package analyzer.exercises.hamming;
 
-
-import analyzer.exercises.Exercise;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
+import analyzer.Comment;
+import analyzer.comments.ConstructorTooLong;
+import analyzer.comments.MethodTooLong;
+import analyzer.comments.UseProperClassName;
+import analyzer.comments.UseProperMethodName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HammingTest {
-    private static final int INDENTATION_LEVEL = 1;
-
-    @Test
-    public void noHammingClass() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("NoHammingClass.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray()
-                            .put(
-                                new JSONObject()
-                                    .put("comment", "java.general.use_proper_class_name")
-                                    .put("params", new JSONObject().put("className", "Hamming"))))
-                    .toString(INDENTATION_LEVEL));
+    private static Stream<Arguments> testCases() {
+        return Stream.of(
+                Arguments.of("NoHammingClass.java.txt", new Comment[]{new UseProperClassName("Hamming")}),
+                Arguments.of("NoGetHammingDistanceMethod.java.txt", new Comment[]{new UseProperMethodName("getHammingDistance")}),
+                Arguments.of("NoConstructor.java.txt", new Comment[]{new MustUseConstructor()}),
+                Arguments.of("NoConditionalInConstructor.java.txt", new Comment[]{new MustUseConditionalLogicInConstructor()}),
+                Arguments.of("DoesNotThrowInConstructor.java.txt", new Comment[]{new MustThrowInConstructor()}),
+                Arguments.of("NoCalculationOfHammingDistance.java.txt", new Comment[]{new MustCalculateHammingDistance()}),
+                Arguments.of("UsesCharacterLiterals.java.txt", new Comment[]{new AvoidCharacterLiterals()}),
+                Arguments.of("MustUseCharAtOrCodePointAt.java.txt", new Comment[]{new MustUseStringCharAtOrCodePointAt()}),
+                Arguments.of("NestedValidation.java.txt", new Comment[]{new CalculateDistanceInConstructor()}),
+                Arguments.of("NestedCalculation.java.txt", new Comment[0]),
+                Arguments.of("ShouldUseStringIsEmpty.java.txt", new Comment[]{new ShouldUseStringIsEmpty()}),
+                Arguments.of("OptimalWithCalculationInGetHammingDistance.java.txt", new Comment[]{new CalculateDistanceInConstructor()}),
+                Arguments.of("OptimalWithCalculationDelegatedFromGetHammingDistance.java.txt", new Comment[]{new CalculateDistanceInConstructor()}),
+                Arguments.of("ConstructorTooLong.java.txt", new Comment[]{new ConstructorTooLong("Hamming")}),
+                Arguments.of("MethodTooLong.java.txt", new Comment[]{new MethodTooLong("calculateHammingDistance")}),
+                Arguments.of("UsesStreamReduce.java.txt", new Comment[]{new ShouldUseStreamFilterAndCount()}),
+                Arguments.of("OptimalWithCalculationDelegatedFromConstructor.java.txt", new Comment[0]),
+                Arguments.of("OptimalWithValidationMethod.java.txt", new Comment[0]));
     }
 
-    @Test
-    public void noGetHammingDistanceMethod() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("NoGetHammingDistanceMethod.java.txt"));
+    @MethodSource("testCases")
+    @ParameterizedTest(name = "{0}")
+    public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
+        var hamming = new Hamming(getTestFileFromResource(solutionFile));
         hamming.parse();
 
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray()
-                            .put(
-                                new JSONObject()
-                                    .put("comment", "java.general.use_proper_method_name")
-                                    .put(
-                                        "params",
-                                        new JSONObject().put("methodName", "getHammingDistance"))))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void noConstructor() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("NoConstructor.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments", new JSONArray().put("java.hamming.must_use_constructor"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void noConditionalInConstructor() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("NoConditionalInConstructor.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray()
-                            .put("java.hamming.must_use_conditional_logic_in_constructor"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void doesNotThrowInConstructor() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("DoesNotThrowInConstructor.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.must_throw_in_constructor"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void noCalculationOfHammingDistance() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("NoCalculationOfHammingDistance.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.must_calculate_hamming_distance"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void usesCharacterLiterals() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("UsesCharacterLiterals.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.avoid_character_literals"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void mustUseCharAtOrCodePointAt() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource(
-                    "MustUseCharAtOrCodePointAt.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put(
-                            "java.hamming.must_use_string_char_at_or_code_point_at"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void nestedValidation() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("NestedValidation.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.calculate_distance_in_constructor"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void nestedCalculation() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("NestedCalculation.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(new JSONObject().toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void shouldUseIsEmpty() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource(
-                    "ShouldUseStringIsEmpty.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.should_use_string_is_empty"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void optimalWithCalculationInGetHammingDistance() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource(
-                    "OptimalWithCalculationInGetHammingDistance.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.calculate_distance_in_constructor"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void optimalWithCalculationDelegatedFromGetHammingDistance() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource(
-                    "OptimalWithCalculationDelegatedFromGetHammingDistance.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.calculate_distance_in_constructor"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void constructorTooLong() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource("ConstructorTooLong.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                .put("comments",
-                    new JSONArray()
-                        .put(
-                            new JSONObject()
-                                .put("comment", "java.general.constructor_too_long")
-                                .put(
-                                    "params",
-                                    new JSONObject().put(
-                                        "constructorNames", "Hamming"))))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void methodTooLong() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource("MethodTooLong.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put("comments",
-                        new JSONArray()
-                            .put(
-                                new JSONObject()
-                                    .put("comment", "java.general.method_too_long")
-                                    .put(
-                                        "params",
-                                        new JSONObject().put(
-                                            "methodNames", "calculateHammingDistance"))))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void usesStreamReduce() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource("UsesStreamReduce.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject()
-                    .put(
-                        "comments",
-                        new JSONArray().put("java.hamming.should_use_stream_filter_and_count"))
-                    .toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void optimalWithCalculationDelegatedFromConstructor() {
-        Exercise hamming =
-            new Hamming(
-                getTestFileFromResource(
-                    "OptimalWithCalculationDelegatedFromConstructor.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject().toString(INDENTATION_LEVEL));
-    }
-
-    @Test
-    public void optimalWithValidationMethod() {
-        Exercise hamming =
-            new Hamming(getTestFileFromResource("OptimalWithValidationMethod.java.txt"));
-        hamming.parse();
-
-        assertThat(hamming.getAnalysis().toString(INDENTATION_LEVEL))
-            .isEqualTo(
-                new JSONObject().toString(INDENTATION_LEVEL));
+        assertThat(hamming.getAnalysis().comments()).containsExactly(expectedComments);
     }
 
     private File getTestFileFromResource(String testFileName) {
-        return new File(
-            getClass()
-                .getResource("/analyzer/exercises/hamming/" + testFileName)
-                .getFile());
+        return new File(getClass().getResource("/analyzer/exercises/hamming/" + testFileName).getFile());
     }
 }

@@ -1,1 +1,4 @@
-{"comments":["java.hamming.calculate_distance_in_constructor","java.hamming.should_use_string_is_empty"]}
+{"comments": [
+  {"comment": "java.hamming.should_use_string_is_empty"},
+  {"comment": "java.hamming.calculate_distance_in_constructor"}
+]}

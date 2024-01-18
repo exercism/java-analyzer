@@ -1,39 +1,16 @@
 package analyzer.exercises.twofer;
 
-import java.io.File;
-
+import analyzer.Exercise;
+import analyzer.comments.AvoidHardCodedTestCases;
+import analyzer.comments.UseProperClassName;
+import analyzer.comments.UseProperMethodName;
 import com.github.javaparser.ast.CompilationUnit;
 
-import analyzer.exercises.Exercise;
-import analyzer.exercises.GeneralComment;
-import analyzer.exercises.Params;
+import java.io.File;
 
 public class Twofer extends Exercise {
-
-    public Twofer(String inputDirectory, String outputDirectory) {
-        this(inputDirectory, outputDirectory, WriteAnalysisToFile.YES);
-    }
-
-    public Twofer(String inputDirectory,
-                  String outputDirectory,
-                  WriteAnalysisToFile writeAnalysisToFile) {
-        super(inputDirectory, "Twofer.java", outputDirectory, writeAnalysisToFile);
-    }
-
-    /**
-     * @deprecated {@inheritDoc}
-     */
-    @Deprecated
     public Twofer(String inputDirectory) {
-        this(inputDirectory, WriteAnalysisToFile.YES);
-    }
-
-    /**
-     * @deprecated {@inheritDoc}
-     */
-    @Deprecated
-    public Twofer(String inputDirectory, WriteAnalysisToFile writeAnalysisToFile) {
-        super(inputDirectory, "Twofer.java", writeAnalysisToFile);
+        super(inputDirectory, "Twofer.java");
     }
 
     /** For testing. */
@@ -48,28 +25,24 @@ public class Twofer extends Exercise {
         compilationUnit.walk(walker);
 
         if (!walker.hasClassTwofer) {
-            addComment(
-                GeneralComment.USE_PROPER_CLASS_NAME,
-                Params.newBuilder().addParam(GeneralComment.CLASS_NAME, "Twofer").build());
+            addComment(new UseProperClassName("Twofer"));
         } else if (!walker.hasMethodTwofer) {
-            addComment(
-                GeneralComment.USE_PROPER_METHOD_NAME,
-                Params.newBuilder().addParam(GeneralComment.METHOD_NAME, "twofer").build());
+            addComment(new UseProperMethodName("twofer"));
         } else if (walker.hasHardCodedTestCases) {
-            addComment(GeneralComment.AVOID_HARD_CODED_TEST_CASES);
+            addComment(new AvoidHardCodedTestCases());
         } else if (walker.usesLambda) {
             // could be used later for additional comments?
         } else if (walker.usesLoops) {
             // could be used later for additional comments?
         } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
-            addComment(TwoferComment.USE_CONDITIONAL_LOGIC);
+            addComment(new UseConditionalLogic());
         } else if (walker.usesFormat) {
-            addComment(TwoferComment.AVOID_STRING_FORMAT);
+            addComment(new AvoidStringFormat());
         } else if (walker.returnCount > 1) {
-            addComment(TwoferComment.USE_ONE_RETURN);
+            addComment(new UseOneReturn());
         } else {
             if (walker.usesIfStatement) {
-                addComment(TwoferComment.USE_TERNARY_OPERATOR);
+                addComment(new UseTernaryOperator());
             }
         }
     }
