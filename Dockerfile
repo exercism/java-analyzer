@@ -1,10 +1,10 @@
-FROM gradle:8.4-jdk8 as build
+FROM gradle:8.5-jdk21 as build
 
 WORKDIR /app
 COPY --chown=gradle:gradle . /app
 RUN gradle -i --stacktrace clean build shadowJar
 
-FROM openjdk:8-jre-alpine
+FROM eclipse-temurin:21
 
 WORKDIR /opt/analyzer
 COPY bin/run.sh bin/run.sh
