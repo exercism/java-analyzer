@@ -1,14 +1,13 @@
 package analyzer.exercises.twofer;
 
-import static com.google.common.truth.Truth.assertThat;
+import analyzer.exercises.Exercise;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.junit.Test;
-
-import analyzer.exercises.Exercise;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TwoferTest {
     @Test
