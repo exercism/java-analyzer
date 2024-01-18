@@ -1,9 +1,9 @@
 package analyzer;
 
-import java.util.Set;
+import java.util.List;
 
-public record Tags(Set<String> tags) {
+public record Tags(List<String> tags) {
     public Tags {
-        tags = Set.copyOf(tags);
+        tags = List.copyOf(tags);
     }
 }

@@ -1,9 +1,9 @@
 package analyzer;
 
-import java.util.Set;
+import java.util.List;
 
-public record Analysis(Set<Comment> comments, String summary) {
+public record Analysis(List<Comment> comments, String summary) {
     public Analysis {
-        comments = Set.copyOf(comments);
+        comments = List.copyOf(comments);
     }
 }

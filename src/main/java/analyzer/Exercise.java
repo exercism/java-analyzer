@@ -8,15 +8,15 @@ import com.github.javaparser.ast.CompilationUnit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Exercise {
     private CompilationUnit compilationUnit;
 
     private String summary;
-    private final Set<Comment> comments = new HashSet<>();
-    private final Set<String> tags = new HashSet<>();
+    private final List<Comment> comments = new ArrayList<>();
+    private final List<String> tags = new ArrayList<>();
 
     protected Exercise(String directory, String solutionFile) {
         this(getSolutionFile(directory, solutionFile));
@@ -46,7 +46,9 @@ public abstract class Exercise {
     abstract public void parse(CompilationUnit compilationUnit);
 
     protected void addComment(Comment comment) {
-        this.comments.add(comment);
+        if (!this.comments.contains(comment)) {
+            this.comments.add(comment);
+        }
     }
 
     protected void setSummary(String summary) {
@@ -54,7 +56,9 @@ public abstract class Exercise {
     }
 
     protected void addTag(String tag) {
-        this.tags.add(tag);
+        if (!this.tags.contains(tag)) {
+            this.tags.add(tag);
+        }
     }
 
     public Analysis getAnalysis() {

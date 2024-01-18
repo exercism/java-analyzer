@@ -1,13 +1,12 @@
 package analyzer;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,11 +48,11 @@ public class JsonSerializerTest {
     private static Stream<Arguments> analyses() {
         return Stream.of(
                 Arguments.of(
-                        new Analysis(Set.of(new TestComment("key")), null),
+                        new Analysis(List.of(new TestComment("key")), null),
                         """
                                 {"comments":[{"comment":"key"}]}"""),
                 Arguments.of(
-                        new Analysis(Set.of(new TestComment("key")), "Lorum ipsum"),
+                        new Analysis(List.of(new TestComment("key")), "Lorum ipsum"),
                         """
                                 {"summary":"Lorum ipsum","comments":[{"comment":"key"}]}""")
         );
@@ -66,12 +65,20 @@ public class JsonSerializerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    public void serializeTags() {
-        var tags = new Tags(Set.of("tag1", "tag2", "tag3"));
-        var actual = JsonSerializer.serialize(tags);
-        assertThat(actual.keySet()).containsExactlyInAnyOrder("tags");
-        assertThat(actual.getJSONArray("tags")).containsExactlyInAnyOrder("tag1", "tag2", "tag3");
+    private static Stream<Arguments> tags() {
+        return Stream.of(
+                Arguments.of(new Tags(List.of()), "{}"),
+                Arguments.of(new Tags(List.of("tag1", "tag2", "tag3")),
+                        """
+                                {"tags":["tag1","tag2","tag3"]}""")
+        );
+    }
+
+    @MethodSource("tags")
+    @ParameterizedTest(name = "{0}")
+    public void serializeTags(Tags tags, String expected) {
+        var actual = JsonSerializer.serialize(tags).toString();
+        assertThat(actual).isEqualTo(expected);
     }
 
     private static class TestComment extends Comment {
