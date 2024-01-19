@@ -1,6 +1,7 @@
 package analyzer.comments;
 
 import analyzer.Comment;
+import analyzer.CommentType;
 
 import java.util.Map;
 
@@ -22,5 +23,10 @@ public class UseProperClassName extends Comment {
     @Override
     public Map<String, String> getParameters() {
         return Map.of("className", className);
+    }
+
+    @Override
+    public CommentType getType() {
+        return CommentType.ESSENTIAL;
     }
 }
