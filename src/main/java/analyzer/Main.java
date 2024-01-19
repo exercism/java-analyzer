@@ -1,17 +1,23 @@
 package analyzer;
 
-import analyzer.exercises.Exercise;
-import analyzer.exercises.twofer.Twofer;
-import analyzer.exercises.hamming.Hamming;
+import com.github.javaparser.ParseResult;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.utils.SourceRoot;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
+
     private static boolean isNotValidDirectory(String p) {
         return !p.endsWith("/") || !new File(p).isDirectory();
     }
 
-    public static void main(String... args) {
+    private static Options validateOptions(String... args) {
         if (args.length < 3) {
             System.err.println("Invalid arguments. Usage: java-analyzer <exercise slug> <exercise directory> <output directory>");
             System.exit(-1);
@@ -30,21 +36,33 @@ public class Main {
             System.exit(-1);
         }
 
-        Exercise ex = null;
-        switch (slug) {
-            case "two-fer":
-                ex = new Twofer(inputDirectory, outputDirectory);
-                break;
-            case "hamming":
-                ex = new Hamming(inputDirectory, outputDirectory);
-                break;
-            default:
-                System.err.println("Exercise not found");
-                System.exit(-1);
+        return new Options(slug, inputDirectory, outputDirectory);
+    }
+
+    private static List<CompilationUnit> parseInput(Options options) throws IOException {
+        var sourceRoot = new SourceRoot(Path.of(options.inputDirectory, "src/main/java"));
+        var compilationUnits = new ArrayList<CompilationUnit>();
+        for (ParseResult<CompilationUnit> parseResult : sourceRoot.tryToParse()) {
+            compilationUnits.add(parseResult.getResult().get());
         }
 
-        ex.parse();
-        ex.writeAnalysisToFile();
-        System.out.println("Analysis completed successfully");
+        return List.copyOf(compilationUnits);
     }
+
+    private static void writeOutput(Analysis analysis, Options options) throws IOException {
+        try (var analysisWriter = new FileWriter(options.outputDirectory + "analysis.json");
+             var tagsWriter = new FileWriter(options.outputDirectory + "tags.json")) {
+            var output = new OutputWriter(analysisWriter, tagsWriter);
+            output.write(analysis);
+        }
+    }
+
+    public static void main(String... args) throws IOException {
+        var options = validateOptions(args);
+        var input = parseInput(options);
+        var analysis = AnalyzerRoot.analyze(options.slug, input);
+        writeOutput(analysis, options);
+    }
+
+    private record Options(String slug, String inputDirectory, String outputDirectory){}
 }
