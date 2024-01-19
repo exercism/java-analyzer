@@ -29,8 +29,10 @@ public class OutputWriterTest {
         analysis.addComment(new TestComment("key_only"));
         analysis.addComment(new TestComment("key_and_single_param", Map.of("param1", "value1")));
         analysis.addComment(new TestComment("key_and_multiple_params", Map.of("param1", "value1", "param2", "value2")));
-        analysis.addComment(new TestComment("key_and_type", CommentType.ACTIONABLE));
-        analysis.addComment(new TestComment("key_type_and_params", CommentType.ACTIONABLE, Map.of("param", "value")));
+        analysis.addComment(new TestComment("celebratory", CommentType.CELEBRATORY));
+        analysis.addComment(new TestComment("actionable", CommentType.ACTIONABLE));
+        analysis.addComment(new TestComment("essential", CommentType.ESSENTIAL));
+        analysis.addComment(new TestComment("informative", CommentType.INFORMATIVE));
         analysis.setSummary("Lorum Ipsum");
         outputWriter.write(analysis);
 
@@ -38,6 +40,22 @@ public class OutputWriterTest {
                 {
                   "summary": "Lorum Ipsum",
                   "comments": [
+                    {
+                      "comment": "essential",
+                      "type": "essential"
+                    },
+                    {
+                      "comment": "actionable",
+                      "type": "actionable"
+                    },
+                    {
+                      "comment": "informative",
+                      "type": "informative"
+                    },
+                    {
+                      "comment": "celebratory",
+                      "type": "celebratory"
+                    },
                     {"comment": "key_only"},
                     {
                       "comment": "key_and_single_param",
@@ -49,15 +67,6 @@ public class OutputWriterTest {
                         "param1": "value1",
                         "param2": "value2"
                       }
-                    },
-                    {
-                      "comment": "key_and_type",
-                      "type": "actionable"
-                    },
-                    {
-                      "comment": "key_type_and_params",
-                      "type": "actionable",
-                      "params": {"param": "value"}
                     }
                   ]
                 }

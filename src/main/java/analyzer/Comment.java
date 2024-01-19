@@ -15,7 +15,7 @@ public abstract class Comment {
     }
 
     public CommentType getType() {
-        return null;
+        return CommentType.INFORMATIVE;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package analyzer.comments;
 
 import analyzer.Comment;
+import analyzer.CommentType;
 
 import java.util.Collection;
 import java.util.List;
@@ -28,5 +29,10 @@ public class ConstructorTooLong extends Comment {
     @Override
     public Map<String, String> getParameters() {
         return Map.of("constructorNames", String.join(", ", this.constructorNames));
+    }
+
+    @Override
+    public CommentType getType() {
+        return CommentType.ACTIONABLE;
     }
 }
