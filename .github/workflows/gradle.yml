@@ -17,8 +17,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93
         with:
-          java-version: "8"
-          distribution: adopt
+          java-version: "21"
+          distribution: "temurin"
       - name: Test with Gradle
         run: ./gradlew --no-daemon --continue test
 
