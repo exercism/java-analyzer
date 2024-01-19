@@ -1,6 +1,8 @@
 package analyzer.exercises.twofer;
 
+import analyzer.Analyzer;
 import analyzer.Comment;
+import analyzer.ExerciseAnalyzerTest;
 import analyzer.comments.AvoidHardCodedTestCases;
 import analyzer.comments.UseProperClassName;
 import analyzer.comments.UseProperMethodName;
@@ -8,12 +10,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.File;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TwoferAnalyzerTest {
+public class TwoferAnalyzerTest extends ExerciseAnalyzerTest {
+
+    @Override
+    protected Analyzer getAnalyzer() {
+        return new TwoferAnalyzer();
+    }
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
@@ -33,12 +39,12 @@ public class TwoferAnalyzerTest {
     @MethodSource("testCases")
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var analyzer = new TwoferAnalyzer(getTestFileFromResource(solutionFile));
+        var actual = analyzeResourceFile(getResourceFileName(solutionFile));
 
-        assertThat(analyzer.getAnalysis().comments()).containsExactly(expectedComments);
+        assertThat(actual.getComments()).containsExactly(expectedComments);
     }
 
-    private File getTestFileFromResource(String testFileName) {
-        return new File(getClass().getResource("/analyzer/exercises/twofer/" + testFileName).getFile());
+    private static String getResourceFileName(String testFileName) {
+        return "/analyzer/exercises/twofer/" + testFileName;
     }
 }

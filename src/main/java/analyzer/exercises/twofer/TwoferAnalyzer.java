@@ -1,48 +1,41 @@
 package analyzer.exercises.twofer;
 
+import analyzer.Analysis;
 import analyzer.Analyzer;
 import analyzer.comments.AvoidHardCodedTestCases;
 import analyzer.comments.UseProperClassName;
 import analyzer.comments.UseProperMethodName;
 import com.github.javaparser.ast.CompilationUnit;
 
-import java.io.File;
+import java.util.List;
 
-public class TwoferAnalyzer extends Analyzer {
-    public TwoferAnalyzer(String inputDirectory) {
-        super(inputDirectory, "Twofer.java");
-    }
-
-    /** For testing. */
-    TwoferAnalyzer(File solutionFile) {
-        super(solutionFile);
-    }
+public class TwoferAnalyzer implements Analyzer {
 
     @Override
-    protected void parse(CompilationUnit compilationUnit) {
+    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
         TwoferWalker walker = new TwoferWalker();
 
-        compilationUnit.walk(walker);
+        compilationUnits.forEach(cu -> cu.walk(walker));
 
         if (!walker.hasClassTwofer) {
-            addComment(new UseProperClassName("Twofer"));
+            analysis.addComment(new UseProperClassName("Twofer"));
         } else if (!walker.hasMethodTwofer) {
-            addComment(new UseProperMethodName("twofer"));
+            analysis.addComment(new UseProperMethodName("twofer"));
         } else if (walker.hasHardCodedTestCases) {
-            addComment(new AvoidHardCodedTestCases());
+            analysis.addComment(new AvoidHardCodedTestCases());
         } else if (walker.usesLambda) {
             // could be used later for additional comments?
         } else if (walker.usesLoops) {
             // could be used later for additional comments?
         } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
-            addComment(new UseConditionalLogic());
+            analysis.addComment(new UseConditionalLogic());
         } else if (walker.usesFormat) {
-            addComment(new AvoidStringFormat());
+            analysis.addComment(new AvoidStringFormat());
         } else if (walker.returnCount > 1) {
-            addComment(new UseOneReturn());
+            analysis.addComment(new UseOneReturn());
         } else {
             if (walker.usesIfStatement) {
-                addComment(new UseTernaryOperator());
+                analysis.addComment(new UseTernaryOperator());
             }
         }
     }

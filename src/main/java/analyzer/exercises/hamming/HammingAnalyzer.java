@@ -1,5 +1,6 @@
 package analyzer.exercises.hamming;
 
+import analyzer.Analysis;
 import analyzer.Analyzer;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
@@ -8,87 +9,78 @@ import analyzer.comments.UseProperMethodName;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
-import java.io.File;
+import java.util.List;
 import java.util.Set;
 
-public class HammingAnalyzer extends Analyzer {
-
-    public HammingAnalyzer(String inputDirectory) {
-        super(inputDirectory, "Hamming.java");
-    }
-
-    /** For testing. */
-    HammingAnalyzer(File solutionFile) {
-        super(solutionFile);
-    }
+public class HammingAnalyzer implements Analyzer {
 
     @Override
-    protected void parse(CompilationUnit compilationUnit) {
+    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
         HammingWalker walker = new HammingWalker();
 
-        compilationUnit.walk(ClassOrInterfaceDeclaration.class, walker);
+        compilationUnits.forEach(cu -> cu.walk(ClassOrInterfaceDeclaration.class, walker));
 
         if (!walker.hasHammingClass()) {
-            addComment(new UseProperClassName("Hamming"));
+            analysis.addComment(new UseProperClassName("Hamming"));
             return;
         }
 
         if (!walker.hasGetHammingDistanceMethod()) {
-            addComment(new UseProperMethodName("getHammingDistance"));
+            analysis.addComment(new UseProperMethodName("getHammingDistance"));
             return;
         }
 
         if (!walker.hasConstructor()) {
-            addComment(new MustUseConstructor());
+            analysis.addComment(new MustUseConstructor());
             return;
         }
 
         if (!walker.constructorHasIfStatements() && !walker.constructorHasMethodCalls()) {
-            addComment(new MustUseConditionalLogicInConstructor());
+            analysis.addComment(new MustUseConditionalLogicInConstructor());
             return;
         }
 
         if (!walker.constructorThrowsIllegalArgument()) {
-            addComment(new MustThrowInConstructor());
+            analysis.addComment(new MustThrowInConstructor());
             return;
         }
 
         if (!walker.getHammingDistanceMethodMayCalculateDistance()
             && !walker.constructorMayCalculateDistance()) {
-            addComment(new MustCalculateHammingDistance());
+            analysis.addComment(new MustCalculateHammingDistance());
             return;
         }
 
         if (walker.usesCharacterLiterals()) {
-            addComment(new AvoidCharacterLiterals());
+            analysis.addComment(new AvoidCharacterLiterals());
             return;
         }
 
         if (!walker.usesStringCharAtOrCodePointAt()) {
-            addComment(new MustUseStringCharAtOrCodePointAt());
+            analysis.addComment(new MustUseStringCharAtOrCodePointAt());
             return;
         }
 
         if (!walker.constructorMayCalculateDistance()) {
-            addComment(new CalculateDistanceInConstructor());
+            analysis.addComment(new CalculateDistanceInConstructor());
         }
 
         if (!walker.usesStringIsEmpty()) {
-            addComment(new ShouldUseStringIsEmpty());
+            analysis.addComment(new ShouldUseStringIsEmpty());
         }
 
         if (walker.shouldUseStreamFilterAndCount()) {
-            addComment(new ShouldUseStreamFilterAndCount());
+            analysis.addComment(new ShouldUseStreamFilterAndCount());
         }
 
         Set<String> longConstructors = walker.getLongConstructors();
         if (!longConstructors.isEmpty()) {
-            addComment(new ConstructorTooLong(longConstructors));
+            analysis.addComment(new ConstructorTooLong(longConstructors));
         }
 
         Set<String> longMethods = walker.getLongMethods();
         if (!longMethods.isEmpty()) {
-            addComment(new MethodTooLong(longMethods));
+            analysis.addComment(new MethodTooLong(longMethods));
         }
     }
 }

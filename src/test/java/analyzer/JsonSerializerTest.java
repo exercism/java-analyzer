@@ -1,84 +1,95 @@
 package analyzer;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JsonSerializerTest {
 
-    private static Stream<Arguments> comments() {
-        return Stream.of(
-                Arguments.of(
-                        new TestComment("key_only"),
-                        """
-                                {"comment":"key_only"}"""),
-                Arguments.of(
-                        new TestComment("key_and_single_param", Map.of("param1", "value1")),
-                        """
-                                {"comment":"key_and_single_param","params":{"param1":"value1"}}"""),
-                Arguments.of(
-                        new TestComment("key_and_multiple_params", Map.of("param1", "value1", "param2", "value2")),
-                        """
-                                {"comment":"key_and_multiple_params","params":{"param1":"value1","param2":"value2"}}"""),
-                Arguments.of(
-                        new TestComment("key_and_type", CommentType.ACTIONABLE),
-                        """
-                                {"comment":"key_and_type","type":"actionable"}"""),
-                Arguments.of(
-                        new TestComment("key_type_and_params", CommentType.ACTIONABLE, Map.of("param", "value")),
-                        """
-                                {"comment":"key_type_and_params","type":"actionable","params":{"param":"value"}}""")
-        );
+    private StringWriter analysisOutput;
+    private StringWriter tagsOutput;
+    private OutputWriter outputWriter;
+
+    @BeforeEach
+    public void setup() {
+        analysisOutput = new StringWriter();
+        tagsOutput = new StringWriter();
+        outputWriter = new OutputWriter(analysisOutput, tagsOutput);
     }
 
-    @ParameterizedTest(name = "{0}")
-    @MethodSource("comments")
-    public void serializeComment(Comment comment, String expected) {
-        var actual = JsonSerializer.serialize(comment).toString();
-        assertThat(actual).isEqualTo(expected);
+    @Test
+    public void serializeAnalysis() throws IOException {
+        var analysis = new Analysis();
+        analysis.addComment(new TestComment("key_only"));
+        analysis.addComment(new TestComment("key_and_single_param", Map.of("param1", "value1")));
+        analysis.addComment(new TestComment("key_and_multiple_params", Map.of("param1", "value1", "param2", "value2")));
+        analysis.addComment(new TestComment("key_and_type", CommentType.ACTIONABLE));
+        analysis.addComment(new TestComment("key_type_and_params", CommentType.ACTIONABLE, Map.of("param", "value")));
+        analysis.setSummary("Lorum Ipsum");
+        outputWriter.write(analysis);
+
+        var expected = """
+                {
+                  "summary": "Lorum Ipsum",
+                  "comments": [
+                    {"comment": "key_only"},
+                    {
+                      "comment": "key_and_single_param",
+                      "params": {"param1": "value1"}
+                    },
+                    {
+                      "comment": "key_and_multiple_params",
+                      "params": {
+                        "param1": "value1",
+                        "param2": "value2"
+                      }
+                    },
+                    {
+                      "comment": "key_and_type",
+                      "type": "actionable"
+                    },
+                    {
+                      "comment": "key_type_and_params",
+                      "type": "actionable",
+                      "params": {"param": "value"}
+                    }
+                  ]
+                }
+                """.trim();
+
+        assertThat(analysisOutput.toString()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> analyses() {
-        return Stream.of(
-                Arguments.of(
-                        new Analysis(List.of(new TestComment("key")), null),
-                        """
-                                {"comments":[{"comment":"key"}]}"""),
-                Arguments.of(
-                        new Analysis(List.of(new TestComment("key")), "Lorum ipsum"),
-                        """
-                                {"summary":"Lorum ipsum","comments":[{"comment":"key"}]}""")
-        );
+    @Test
+    public void serializeTags() throws IOException {
+        var analysis = new Analysis();
+        analysis.addTag("tag1");
+        analysis.addTag("tag3");
+        analysis.addTag("tag2");
+        outputWriter.write(analysis);
+
+        var expected = """
+                {"tags": [
+                  "tag1",
+                  "tag3",
+                  "tag2"
+                ]}
+                """.trim();
+
+        assertThat(tagsOutput.toString()).isEqualTo(expected);
     }
 
-    @MethodSource("analyses")
-    @ParameterizedTest(name = "{0}")
-    public void serializeAnalysis(Analysis analysis, String expected) {
-        var actual = JsonSerializer.serialize(analysis).toString();
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> tags() {
-        return Stream.of(
-                Arguments.of(new Tags(List.of()), "{}"),
-                Arguments.of(new Tags(List.of("tag1", "tag2", "tag3")),
-                        """
-                                {"tags":["tag1","tag2","tag3"]}""")
-        );
-    }
-
-    @MethodSource("tags")
-    @ParameterizedTest(name = "{0}")
-    public void serializeTags(Tags tags, String expected) {
-        var actual = JsonSerializer.serialize(tags).toString();
-        assertThat(actual).isEqualTo(expected);
+    @Test
+    public void serializeEmptyAnalysis() throws IOException {
+        outputWriter.write(new Analysis());
+        assertThat(analysisOutput.toString()).isEqualTo("{}");
+        assertThat(tagsOutput.toString()).isEqualTo("{}");
     }
 
     private static class TestComment extends Comment {

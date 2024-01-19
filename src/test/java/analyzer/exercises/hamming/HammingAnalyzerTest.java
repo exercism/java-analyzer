@@ -1,6 +1,8 @@
 package analyzer.exercises.hamming;
 
+import analyzer.Analyzer;
 import analyzer.Comment;
+import analyzer.ExerciseAnalyzerTest;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
 import analyzer.comments.UseProperClassName;
@@ -9,12 +11,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.File;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HammingAnalyzerTest {
+public class HammingAnalyzerTest extends ExerciseAnalyzerTest {
+    @Override
+    protected Analyzer getAnalyzer() {
+        return new HammingAnalyzer();
+    }
+
     private static Stream<Arguments> testCases() {
         return Stream.of(
                 Arguments.of("NoHammingClass.java.txt", new Comment[]{new UseProperClassName("Hamming")}),
@@ -40,12 +46,12 @@ public class HammingAnalyzerTest {
     @MethodSource("testCases")
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var analyzer = new HammingAnalyzer(getTestFileFromResource(solutionFile));
+        var actual = analyzeResourceFile(getResourceFileName(solutionFile));
 
-        assertThat(analyzer.getAnalysis().comments()).containsExactly(expectedComments);
+        assertThat(actual.getComments()).containsExactly(expectedComments);
     }
 
-    private File getTestFileFromResource(String testFileName) {
-        return new File(getClass().getResource("/analyzer/exercises/hamming/" + testFileName).getFile());
+    private static String getResourceFileName(String testFileName) {
+        return "/analyzer/exercises/hamming/" + testFileName;
     }
 }

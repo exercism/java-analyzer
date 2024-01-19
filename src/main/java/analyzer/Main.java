@@ -1,20 +1,23 @@
 package analyzer;
 
-import analyzer.exercises.twofer.TwoferAnalyzer;
-import analyzer.exercises.hamming.HammingAnalyzer;
-import org.json.JSONObject;
+import com.github.javaparser.ParseResult;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.utils.SourceRoot;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-    private static final int JSON_INDENTATION = 2;
+
     private static boolean isNotValidDirectory(String p) {
         return !p.endsWith("/") || !new File(p).isDirectory();
     }
 
-    public static void main(String... args) throws IOException {
+    private static Options validateOptions(String... args) {
         if (args.length < 3) {
             System.err.println("Invalid arguments. Usage: java-analyzer <exercise slug> <exercise directory> <output directory>");
             System.exit(-1);
@@ -33,37 +36,33 @@ public class Main {
             System.exit(-1);
         }
 
-        Analyzer analyzer = null;
-        switch (slug) {
-            case "two-fer":
-                analyzer = new TwoferAnalyzer(inputDirectory);
-                break;
-            case "hamming":
-                analyzer = new HammingAnalyzer(inputDirectory);
-                break;
-            default:
-                System.err.println("Exercise not found");
-                System.exit(-1);
+        return new Options(slug, inputDirectory, outputDirectory);
+    }
+
+    private static List<CompilationUnit> parseInput(Options options) throws IOException {
+        var sourceRoot = new SourceRoot(Path.of(options.inputDirectory, "src/main/java"));
+        var compilationUnits = new ArrayList<CompilationUnit>();
+        for (ParseResult<CompilationUnit> parseResult : sourceRoot.tryToParse()) {
+            compilationUnits.add(parseResult.getResult().get());
         }
 
-        writeAnalysisToFile(analyzer.getAnalysis(), outputDirectory);
-        writeTagsToFile(analyzer.getTags(), outputDirectory);
-        System.out.println("Analysis completed successfully");
+        return List.copyOf(compilationUnits);
     }
 
-    private static void writeAnalysisToFile(Analysis analysis, String outputDirectory) throws IOException {
-        var json = JsonSerializer.serialize(analysis);
-        writeJsonToFile(json, outputDirectory, "analysis.json");
-    }
-
-    private static void writeTagsToFile(Tags tags, String outputDirectory) throws IOException {
-        var json = JsonSerializer.serialize(tags);
-        writeJsonToFile(json, outputDirectory, "tags.json");
-    }
-
-    private static void writeJsonToFile(JSONObject json, String outputDirectory, String filename) throws IOException {
-        try (var writer = new FileWriter(outputDirectory + filename)) {
-            writer.write(json.toString(JSON_INDENTATION));
+    private static void writeOutput(Analysis analysis, Options options) throws IOException {
+        try (var analysisWriter = new FileWriter(options.outputDirectory + "analysis.json");
+             var tagsWriter = new FileWriter(options.outputDirectory + "tags.json")) {
+            var output = new OutputWriter(analysisWriter, tagsWriter);
+            output.write(analysis);
         }
     }
+
+    public static void main(String... args) throws IOException {
+        var options = validateOptions(args);
+        var input = parseInput(options);
+        var analysis = AnalyzerRoot.analyze(options.slug, input);
+        writeOutput(analysis, options);
+    }
+
+    private record Options(String slug, String inputDirectory, String outputDirectory){}
 }
