@@ -1,11 +1,18 @@
 {"comments": [
-  {"comment": "java.two-fer.avoid_string_format"},
   {
     "comment": "java.general.do_not_use_main_method",
     "type": "essential"
   },
   {
+    "comment": "java.two-fer.avoid_string_format",
+    "type": "actionable"
+  },
+  {
     "comment": "java.general.avoid_print_statements",
+    "type": "informative"
+  },
+  {
+    "comment": "java.general.feedback_request",
     "type": "informative"
   }
 ]}

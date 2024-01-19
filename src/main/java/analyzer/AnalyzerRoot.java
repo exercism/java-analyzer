@@ -1,5 +1,6 @@
 package analyzer;
 
+import analyzer.comments.FeedbackRequest;
 import analyzer.exercises.GlobalAnalyzer;
 import analyzer.exercises.hamming.HammingAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
@@ -12,9 +13,15 @@ public class AnalyzerRoot {
 
     public static Analysis analyze(String slug, List<CompilationUnit> compilationUnits) {
         var analysis = new Analysis();
+
         for (Analyzer analyzer : createAnalyzers(slug)) {
             analyzer.analyze(compilationUnits, analysis);
         }
+
+        if (!analysis.getComments().isEmpty()) {
+            analysis.addComment(new FeedbackRequest());
+        }
+        
         return analysis;
     }
 

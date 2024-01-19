@@ -6,5 +6,9 @@
   {
     "comment": "java.general.avoid_print_statements",
     "type": "informative"
+  },
+  {
+    "comment": "java.general.feedback_request",
+    "type": "informative"
   }
 ]}
