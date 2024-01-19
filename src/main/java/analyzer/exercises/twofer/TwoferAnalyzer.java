@@ -1,6 +1,6 @@
 package analyzer.exercises.twofer;
 
-import analyzer.Exercise;
+import analyzer.Analyzer;
 import analyzer.comments.AvoidHardCodedTestCases;
 import analyzer.comments.UseProperClassName;
 import analyzer.comments.UseProperMethodName;
@@ -8,18 +8,18 @@ import com.github.javaparser.ast.CompilationUnit;
 
 import java.io.File;
 
-public class Twofer extends Exercise {
-    public Twofer(String inputDirectory) {
+public class TwoferAnalyzer extends Analyzer {
+    public TwoferAnalyzer(String inputDirectory) {
         super(inputDirectory, "Twofer.java");
     }
 
     /** For testing. */
-    public Twofer(File solutionFile) {
+    TwoferAnalyzer(File solutionFile) {
         super(solutionFile);
     }
 
     @Override
-    public void parse(CompilationUnit compilationUnit) {
+    protected void parse(CompilationUnit compilationUnit) {
         TwoferWalker walker = new TwoferWalker();
 
         compilationUnit.walk(walker);

@@ -11,20 +11,20 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Exercise {
-    private CompilationUnit compilationUnit;
+public abstract class Analyzer {
 
     private String summary;
     private final List<Comment> comments = new ArrayList<>();
     private final List<String> tags = new ArrayList<>();
 
-    protected Exercise(String directory, String solutionFile) {
+    protected Analyzer(String directory, String solutionFile) {
         this(getSolutionFile(directory, solutionFile));
     }
 
-    protected Exercise(File solutionFile) {
+    protected Analyzer(File solutionFile) {
         try {
-            this.compilationUnit = new JavaParser().parse(solutionFile).getResult().get();
+            var compilationUnit = new JavaParser().parse(solutionFile).getResult().get();
+            this.parse(compilationUnit);
         } catch (ParseProblemException e) {
             addComment(new FailedParse());
         } catch (FileNotFoundException e) {
@@ -36,14 +36,7 @@ public abstract class Exercise {
         return new File(directory + "src/main/java/" + solutionFile);
     }
 
-    public final void parse() {
-        if (compilationUnit == null) {
-            return;
-        }
-        parse(compilationUnit);
-    }
-
-    abstract public void parse(CompilationUnit compilationUnit);
+    protected abstract void parse(CompilationUnit compilationUnit);
 
     protected void addComment(Comment comment) {
         if (!this.comments.contains(comment)) {

@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HammingTest {
+public class HammingAnalyzerTest {
     private static Stream<Arguments> testCases() {
         return Stream.of(
                 Arguments.of("NoHammingClass.java.txt", new Comment[]{new UseProperClassName("Hamming")}),
@@ -40,10 +40,9 @@ public class HammingTest {
     @MethodSource("testCases")
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var hamming = new Hamming(getTestFileFromResource(solutionFile));
-        hamming.parse();
+        var analyzer = new HammingAnalyzer(getTestFileFromResource(solutionFile));
 
-        assertThat(hamming.getAnalysis().comments()).containsExactly(expectedComments);
+        assertThat(analyzer.getAnalysis().comments()).containsExactly(expectedComments);
     }
 
     private File getTestFileFromResource(String testFileName) {

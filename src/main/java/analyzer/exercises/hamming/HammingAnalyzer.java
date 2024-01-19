@@ -1,6 +1,6 @@
 package analyzer.exercises.hamming;
 
-import analyzer.Exercise;
+import analyzer.Analyzer;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
 import analyzer.comments.UseProperClassName;
@@ -11,18 +11,19 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import java.io.File;
 import java.util.Set;
 
-public class Hamming extends Exercise {
-    public Hamming(String inputDirectory) {
+public class HammingAnalyzer extends Analyzer {
+
+    public HammingAnalyzer(String inputDirectory) {
         super(inputDirectory, "Hamming.java");
     }
 
     /** For testing. */
-    public Hamming(File solutionFile) {
+    HammingAnalyzer(File solutionFile) {
         super(solutionFile);
     }
 
     @Override
-    public void parse(CompilationUnit compilationUnit) {
+    protected void parse(CompilationUnit compilationUnit) {
         HammingWalker walker = new HammingWalker();
 
         compilationUnit.walk(ClassOrInterfaceDeclaration.class, walker);

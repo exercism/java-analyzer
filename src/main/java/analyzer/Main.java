@@ -1,7 +1,7 @@
 package analyzer;
 
-import analyzer.exercises.twofer.Twofer;
-import analyzer.exercises.hamming.Hamming;
+import analyzer.exercises.twofer.TwoferAnalyzer;
+import analyzer.exercises.hamming.HammingAnalyzer;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -33,22 +33,21 @@ public class Main {
             System.exit(-1);
         }
 
-        Exercise ex = null;
+        Analyzer analyzer = null;
         switch (slug) {
             case "two-fer":
-                ex = new Twofer(inputDirectory);
+                analyzer = new TwoferAnalyzer(inputDirectory);
                 break;
             case "hamming":
-                ex = new Hamming(inputDirectory);
+                analyzer = new HammingAnalyzer(inputDirectory);
                 break;
             default:
                 System.err.println("Exercise not found");
                 System.exit(-1);
         }
 
-        ex.parse();
-        writeAnalysisToFile(ex.getAnalysis(), outputDirectory);
-        writeTagsToFile(ex.getTags(), outputDirectory);
+        writeAnalysisToFile(analyzer.getAnalysis(), outputDirectory);
+        writeTagsToFile(analyzer.getTags(), outputDirectory);
         System.out.println("Analysis completed successfully");
     }
 

@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TwoferTest {
+public class TwoferAnalyzerTest {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
@@ -33,10 +33,9 @@ public class TwoferTest {
     @MethodSource("testCases")
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var twofer = new Twofer(getTestFileFromResource(solutionFile));
-        twofer.parse();
+        var analyzer = new TwoferAnalyzer(getTestFileFromResource(solutionFile));
 
-        assertThat(twofer.getAnalysis().comments()).containsExactly(expectedComments);
+        assertThat(analyzer.getAnalysis().comments()).containsExactly(expectedComments);
     }
 
     private File getTestFileFromResource(String testFileName) {
