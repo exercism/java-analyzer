@@ -3,6 +3,9 @@ package analyzer;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
+ */
 public abstract class Comment {
 
     public abstract String getKey();
