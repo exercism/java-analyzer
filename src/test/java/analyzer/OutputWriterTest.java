@@ -10,7 +10,7 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JsonSerializerTest {
+public class OutputWriterTest {
 
     private StringWriter analysisOutput;
     private StringWriter tagsOutput;
