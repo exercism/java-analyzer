@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Optional;
 
 /**
  * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
@@ -31,9 +32,10 @@ public class OutputWriter {
             json.put("summary", analysis.getSummary());
         }
 
-        for (Comment comment : analysis.getComments()) {
-            json.append("comments", serialize(comment));
-        }
+        analysis.getComments()
+                .stream()
+                .sorted(OutputWriter::compareCommentsByType)
+                .forEachOrdered(comment -> json.append("comments", serialize(comment)));
 
         this.analysisWriter.write(json.toString(JSON_INDENTATION));
     }
@@ -63,5 +65,11 @@ public class OutputWriter {
         comment.getParameters().forEach(paramsJson::put);
         json.put("params", paramsJson);
         return json;
+    }
+
+    private static int compareCommentsByType(Comment a, Comment b) {
+        var ordinalA = Optional.ofNullable(a.getType()).map(CommentType::ordinal).orElse(Integer.MAX_VALUE);
+        var ordinalB = Optional.ofNullable(b.getType()).map(CommentType::ordinal).orElse(Integer.MAX_VALUE);
+        return Integer.compare(ordinalA, ordinalB);
     }
 }
