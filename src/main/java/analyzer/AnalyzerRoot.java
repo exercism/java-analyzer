@@ -1,5 +1,6 @@
 package analyzer;
 
+import analyzer.exercises.GlobalAnalyzer;
 import analyzer.exercises.hamming.HammingAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
 import com.github.javaparser.ast.CompilationUnit;
@@ -24,6 +25,8 @@ public class AnalyzerRoot {
             case "hamming" -> analyzers.add(new HammingAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
         }
+
+        analyzers.add(new GlobalAnalyzer());
 
         return List.copyOf(analyzers);
     }

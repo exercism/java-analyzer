@@ -2,7 +2,7 @@ package analyzer.exercises.twofer;
 
 import analyzer.Analyzer;
 import analyzer.Comment;
-import analyzer.ExerciseAnalyzerTest;
+import analyzer.AnalyzerTest;
 import analyzer.comments.AvoidHardCodedTestCases;
 import analyzer.comments.UseProperClassName;
 import analyzer.comments.UseProperMethodName;
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TwoferAnalyzerTest extends ExerciseAnalyzerTest {
+public class TwoferAnalyzerTest extends AnalyzerTest {
 
     @Override
     protected Analyzer getAnalyzer() {
