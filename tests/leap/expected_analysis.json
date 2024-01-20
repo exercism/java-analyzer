@@ -1,0 +1,10 @@
+{"comments": [
+  {
+    "comment": "java.leap.do_not_use_java_time",
+    "type": "essential"
+  },
+  {
+    "comment": "java.general.feedback_request",
+    "type": "informative"
+  }
+]}
