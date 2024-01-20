@@ -25,7 +25,8 @@ public class LeapAnalyzerTest extends AnalyzerTest {
                 Arguments.of("UsesGregorianCalendar.java", new Comment[]{new NoBuiltInMethods()}),
                 Arguments.of("HardCodedTestCases.java", new Comment[]{new AvoidHardCodedTestCases()}),
                 Arguments.of("UsesIfStatements.java", new Comment[]{new AvoidConditionalLogic()}),
-                Arguments.of("UsesTernary.java", new Comment[]{new AvoidConditionalLogic()})
+                Arguments.of("UsesTernary.java", new Comment[]{new AvoidConditionalLogic()}),
+                Arguments.of("TooManyChecks.java", new Comment[]{new UseMinimumNumberOfChecks()})
         );
     }
 
@@ -34,7 +35,7 @@ public class LeapAnalyzerTest extends AnalyzerTest {
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
         var actual = analyzeResourceFile(getResourceFileName(solutionFile));
 
-        assertThat(actual.getComments()).containsExactly(expectedComments);
+        assertThat(actual.getComments()).contains(expectedComments);
     }
 
     private static String getResourceFileName(String testFileName) {

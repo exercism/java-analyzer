@@ -5,6 +5,8 @@ import analyzer.Analyzer;
 import analyzer.comments.AvoidHardCodedTestCases;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.expr.ConditionalExpr;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
 import com.github.javaparser.ast.stmt.IfStmt;
@@ -43,8 +45,7 @@ public class LeapAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
 
     @Override
     public void visit(ImportDeclaration n, Void arg) {
-        var name = n.getNameAsString();
-        if (DISALLOWED_IMPORTS.stream().anyMatch(name::contains)) {
+        if (isUsingBuiltInMethods(n)) {
             this.analysis.addComment(new NoBuiltInMethods());
         }
 
@@ -74,5 +75,25 @@ public class LeapAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
     public void visit(ConditionalExpr n, Void arg) {
         this.analysis.addComment(new AvoidConditionalLogic());
         super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(MethodDeclaration n, Void arg) {
+        if (n.getNameAsString().equals("isLeapYear") && hasMoreThanThreeChecks(n)) {
+            this.analysis.addComment(new UseMinimumNumberOfChecks());
+        }
+        super.visit(n, arg);
+    }
+
+    private static boolean isUsingBuiltInMethods(ImportDeclaration node) {
+        var name = node.getNameAsString();
+        return DISALLOWED_IMPORTS.stream().anyMatch(name::contains);
+    }
+
+    private static boolean hasMoreThanThreeChecks(MethodDeclaration node) {
+        var booleanOperators = node.findAll(BinaryExpr.class,
+                x -> x.getOperator() == BinaryExpr.Operator.AND || x.getOperator() == BinaryExpr.Operator.OR);
+
+        return booleanOperators.size() > 2;
     }
 }
