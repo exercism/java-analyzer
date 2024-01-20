@@ -21,8 +21,8 @@ public class LeapAnalyzerTest extends AnalyzerTest {
     private static Stream<Arguments> testCases() {
         return Stream.of(
                 Arguments.of("Optimal.java", new Comment[0]),
-                Arguments.of("UsesJavaTime.java", new Comment[]{new AvoidBuiltInMethods()}),
-                Arguments.of("UsesGregorianCalendar.java", new Comment[]{new AvoidBuiltInMethods()}),
+                Arguments.of("UsesJavaTime.java", new Comment[]{new NoBuiltInMethods()}),
+                Arguments.of("UsesGregorianCalendar.java", new Comment[]{new NoBuiltInMethods()}),
                 Arguments.of("HardCodedTestCases.java", new Comment[]{new AvoidHardCodedTestCases()})
         );
     }

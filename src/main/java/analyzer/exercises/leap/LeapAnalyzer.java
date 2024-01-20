@@ -43,7 +43,7 @@ public class LeapAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
     public void visit(ImportDeclaration n, Void arg) {
         var name = n.getNameAsString();
         if (DISALLOWED_IMPORTS.stream().anyMatch(name::contains)) {
-            this.analysis.addComment(new AvoidBuiltInMethods());
+            this.analysis.addComment(new NoBuiltInMethods());
         }
 
         super.visit(n, arg);

@@ -4,12 +4,12 @@ import analyzer.Comment;
 import analyzer.CommentType;
 
 /**
- * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/leap/avoid_built_in_methods.md">Markdown Template</a>
+ * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/leap/no_built_in_methods.md">Markdown Template</a>
  */
-class AvoidBuiltInMethods extends Comment {
+class NoBuiltInMethods extends Comment {
     @Override
     public String getKey() {
-        return "java.leap.avoid_built_in_methods";
+        return "java.leap.no_built_in_methods";
     }
 
     @Override

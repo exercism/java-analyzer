@@ -1,6 +1,6 @@
 {"comments": [
   {
-    "comment": "java.leap.avoid_built_in_methods",
+    "comment": "java.leap.no_built_in_methods",
     "type": "essential"
   },
   {
