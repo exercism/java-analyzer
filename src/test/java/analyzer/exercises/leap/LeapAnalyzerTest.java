@@ -3,6 +3,7 @@ package analyzer.exercises.leap;
 import analyzer.Analyzer;
 import analyzer.AnalyzerTest;
 import analyzer.Comment;
+import analyzer.comments.AvoidHardCodedTestCases;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,7 +21,8 @@ public class LeapAnalyzerTest extends AnalyzerTest {
     private static Stream<Arguments> testCases() {
         return Stream.of(
                 Arguments.of("Optimal.java", new Comment[0]),
-                Arguments.of("UsesJavaTime.java", new Comment[]{new DoNotUseJavaTime()})
+                Arguments.of("UsesJavaTime.java", new Comment[]{new DoNotUseJavaTime()}),
+                Arguments.of("HardCodedTestCases.java", new Comment[]{new AvoidHardCodedTestCases()})
         );
     }
 
