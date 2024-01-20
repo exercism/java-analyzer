@@ -23,8 +23,8 @@ class TwoferWalker implements Consumer<Node> {
     public void accept(Node node) {
         if (node instanceof ClassOrInterfaceDeclaration) {
             this.hasClassTwofer = ((ClassOrInterfaceDeclaration) node).getName().toString().equals("Twofer");
-        } else if (node instanceof MethodDeclaration) {
-            this.hasMethodTwofer = ((MethodDeclaration) node).getName().toString().equals("twofer");
+        } else if (node instanceof MethodDeclaration methodDeclaration && methodDeclaration.getNameAsString().equals("twofer")) {
+            this.hasMethodTwofer = true;
         } else if (node instanceof StringLiteralExpr && !this.hasHardCodedTestCases) {
             this.hasHardCodedTestCases = node.toString().contains("Alice") || node.toString().contains("Bob");
         } else if (node instanceof ReturnStmt) {

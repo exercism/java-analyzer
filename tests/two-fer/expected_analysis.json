@@ -4,6 +4,10 @@
     "type": "essential"
   },
   {
+    "comment": "java.two-fer.avoid_string_format",
+    "type": "actionable"
+  },
+  {
     "comment": "java.general.avoid_print_statements",
     "type": "informative"
   },

@@ -2,7 +2,7 @@ package analyzer.exercises.hamming;
 
 import analyzer.Analyzer;
 import analyzer.Comment;
-import analyzer.ExerciseAnalyzerTest;
+import analyzer.AnalyzerTest;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
 import analyzer.comments.UseProperClassName;
@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HammingAnalyzerTest extends ExerciseAnalyzerTest {
+public class HammingAnalyzerTest extends AnalyzerTest {
     @Override
     protected Analyzer getAnalyzer() {
         return new HammingAnalyzer();
