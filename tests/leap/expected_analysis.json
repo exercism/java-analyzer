@@ -1,6 +1,6 @@
 {"comments": [
   {
-    "comment": "java.leap.do_not_use_java_time",
+    "comment": "java.leap.avoid_built_in_methods",
     "type": "essential"
   },
   {
