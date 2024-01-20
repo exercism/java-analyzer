@@ -4,8 +4,8 @@ import analyzer.Analysis;
 import analyzer.Analyzer;
 import analyzer.comments.AvoidHardCodedTestCases;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
-import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.HashSet;
@@ -14,6 +14,10 @@ import java.util.Set;
 
 public class LeapAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
     private static final Set<Integer> TEST_CASES = Set.of(1960, 1996, 2000, 2400);
+    private static final Set<String> DISALLOWED_IMPORTS = Set.of(
+            "java.time",
+            "java.util.GregorianCalendar"
+    );
 
     private final Set<Integer> intLiterals = new HashSet<>();
     private Analysis analysis;
@@ -36,9 +40,10 @@ public class LeapAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
     }
 
     @Override
-    public void visit(MethodCallExpr n, Void arg) {
-        if (n.toString().contains("Year.isLeap")) {
-            this.analysis.addComment(new DoNotUseJavaTime());
+    public void visit(ImportDeclaration n, Void arg) {
+        var name = n.getNameAsString();
+        if (DISALLOWED_IMPORTS.stream().anyMatch(name::contains)) {
+            this.analysis.addComment(new AvoidBuiltInMethods());
         }
 
         super.visit(n, arg);
