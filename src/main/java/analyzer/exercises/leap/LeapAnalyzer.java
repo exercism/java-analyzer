@@ -5,7 +5,9 @@ import analyzer.Analyzer;
 import analyzer.comments.AvoidHardCodedTestCases;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.expr.ConditionalExpr;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
+import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.HashSet;
@@ -59,6 +61,18 @@ public class LeapAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
             this.analysis.addComment(new AvoidHardCodedTestCases());
         }
 
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(IfStmt n, Void arg) {
+        this.analysis.addComment(new AvoidConditionalLogic());
+        super.visit(n, arg);
+    }
+
+    @Override
+    public void visit(ConditionalExpr n, Void arg) {
+        this.analysis.addComment(new AvoidConditionalLogic());
         super.visit(n, arg);
     }
 }

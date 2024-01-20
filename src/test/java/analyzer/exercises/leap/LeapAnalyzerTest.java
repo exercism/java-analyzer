@@ -23,7 +23,9 @@ public class LeapAnalyzerTest extends AnalyzerTest {
                 Arguments.of("Optimal.java", new Comment[0]),
                 Arguments.of("UsesJavaTime.java", new Comment[]{new NoBuiltInMethods()}),
                 Arguments.of("UsesGregorianCalendar.java", new Comment[]{new NoBuiltInMethods()}),
-                Arguments.of("HardCodedTestCases.java", new Comment[]{new AvoidHardCodedTestCases()})
+                Arguments.of("HardCodedTestCases.java", new Comment[]{new AvoidHardCodedTestCases()}),
+                Arguments.of("UsesIfStatements.java", new Comment[]{new AvoidConditionalLogic()}),
+                Arguments.of("UsesTernary.java", new Comment[]{new AvoidConditionalLogic()})
         );
     }
 
