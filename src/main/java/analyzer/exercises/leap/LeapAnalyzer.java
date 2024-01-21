@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class LeapAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
+public class LeapAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
     private static final Set<Integer> TEST_CASES = Set.of(1960, 1996, 2000, 2400);
     private static final Set<String> DISALLOWED_IMPORTS = Set.of(
             "java.time",
@@ -24,65 +24,62 @@ public class LeapAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
     );
 
     private final Set<Integer> intLiterals = new HashSet<>();
-    private Analysis analysis;
 
     @Override
     public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
-        this.analysis = analysis;
-
         for (CompilationUnit compilationUnit : compilationUnits) {
-            compilationUnit.accept(this, null);
+            compilationUnit.accept(this, analysis);
         }
     }
 
     @Override
-    public void visit(CompilationUnit n, Void arg) {
+    public void visit(CompilationUnit node, Analysis analysis) {
         // Reset state for each compilation unit
         this.intLiterals.clear();
 
-        super.visit(n, arg);
+        super.visit(node, analysis);
     }
 
     @Override
-    public void visit(ImportDeclaration n, Void arg) {
-        if (isUsingBuiltInMethods(n)) {
-            this.analysis.addComment(new NoBuiltInMethods());
+    public void visit(ImportDeclaration node, Analysis analysis) {
+        if (isUsingBuiltInMethods(node)) {
+            analysis.addComment(new NoBuiltInMethods());
         }
 
-        super.visit(n, arg);
+        super.visit(node, analysis);
     }
 
     @Override
-    public void visit(IntegerLiteralExpr n, Void arg) {
-        if (n.asNumber() instanceof Integer i) {
+    public void visit(IntegerLiteralExpr node, Analysis analysis) {
+        if (node.asNumber() instanceof Integer i) {
             this.intLiterals.add(i);
         }
 
         if (this.intLiterals.containsAll(TEST_CASES)) {
-            this.analysis.addComment(new AvoidHardCodedTestCases());
+            analysis.addComment(new AvoidHardCodedTestCases());
         }
 
-        super.visit(n, arg);
+        super.visit(node, analysis);
     }
 
     @Override
-    public void visit(IfStmt n, Void arg) {
-        this.analysis.addComment(new AvoidConditionalLogic());
-        super.visit(n, arg);
+    public void visit(IfStmt node, Analysis analysis) {
+        analysis.addComment(new AvoidConditionalLogic());
+        super.visit(node, analysis);
     }
 
     @Override
-    public void visit(ConditionalExpr n, Void arg) {
-        this.analysis.addComment(new AvoidConditionalLogic());
-        super.visit(n, arg);
+    public void visit(ConditionalExpr node, Analysis analysis) {
+        analysis.addComment(new AvoidConditionalLogic());
+        super.visit(node, analysis);
     }
 
     @Override
-    public void visit(MethodDeclaration n, Void arg) {
-        if (n.getNameAsString().equals("isLeapYear") && hasMoreThanThreeChecks(n)) {
-            this.analysis.addComment(new UseMinimumNumberOfChecks());
+    public void visit(MethodDeclaration node, Analysis analysis) {
+        if (node.getNameAsString().equals("isLeapYear") && hasMoreThanThreeChecks(node)) {
+            analysis.addComment(new UseMinimumNumberOfChecks());
         }
-        super.visit(n, arg);
+        super.visit(node, analysis);
     }
 
     private static boolean isUsingBuiltInMethods(ImportDeclaration node) {
