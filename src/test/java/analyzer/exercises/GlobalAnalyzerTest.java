@@ -20,7 +20,7 @@ public class GlobalAnalyzerTest extends AnalyzerTest {
     @MethodSource
     @ParameterizedTest
     public void solutionsWithMainMethod(String solution) {
-        var actual = analyzeString(solution);
+        var actual = analyze(solution);
         assertThat(actual.getComments()).contains(new DoNotUseMainMethod());
     }
 
@@ -44,7 +44,7 @@ public class GlobalAnalyzerTest extends AnalyzerTest {
     @MethodSource
     @ParameterizedTest
     public void solutionsWithPrintStatements(String solution) {
-        var actual = analyzeString(solution);
+        var actual = analyze(solution);
         assertThat(actual.getComments()).contains(new AvoidPrintStatements());
     }
 

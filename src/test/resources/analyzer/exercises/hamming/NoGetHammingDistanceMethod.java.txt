@@ -1,6 +1,0 @@
-package analyzer.exercises.hamming;
-
-/** There must be a getHammingDistance method. */
-public class Hamming {
-    public void notGetHammingDistanceMethod() {}
-}

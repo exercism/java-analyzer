@@ -1,6 +1,0 @@
-package analyzer.exercises.twofer;
-
-/** Empty class for testing that there must be a twofer method. */
-public class Twofer {
-    public void notTwoferMethod() {}
-}
