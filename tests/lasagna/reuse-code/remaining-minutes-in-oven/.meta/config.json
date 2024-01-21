@@ -1,0 +1,23 @@
+{
+  "authors": [
+    "mirkoperillo"
+  ],
+  "files": {
+    "solution": [
+      "src/main/java/Lasagna.java"
+    ],
+    "test": [
+      "src/test/java/LasagnaTest.java"
+    ],
+    "exemplar": [
+      ".meta/src/reference/java/Lasagna.java"
+    ],
+    "invalidator": [
+      "build.gradle"
+    ]
+  },
+  "forked_from": [
+    "csharp/lucians-luscious-lasagna"
+  ],
+  "blurb": "Learn about the basics of Java by following a lasagna recipe."
+}

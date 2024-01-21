@@ -1,0 +1,14 @@
+{"comments": [
+  {
+    "comment": "java.lasagna.reuse_code",
+    "type": "actionable",
+    "params": {
+      "callingMethod": "totalTimeInMinutes",
+      "methodToCall": "preparationTimeInMinutes"
+    }
+  },
+  {
+    "comment": "java.general.feedback_request",
+    "type": "informative"
+  }
+]}
