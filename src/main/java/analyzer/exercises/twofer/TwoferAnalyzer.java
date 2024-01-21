@@ -17,11 +17,7 @@ public class TwoferAnalyzer implements Analyzer {
 
         compilationUnits.forEach(cu -> cu.walk(walker));
 
-        if (!walker.hasClassTwofer) {
-            analysis.addComment(new UseProperClassName("Twofer"));
-        } else if (!walker.hasMethodTwofer) {
-            analysis.addComment(new UseProperMethodName("twofer"));
-        } else if (walker.hasHardCodedTestCases) {
+        if (walker.hasHardCodedTestCases) {
             analysis.addComment(new AvoidHardCodedTestCases());
         } else if (walker.usesLambda) {
             // could be used later for additional comments?

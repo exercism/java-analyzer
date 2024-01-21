@@ -20,16 +20,6 @@ public class HammingAnalyzer implements Analyzer {
 
         compilationUnits.forEach(cu -> cu.walk(ClassOrInterfaceDeclaration.class, walker));
 
-        if (!walker.hasHammingClass()) {
-            analysis.addComment(new UseProperClassName("Hamming"));
-            return;
-        }
-
-        if (!walker.hasGetHammingDistanceMethod()) {
-            analysis.addComment(new UseProperMethodName("getHammingDistance"));
-            return;
-        }
-
         if (!walker.hasConstructor()) {
             analysis.addComment(new MustUseConstructor());
             return;
