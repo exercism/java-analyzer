@@ -1,0 +1,10 @@
+{"comments": [
+  {
+    "comment": "java.hamming.must_use_conditional_logic_in_constructor",
+    "type": "essential"
+  },
+  {
+    "comment": "java.general.feedback_request",
+    "type": "informative"
+  }
+]}

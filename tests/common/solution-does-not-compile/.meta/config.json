@@ -1,0 +1,22 @@
+{
+  "authors": [
+    "sanderploegsma"
+  ],
+  "files": {
+    "solution": [
+      "src/main/java/UnknownExercise.java"
+    ],
+    "test": [
+      "src/test/java/UnknownExerciseTest.java"
+    ],
+    "example": [
+      ".meta/src/reference/java/UnknownExercise.java"
+    ],
+    "invalidator": [
+      "build.gradle"
+    ]
+  },
+  "blurb": "Nothing to see here",
+  "source": "No source",
+  "source_url": "https://example.com"
+}

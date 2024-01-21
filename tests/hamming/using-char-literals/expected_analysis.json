@@ -1,0 +1,10 @@
+{"comments": [
+  {
+    "comment": "java.hamming.avoid_character_literals",
+    "type": "actionable"
+  },
+  {
+    "comment": "java.general.feedback_request",
+    "type": "informative"
+  }
+]}
