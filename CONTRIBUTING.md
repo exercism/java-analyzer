@@ -12,6 +12,13 @@ However, if you want to propose bigger changes, make sure to post on the [forum]
 Help us keep Exercism welcoming.
 Please read and abide by the [Code of Conduct][coc].
 
+## Contributing to Exercism
+
+If you are new to contributing to Exercism, please read:
+
+- [Being a good community member][community-docs]
+- [Contributing via GitHub][contributing-docs-github]
+
 ## How does this project work?
 
 Start by reading up on Exercism analyzers:
@@ -37,3 +44,5 @@ See [the Analyzer comment guidelines][analyzer-comments-guidelines] for guidance
 [browse-analyzers]: https://github.com/exercism/java-analyzer/tree/main/src/main/java/analyzer/exercises/
 [analyzer-docs-guidance]: https://exercism.org/docs/building/tooling/analyzers/guidance
 [analyzer-docs-interface]: https://exercism.org/docs/building/tooling/analyzers/interface
+[community-docs]: https://exercism.org/docs/community/being-a-good-community-member
+[contributing-docs-github]: https://exercism.org/docs/building/github
