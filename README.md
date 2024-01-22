@@ -1,6 +1,6 @@
-# java-analyzer
+# Java Analyzer [![Coverage Status](https://coveralls.io/repos/github/exercism/java-analyzer/badge.svg?branch=main)](https://coveralls.io/github/exercism/java-analyzer?branch=main)
 
-The Java track project-auto-mentor analyzer using abstract syntax trees
+The Java track project-auto-mentor analyzer using abstract syntax trees.
 
 
 ## Running in docker
