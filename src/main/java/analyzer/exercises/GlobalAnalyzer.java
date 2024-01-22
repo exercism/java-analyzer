@@ -11,33 +11,31 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.List;
 
-public class GlobalAnalyzer extends VoidVisitorAdapter<Void> implements Analyzer {
-    private Analysis analysis;
+public class GlobalAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
 
     @Override
     public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
-        this.analysis = analysis;
         for (CompilationUnit compilationUnit : compilationUnits) {
-            compilationUnit.accept(this, null);
+            compilationUnit.accept(this, analysis);
         }
     }
 
     @Override
-    public void visit(MethodDeclaration n, Void arg) {
-        if (isMainMethod(n)) {
+    public void visit(MethodDeclaration node, Analysis analysis) {
+        if (isMainMethod(node)) {
             analysis.addComment(new DoNotUseMainMethod());
         }
 
-        super.visit(n, arg);
+        super.visit(node, analysis);
     }
 
     @Override
-    public void visit(MethodCallExpr n, Void arg) {
-        if (isPrintStatement(n)) {
+    public void visit(MethodCallExpr node, Analysis analysis) {
+        if (isPrintStatement(node)) {
             analysis.addComment(new AvoidPrintStatements());
         }
 
-        super.visit(n, arg);
+        super.visit(node, analysis);
     }
 
     private static boolean isMainMethod(MethodDeclaration node) {

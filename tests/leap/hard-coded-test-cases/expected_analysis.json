@@ -1,0 +1,14 @@
+{"comments": [
+  {
+    "comment": "java.general.avoid_hard_coded_test_cases",
+    "type": "essential"
+  },
+  {
+    "comment": "java.leap.use_minimum_number_of_checks",
+    "type": "actionable"
+  },
+  {
+    "comment": "java.general.feedback_request",
+    "type": "informative"
+  }
+]}

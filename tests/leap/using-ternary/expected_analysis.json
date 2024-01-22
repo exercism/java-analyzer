@@ -1,0 +1,10 @@
+{"comments": [
+  {
+    "comment": "java.leap.avoid_conditional_logic",
+    "type": "actionable"
+  },
+  {
+    "comment": "java.general.feedback_request",
+    "type": "informative"
+  }
+]}
