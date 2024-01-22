@@ -2,6 +2,10 @@
 
 The Java analyzer uses [Abstract Syntax Trees][ast-wiki] (ASTs) to analyze submitted solutions using the [`javaparser`][javaparser] library.
 
+## Contributing
+
+If you want to contribute to the Java analyzer, please refer to the [Contributing Guide][contributing-guide].
+
 ## Usage
 
 ### Running directly
@@ -38,5 +42,24 @@ docker run -v /path/to/leap:/input -v /path/to/output/folder:/output exercism/ja
 
 The analyzer output is written to `analysis.json` and `tags.json` in `/path/to/output/folder/`.
 
+## Tests
+
+### Unit tests
+
+To run the unit tests:
+
+```sh
+./gradlew test
+```
+
+### Smoke tests
+
+To run the smoke tests using Docker:
+
+```sh
+bin/run-tests-in-docker.sh
+```
+
 [ast-wiki]: https://en.wikipedia.org/wiki/Abstract_syntax_tree
+[contributing-guide]: https://github.com/exercism/java-analyzer/blob/main/CONTRIBUTING.md
 [javaparser]: https://github.com/javaparser/javaparser 
