@@ -2,6 +2,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "8.1.1"
     id "java"
     id "application"
+    id "jacoco"
 }
 
 group = "org.exercism"
@@ -37,5 +38,14 @@ test {
         exceptionFormat = "full"
         showStandardStreams = true
         events = ["passed", "failed", "skipped"]
+    }
+
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
     }
 }
