@@ -40,7 +40,12 @@ public class Main {
     }
 
     private static List<CompilationUnit> parseInput(Options options) throws IOException {
-        var sourceRoot = new SourceRoot(Path.of(options.inputDirectory, "src/main/java"));
+        var sourceDirectory = Path.of(options.inputDirectory, "src/main/java");
+        if (!sourceDirectory.toFile().exists()) {
+            return List.of();
+        }
+
+        var sourceRoot = new SourceRoot(sourceDirectory);
         var compilationUnits = new ArrayList<CompilationUnit>();
         for (ParseResult<CompilationUnit> parseResult : sourceRoot.tryToParse()) {
             compilationUnits.add(parseResult.getResult().get());
