@@ -2,7 +2,7 @@ package analyzer.exercises.lasagna;
 
 import analyzer.Analysis;
 import analyzer.Analyzer;
-import analyzer.comments.OptimalSolution;
+import analyzer.comments.ExemplarSolution;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
@@ -24,7 +24,7 @@ public class LasagnaAnalyzer extends VoidVisitorAdapter<Analysis> implements Ana
         }
 
         if (analysis.getComments().isEmpty()) {
-            analysis.addComment(new OptimalSolution(EXERCISE_NAME));
+            analysis.addComment(new ExemplarSolution(EXERCISE_NAME));
         }
     }
 
