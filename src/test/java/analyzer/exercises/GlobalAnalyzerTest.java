@@ -1,6 +1,5 @@
 package analyzer.exercises;
 
-import analyzer.Analyzer;
 import analyzer.AnalyzerTest;
 import analyzer.comments.AvoidPrintStatements;
 import analyzer.comments.DoNotUseMainMethod;
@@ -11,10 +10,9 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GlobalAnalyzerTest extends AnalyzerTest {
-    @Override
-    protected Analyzer getAnalyzer() {
-        return new GlobalAnalyzer();
+public class GlobalAnalyzerTest extends AnalyzerTest<GlobalAnalyzer> {
+    public GlobalAnalyzerTest() {
+        super(GlobalAnalyzer.class);
     }
 
     @MethodSource
