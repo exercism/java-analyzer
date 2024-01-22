@@ -4,6 +4,7 @@ import analyzer.comments.FeedbackRequest;
 import analyzer.exercises.GlobalAnalyzer;
 import analyzer.exercises.hamming.HammingAnalyzer;
 import analyzer.exercises.lasagna.LasagnaAnalyzer;
+import analyzer.exercises.leap.LeapAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
 import com.github.javaparser.ast.CompilationUnit;
 
@@ -34,6 +35,7 @@ public class AnalyzerRoot {
         switch (slug) {
             case "hamming" -> analyzers.add(new HammingAnalyzer());
             case "lasagna" -> analyzers.add(new LasagnaAnalyzer());
+            case "leap" -> analyzers.add(new LeapAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
         }
 

@@ -1,0 +1,29 @@
+{
+  "authors": [
+    "sonapraneeth-a"
+  ],
+  "contributors": [
+    "jmrunkle",
+    "lemoncurry",
+    "msomji",
+    "muzimuzhi",
+    "sshine"
+  ],
+  "files": {
+    "solution": [
+      "src/main/java/Leap.java"
+    ],
+    "test": [
+      "src/test/java/LeapTest.java"
+    ],
+    "example": [
+      ".meta/src/reference/java/Leap.java"
+    ],
+    "invalidator": [
+      "build.gradle"
+    ]
+  },
+  "blurb": "Determine whether a given year is a leap year.",
+  "source": "CodeRanch Cattle Drive, Assignment 3",
+  "source_url": "https://coderanch.com/t/718816/Leap"
+}
