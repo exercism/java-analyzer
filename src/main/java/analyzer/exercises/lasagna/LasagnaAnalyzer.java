@@ -3,8 +3,10 @@ package analyzer.exercises.lasagna;
 import analyzer.Analysis;
 import analyzer.Analyzer;
 import analyzer.comments.ExemplarSolution;
+import analyzer.comments.RemoveTodoComments;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.comments.LineComment;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -45,5 +47,12 @@ public class LasagnaAnalyzer extends VoidVisitorAdapter<Analysis> implements Ana
 
     private static boolean doesNotCallMethod(MethodDeclaration node, String otherMethodName) {
         return node.findAll(MethodCallExpr.class, x -> x.getNameAsString().contains(otherMethodName)).isEmpty();
+    }
+
+    @Override
+    public void visit(LineComment node, Analysis analysis) {
+        if (node.getContent().contains("TODO")) {
+            analysis.addComment(new RemoveTodoComments());
+        }
     }
 }

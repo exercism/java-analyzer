@@ -1,0 +1,10 @@
+{"comments": [
+  {
+    "comment": "java.lasagna.remove_todo_comments",
+    "type": "actionable"
+  },
+  {
+    "comment": "java.general.feedback_request",
+    "type": "informative"
+  }
+]}
