@@ -1,7 +1,8 @@
 package analyzer.exercises.hamming;
 
-import analyzer.AnalyzerTest;
+import analyzer.AnalyzerTestHelper;
 import analyzer.Comment;
+import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,10 +13,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HammingAnalyzerTest extends AnalyzerTest<HammingAnalyzer> {
-    public HammingAnalyzerTest() {
-        super(HammingAnalyzer.class);
-    }
+public class HammingAnalyzerTest {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
@@ -40,9 +38,10 @@ public class HammingAnalyzerTest extends AnalyzerTest<HammingAnalyzer> {
     @MethodSource("testCases")
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var actual = analyzeResourceFile(getResourceFileName(solutionFile));
+        var solution = new SolutionFromResourceFiles("leap", getResourceFileName(solutionFile));
+        var analysis = AnalyzerTestHelper.analyze(solution, HammingAnalyzer::new);
 
-        assertThat(actual.getComments()).containsExactly(expectedComments);
+        assertThat(analysis.getComments()).containsExactly(expectedComments);
     }
 
     private static String getResourceFileName(String testFileName) {

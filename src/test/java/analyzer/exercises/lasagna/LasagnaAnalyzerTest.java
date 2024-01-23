@@ -1,7 +1,8 @@
 package analyzer.exercises.lasagna;
 
-import analyzer.AnalyzerTest;
+import analyzer.AnalyzerTestHelper;
 import analyzer.Comment;
+import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.ExemplarSolution;
 import analyzer.comments.RemoveTodoComments;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,10 +14,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LasagnaAnalyzerTest extends AnalyzerTest<LasagnaAnalyzer> {
-    public LasagnaAnalyzerTest() {
-        super(LasagnaAnalyzer.class);
-    }
+public class LasagnaAnalyzerTest {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
@@ -38,7 +36,8 @@ public class LasagnaAnalyzerTest extends AnalyzerTest<LasagnaAnalyzer> {
     @ParameterizedTest(name = "{0}")
     @MethodSource("testCases")
     public void testCommentsOnSolution(String filename, List<Comment> expectedComments) {
-        var analysis = analyzeResourceFile("/analyzer/exercises/lasagna/" + filename);
+        var solution = new SolutionFromResourceFiles("lasagna", "/analyzer/exercises/lasagna/" + filename);
+        var analysis = AnalyzerTestHelper.analyze(solution, LasagnaAnalyzer::new);
         assertThat(analysis.getComments()).containsExactlyInAnyOrder(expectedComments.toArray(Comment[]::new));
     }
 }

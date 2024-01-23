@@ -2,12 +2,11 @@ package analyzer.exercises.hamming;
 
 import analyzer.Analysis;
 import analyzer.Analyzer;
+import analyzer.Solution;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
-import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,10 +17,10 @@ import java.util.Set;
 public class HammingAnalyzer implements Analyzer {
 
     @Override
-    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
+    public void analyze(Solution solution, Analysis analysis) {
         HammingWalker walker = new HammingWalker();
 
-        compilationUnits.forEach(cu -> cu.walk(ClassOrInterfaceDeclaration.class, walker));
+        solution.getCompilationUnits().forEach(cu -> cu.walk(ClassOrInterfaceDeclaration.class, walker));
 
         if (!walker.hasConstructor()) {
             analysis.addComment(new MustUseConstructor());

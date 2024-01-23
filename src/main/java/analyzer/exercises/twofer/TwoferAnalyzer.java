@@ -2,10 +2,8 @@ package analyzer.exercises.twofer;
 
 import analyzer.Analysis;
 import analyzer.Analyzer;
+import analyzer.Solution;
 import analyzer.comments.AvoidHardCodedTestCases;
-import com.github.javaparser.ast.CompilationUnit;
-
-import java.util.List;
 
 /**
  * The {@link TwoferAnalyzer} is the analyzer implementation for the {@code two-fer} practice exercise.
@@ -15,10 +13,10 @@ import java.util.List;
 public class TwoferAnalyzer implements Analyzer {
 
     @Override
-    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
+    public void analyze(Solution solution, Analysis analysis) {
         TwoferWalker walker = new TwoferWalker();
 
-        compilationUnits.forEach(cu -> cu.walk(walker));
+        solution.getCompilationUnits().forEach(cu -> cu.walk(walker));
 
         if (walker.hasHardCodedTestCases) {
             analysis.addComment(new AvoidHardCodedTestCases());

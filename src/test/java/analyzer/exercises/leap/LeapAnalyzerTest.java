@@ -1,7 +1,8 @@
 package analyzer.exercises.leap;
 
-import analyzer.AnalyzerTest;
+import analyzer.AnalyzerTestHelper;
 import analyzer.Comment;
+import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.AvoidHardCodedTestCases;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,16 +13,12 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LeapAnalyzerTest extends AnalyzerTest<LeapAnalyzer> {
-    private static final String RESOURCE_LOCATION = "/analyzer/exercises/leap/";
-
-    public LeapAnalyzerTest() {
-        super(LeapAnalyzer.class);
-    }
+public class LeapAnalyzerTest {
 
     @Test
     public void optimalSolution() {
-        var analysis = analyzeResourceFile(RESOURCE_LOCATION + "OptimalSolution.java");
+        var solution = new SolutionFromResourceFiles("leap", getResourceFileName("OptimalSolution.java"));
+        var analysis = AnalyzerTestHelper.analyze(solution, LeapAnalyzer::new);
         assertThat(analysis.getComments()).isEmpty();
     }
 
@@ -39,7 +36,12 @@ public class LeapAnalyzerTest extends AnalyzerTest<LeapAnalyzer> {
     @ParameterizedTest(name = "{0}")
     @MethodSource("testCases")
     public void testCommentsOnSolution(String filename, Comment expectedComment) {
-        var analysis = analyzeResourceFile(RESOURCE_LOCATION + filename);
+        var solution = new SolutionFromResourceFiles("leap", getResourceFileName(filename));
+        var analysis = AnalyzerTestHelper.analyze(solution, LeapAnalyzer::new);
         assertThat(analysis.getComments()).contains(expectedComment);
+    }
+
+    private static String getResourceFileName(String testFileName) {
+        return "/analyzer/exercises/leap/" + testFileName;
     }
 }

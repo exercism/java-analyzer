@@ -2,6 +2,7 @@ package analyzer.exercises.leap;
 
 import analyzer.Analysis;
 import analyzer.Analyzer;
+import analyzer.Solution;
 import analyzer.comments.AvoidHardCodedTestCases;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
@@ -13,7 +14,6 @@ import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,8 +32,8 @@ public class LeapAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyz
     private final Set<Integer> intLiterals = new HashSet<>();
 
     @Override
-    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
-        for (CompilationUnit compilationUnit : compilationUnits) {
+    public void analyze(Solution solution, Analysis analysis) {
+        for (CompilationUnit compilationUnit : solution.getCompilationUnits()) {
             compilationUnit.accept(this, analysis);
         }
     }

@@ -1,7 +1,8 @@
 package analyzer.exercises.twofer;
 
-import analyzer.AnalyzerTest;
+import analyzer.AnalyzerTestHelper;
 import analyzer.Comment;
+import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.AvoidHardCodedTestCases;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,11 +12,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TwoferAnalyzerTest extends AnalyzerTest<TwoferAnalyzer> {
-
-    public TwoferAnalyzerTest() {
-        super(TwoferAnalyzer.class);
-    }
+public class TwoferAnalyzerTest {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
@@ -33,7 +30,8 @@ public class TwoferAnalyzerTest extends AnalyzerTest<TwoferAnalyzer> {
     @MethodSource("testCases")
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var actual = analyzeResourceFile(getResourceFileName(solutionFile));
+        var solution = new SolutionFromResourceFiles("two-fer", getResourceFileName(solutionFile));
+        var actual = AnalyzerTestHelper.analyze(solution, TwoferAnalyzer::new);
 
         assertThat(actual.getComments()).containsExactly(expectedComments);
     }
