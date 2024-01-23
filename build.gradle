@@ -1,8 +1,9 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "8.1.1"
     id "java"
     id "application"
     id "jacoco"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "ru.vyarus.mkdocs-build" version '3.0.0'
 }
 
 group = "org.exercism"
@@ -48,4 +49,15 @@ jacocoTestReport {
     reports {
         xml.required = true
     }
+}
+
+mkdocs {
+    sourcesDir = "src/doc"
+    buildDir = file("build/docs")
+    publish.docPath = null
+}
+
+javadoc {
+    mustRunAfter(mkdocsBuild)
+    destinationDir = file("build/docs/api")
 }

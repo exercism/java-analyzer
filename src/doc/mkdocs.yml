@@ -1,0 +1,43 @@
+site_name: Exercism Java analyzer
+
+site_description: Documentation for the Exercism Java analyzer
+site_url: https://exercism.github.io/java-analyzer
+
+repo_name: java-analyzer
+repo_url: https://github.com/exercism/java-analyzer
+edit_uri: blob/main/docs/src/
+
+copyright: 'Copyright &copy; 2024 Exercism'
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.path
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+
+markdown_extensions:
+  - admonition
+  - fenced_code
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - contributing.md
+  - API: /java-analyzer/api
