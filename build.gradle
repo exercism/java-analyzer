@@ -1,7 +1,8 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "8.1.1"
     id "java"
     id "application"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "ru.vyarus.mkdocs-build" version '3.0.0'
 }
 
 group = "org.exercism"
@@ -38,4 +39,14 @@ test {
         showStandardStreams = true
         events = ["passed", "failed", "skipped"]
     }
+}
+
+python {
+    scope = USER
+}
+
+mkdocs {
+    sourcesDir = "."
+    buildDir = "build/docs/mkdocs"
+    publish.docPath = null
 }

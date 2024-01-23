@@ -1,0 +1,21 @@
+site_name: Exercism Java analyzer
+
+site_description: Documentation for the Exercism Java analyzer
+site_url: https://exercism.github.io/java-analyzer
+
+repo_name: java-analyzer
+repo_url: https://github.com/exercism/java-analyzer
+edit_uri: blob/main/docs/
+
+copyright: 'Copyright &copy; 2024 Exercism'
+
+markdown_extensions:
+  - admonition
+  - fenced_code
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
