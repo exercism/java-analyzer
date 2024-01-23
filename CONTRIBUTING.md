@@ -28,7 +28,7 @@ Start by reading up on Exercism analyzers:
 
 To learn how the Java Analyzer works:
 
-- Read the [project documentation][documentation].
+- Read the [project documentation][project-documentation].
 - Browse [existing exercise analyzer implementations][browse-analyzers].
 
 ### Writing comments
