@@ -5,7 +5,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class Main {
+/**
+ * The main entrypoint to the Java analyzer from the command-line.
+ * The CLI expects three arguments and is used like this:
+ *
+ * <pre>
+ * java -jar java-analyzer.jar exercise-slug /path/to/input/ /path/to/output/
+ * </pre>
+ */
+public class AnalyzerCli {
 
     private static boolean isNotValidDirectory(String p) {
         return !p.endsWith("/") || !new File(p).isDirectory();
@@ -34,7 +42,7 @@ public class Main {
         var analysis = AnalyzerRoot.analyze(solution);
 
         try (var analysisWriter = new FileWriter(Path.of(outputDirectory, "analysis.json").toFile());
-             var tagsWriter = new FileWriter(Path.of(outputDirectory,"tags.json").toFile())) {
+             var tagsWriter = new FileWriter(Path.of(outputDirectory, "tags.json").toFile())) {
             var output = new OutputWriter(analysisWriter, tagsWriter);
             output.write(analysis);
         }
