@@ -1,6 +1,7 @@
 plugins {
     id "java"
     id "application"
+    id "jacoco"
     id "com.github.johnrengelman.shadow" version "8.1.1"
     id "ru.vyarus.mkdocs-build" version '3.0.0'
 }
@@ -38,6 +39,15 @@ test {
         exceptionFormat = "full"
         showStandardStreams = true
         events = ["passed", "failed", "skipped"]
+    }
+
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
     }
 }
 

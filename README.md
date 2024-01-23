@@ -1,4 +1,4 @@
-# java-analyzer
+# Java Analyzer [![Coverage Status](https://coveralls.io/repos/github/exercism/java-analyzer/badge.svg?branch=main)](https://coveralls.io/github/exercism/java-analyzer?branch=main)
 
 The Java analyzer uses [Abstract Syntax Trees][ast-wiki] (ASTs) to analyze submitted solutions using the [`javaparser`][javaparser] library.
 
