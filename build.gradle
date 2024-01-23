@@ -51,10 +51,6 @@ jacocoTestReport {
     }
 }
 
-python {
-    scope = USER
-}
-
 mkdocs {
     sourcesDir = "src/doc"
     buildDir = file("build/docs")
