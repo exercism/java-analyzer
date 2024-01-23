@@ -55,11 +55,11 @@ public abstract class Comment {
      * <p>
      * For example, if the Markdown template contains a parameter {@code %<methodName>s},
      * the implementation of this method could look like this:
-     * <pre>
+     * <pre>{@code
      *     public Map<String, String> getParameters() {
      *         return Map.of("methodName", "theNameOfTheMethod");
      *     }
-     * </pre>
+     * }</pre>
      *
      * @return The parameters for the comment.
      */
