@@ -16,6 +16,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The {@link LeapAnalyzer} is the analyzer implementation for the {@code leap} practice exercise.
+ * It extends from the {@link VoidVisitorAdapter} and uses the visitor pattern to traverse each compilation unit.
+ *
+ * @see <a href="https://github.com/exercism/java/tree/main/exercises/practice/leap">The leap exercise on the Java track</a>
+ */
 public class LeapAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
     private static final Set<Integer> TEST_CASES = Set.of(1960, 1996, 2000, 2400);
     private static final Set<String> DISALLOWED_IMPORTS = Set.of(

@@ -10,6 +10,11 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The {@link HammingAnalyzer} is the analyzer implementation for the {@code hamming} practice exercise.
+ *
+ * @see <a href="https://github.com/exercism/java/tree/main/exercises/practice/hamming">The hamming exercise on the Java track</a>
+ */
 public class HammingAnalyzer implements Analyzer {
 
     @Override
@@ -34,7 +39,7 @@ public class HammingAnalyzer implements Analyzer {
         }
 
         if (!walker.getHammingDistanceMethodMayCalculateDistance()
-            && !walker.constructorMayCalculateDistance()) {
+                && !walker.constructorMayCalculateDistance()) {
             analysis.addComment(new MustCalculateHammingDistance());
             return;
         }

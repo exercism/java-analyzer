@@ -11,6 +11,11 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.List;
 
+/**
+ * The {@link GlobalAnalyzer} contains checks that are exercise-agnostic,
+ * such as whether a solution is using print statements or a static {@code main} method.
+ * It extends from the {@link VoidVisitorAdapter} and uses the visitor pattern to traverse each compilation unit.
+ */
 public class GlobalAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
 
     @Override

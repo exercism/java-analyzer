@@ -12,6 +12,12 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.List;
 
+/**
+ * The {@link LasagnaAnalyzer} is the analyzer implementation for the {@code lasagna} concept exercise.
+ * It extends from the {@link VoidVisitorAdapter} and uses the visitor pattern to traverse each compilation unit.
+ *
+ * @see <a href="https://github.com/exercism/java/tree/main/exercises/concept/lasagna">The lasagna exercise on the Java track</a>
+ */
 public class LasagnaAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
     private static final String EXERCISE_NAME = "Lasagna";
     private static final String EXPECTED_MINUTES_IN_OVEN = "expectedMinutesInOven";

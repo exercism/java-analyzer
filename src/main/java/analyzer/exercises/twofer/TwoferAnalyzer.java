@@ -7,6 +7,11 @@ import com.github.javaparser.ast.CompilationUnit;
 
 import java.util.List;
 
+/**
+ * The {@link TwoferAnalyzer} is the analyzer implementation for the {@code two-fer} practice exercise.
+ *
+ * @see <a href="https://github.com/exercism/java/tree/main/exercises/practice/two-fer">The two-fer exercise on the Java track</a>
+ */
 public class TwoferAnalyzer implements Analyzer {
 
     @Override
