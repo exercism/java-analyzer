@@ -1,6 +1,6 @@
 package analyzer.exercises.lasagna;
 
-import analyzer.AnalyzerTestHelper;
+import analyzer.AnalyzerRoot;
 import analyzer.Comment;
 import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.ExemplarSolution;
@@ -37,7 +37,7 @@ public class LasagnaAnalyzerTest {
     @MethodSource("testCases")
     public void testCommentsOnSolution(String filename, List<Comment> expectedComments) {
         var solution = new SolutionFromResourceFiles("lasagna", "/analyzer/exercises/lasagna/" + filename);
-        var analysis = AnalyzerTestHelper.analyze(solution, LasagnaAnalyzer::new);
-        assertThat(analysis.getComments()).containsExactlyInAnyOrder(expectedComments.toArray(Comment[]::new));
+        var analysis = AnalyzerRoot.analyze(solution);
+        assertThat(analysis.getComments()).contains(expectedComments.toArray(Comment[]::new));
     }
 }

@@ -1,6 +1,6 @@
 package analyzer.exercises;
 
-import analyzer.AnalyzerTestHelper;
+import analyzer.AnalyzerRoot;
 import analyzer.SolutionFromString;
 import analyzer.comments.AvoidPrintStatements;
 import analyzer.comments.DoNotUseMainMethod;
@@ -16,8 +16,8 @@ public class GlobalAnalyzerTest {
     @MethodSource
     @ParameterizedTest
     public void solutionsWithMainMethod(String code) {
-        var solution = new SolutionFromString(code);
-        var actual = AnalyzerTestHelper.analyze(solution, GlobalAnalyzer::new);
+        var solution = new SolutionFromString("any-exercise", code);
+        var actual = AnalyzerRoot.analyze(solution);
         assertThat(actual.getComments()).contains(new DoNotUseMainMethod());
     }
 
@@ -41,8 +41,8 @@ public class GlobalAnalyzerTest {
     @MethodSource
     @ParameterizedTest
     public void solutionsWithPrintStatements(String code) {
-        var solution = new SolutionFromString(code);
-        var actual = AnalyzerTestHelper.analyze(solution, GlobalAnalyzer::new);
+        var solution = new SolutionFromString("any-exercise", code);
+        var actual = AnalyzerRoot.analyze(solution);
         assertThat(actual.getComments()).contains(new AvoidPrintStatements());
     }
 

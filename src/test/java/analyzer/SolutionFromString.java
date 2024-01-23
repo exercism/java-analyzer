@@ -14,10 +14,6 @@ public class SolutionFromString implements Solution {
         this.compilationUnit = StaticJavaParser.parse(code);
     }
 
-    public SolutionFromString(String code) {
-        this(null, code);
-    }
-
     @Override
     public String getSlug() {
         return this.slug;

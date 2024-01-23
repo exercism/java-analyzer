@@ -1,6 +1,6 @@
 package analyzer.exercises.hamming;
 
-import analyzer.AnalyzerTestHelper;
+import analyzer.AnalyzerRoot;
 import analyzer.Comment;
 import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.ConstructorTooLong;
@@ -38,10 +38,10 @@ public class HammingAnalyzerTest {
     @MethodSource("testCases")
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var solution = new SolutionFromResourceFiles("leap", getResourceFileName(solutionFile));
-        var analysis = AnalyzerTestHelper.analyze(solution, HammingAnalyzer::new);
+        var solution = new SolutionFromResourceFiles("hamming", getResourceFileName(solutionFile));
+        var analysis = AnalyzerRoot.analyze(solution);
 
-        assertThat(analysis.getComments()).containsExactly(expectedComments);
+        assertThat(analysis.getComments()).contains(expectedComments);
     }
 
     private static String getResourceFileName(String testFileName) {

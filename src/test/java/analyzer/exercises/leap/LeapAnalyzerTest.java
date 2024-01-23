@@ -1,6 +1,6 @@
 package analyzer.exercises.leap;
 
-import analyzer.AnalyzerTestHelper;
+import analyzer.AnalyzerRoot;
 import analyzer.Comment;
 import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.AvoidHardCodedTestCases;
@@ -18,7 +18,7 @@ public class LeapAnalyzerTest {
     @Test
     public void optimalSolution() {
         var solution = new SolutionFromResourceFiles("leap", getResourceFileName("OptimalSolution.java"));
-        var analysis = AnalyzerTestHelper.analyze(solution, LeapAnalyzer::new);
+        var analysis = AnalyzerRoot.analyze(solution);
         assertThat(analysis.getComments()).isEmpty();
     }
 
@@ -37,7 +37,7 @@ public class LeapAnalyzerTest {
     @MethodSource("testCases")
     public void testCommentsOnSolution(String filename, Comment expectedComment) {
         var solution = new SolutionFromResourceFiles("leap", getResourceFileName(filename));
-        var analysis = AnalyzerTestHelper.analyze(solution, LeapAnalyzer::new);
+        var analysis = AnalyzerRoot.analyze(solution);
         assertThat(analysis.getComments()).contains(expectedComment);
     }
 

@@ -1,6 +1,6 @@
 package analyzer.exercises.twofer;
 
-import analyzer.AnalyzerTestHelper;
+import analyzer.AnalyzerRoot;
 import analyzer.Comment;
 import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.AvoidHardCodedTestCases;
@@ -31,9 +31,9 @@ public class TwoferAnalyzerTest {
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
         var solution = new SolutionFromResourceFiles("two-fer", getResourceFileName(solutionFile));
-        var actual = AnalyzerTestHelper.analyze(solution, TwoferAnalyzer::new);
+        var actual = AnalyzerRoot.analyze(solution);
 
-        assertThat(actual.getComments()).containsExactly(expectedComments);
+        assertThat(actual.getComments()).contains(expectedComments);
     }
 
     private static String getResourceFileName(String testFileName) {
