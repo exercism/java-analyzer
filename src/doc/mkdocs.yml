@@ -5,7 +5,7 @@ site_url: https://exercism.github.io/java-analyzer
 
 repo_name: java-analyzer
 repo_url: https://github.com/exercism/java-analyzer
-edit_uri: blob/main/docs/
+edit_uri: blob/main/docs/src/
 
 copyright: 'Copyright &copy; 2024 Exercism'
 
@@ -40,3 +40,4 @@ markdown_extensions:
 nav:
   - Home: index.md
   - contributing.md
+  - API: /java-analyzer/api

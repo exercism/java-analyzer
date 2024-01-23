@@ -46,7 +46,12 @@ python {
 }
 
 mkdocs {
-    sourcesDir = "."
-    buildDir = "build/docs/mkdocs"
+    sourcesDir = "src/doc"
+    buildDir = file("build/docs")
     publish.docPath = null
+}
+
+javadoc {
+    mustRunAfter(mkdocsBuild)
+    destinationDir = file("build/docs/api")
 }
