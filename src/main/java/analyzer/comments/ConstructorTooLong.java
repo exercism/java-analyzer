@@ -1,13 +1,15 @@
 package analyzer.comments;
 
 import analyzer.Comment;
-import analyzer.CommentType;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 /**
+ * This comment indicates that the code in the solution's constructor is too long,
+ * and that it would benefit from being broken up into helper methods.
+ *
  * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/general/constructor_too_long.md">Markdown Template</a>
  */
 public class ConstructorTooLong extends Comment {
@@ -32,7 +34,7 @@ public class ConstructorTooLong extends Comment {
     }
 
     @Override
-    public CommentType getType() {
-        return CommentType.ACTIONABLE;
+    public Type getType() {
+        return Type.ACTIONABLE;
     }
 }

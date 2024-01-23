@@ -1,9 +1,10 @@
 package analyzer.comments;
 
 import analyzer.Comment;
-import analyzer.CommentType;
 
 /**
+ * This comment instructs students not to hard-code values used in the exercise tests.
+ *
  * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/general/avoid_hard_coded_test_cases.md">Markdown Template</a>
  */
 public class AvoidHardCodedTestCases extends Comment {
@@ -13,7 +14,7 @@ public class AvoidHardCodedTestCases extends Comment {
     }
 
     @Override
-    public CommentType getType() {
-        return CommentType.ESSENTIAL;
+    public Type getType() {
+        return Type.ESSENTIAL;
     }
 }

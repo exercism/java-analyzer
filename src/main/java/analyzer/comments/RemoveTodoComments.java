@@ -1,9 +1,10 @@
 package analyzer.comments;
 
 import analyzer.Comment;
-import analyzer.CommentType;
 
 /**
+ * This comment instructs students to remove lef-over to-do comments from their solution.
+ *
  * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/general/remove_todo_comments.md">Markdown Template</a>
  */
 public class RemoveTodoComments extends Comment {
@@ -13,7 +14,7 @@ public class RemoveTodoComments extends Comment {
     }
 
     @Override
-    public CommentType getType() {
-        return CommentType.ACTIONABLE;
+    public Type getType() {
+        return Type.ACTIONABLE;
     }
 }

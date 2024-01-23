@@ -3,8 +3,6 @@ package analyzer.exercises.twofer;
 import analyzer.AnalyzerTest;
 import analyzer.Comment;
 import analyzer.comments.AvoidHardCodedTestCases;
-import analyzer.comments.UseProperClassName;
-import analyzer.comments.UseProperMethodName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,8 +19,6 @@ public class TwoferAnalyzerTest extends AnalyzerTest<TwoferAnalyzer> {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
-                Arguments.of("NoTwoferClass.java.txt", new Comment[]{new UseProperClassName("Twofer")}),
-                Arguments.of("NoTwoferMethod.java.txt", new Comment[]{new UseProperMethodName("twofer")}),
                 Arguments.of("UsesLambda.java.txt", new Comment[0]),
                 Arguments.of("UsesLoop.java.txt", new Comment[0]),
                 Arguments.of("HardCodedTestCases.java.txt", new Comment[]{new AvoidHardCodedTestCases()}),

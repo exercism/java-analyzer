@@ -4,8 +4,6 @@ import analyzer.Analysis;
 import analyzer.Analyzer;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
-import analyzer.comments.UseProperClassName;
-import analyzer.comments.UseProperMethodName;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
@@ -19,16 +17,6 @@ public class HammingAnalyzer implements Analyzer {
         HammingWalker walker = new HammingWalker();
 
         compilationUnits.forEach(cu -> cu.walk(ClassOrInterfaceDeclaration.class, walker));
-
-        if (!walker.hasHammingClass()) {
-            analysis.addComment(new UseProperClassName("Hamming"));
-            return;
-        }
-
-        if (!walker.hasGetHammingDistanceMethod()) {
-            analysis.addComment(new UseProperMethodName("getHammingDistance"));
-            return;
-        }
 
         if (!walker.hasConstructor()) {
             analysis.addComment(new MustUseConstructor());

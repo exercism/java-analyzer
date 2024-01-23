@@ -1,4 +1,0 @@
-package analyzer.exercises.twofer;
-
-/** Empty class for testing that the class must be named correctly. */
-public class NoTwoferClass {}

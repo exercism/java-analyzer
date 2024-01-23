@@ -4,8 +4,6 @@ import analyzer.AnalyzerTest;
 import analyzer.Comment;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
-import analyzer.comments.UseProperClassName;
-import analyzer.comments.UseProperMethodName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,8 +19,6 @@ public class HammingAnalyzerTest extends AnalyzerTest<HammingAnalyzer> {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
-                Arguments.of("NoHammingClass.java.txt", new Comment[]{new UseProperClassName("Hamming")}),
-                Arguments.of("NoGetHammingDistanceMethod.java.txt", new Comment[]{new UseProperMethodName("getHammingDistance")}),
                 Arguments.of("NoConstructor.java.txt", new Comment[]{new MustUseConstructor()}),
                 Arguments.of("NoConditionalInConstructor.java.txt", new Comment[]{new MustUseConditionalLogicInConstructor()}),
                 Arguments.of("DoesNotThrowInConstructor.java.txt", new Comment[]{new MustThrowInConstructor()}),
