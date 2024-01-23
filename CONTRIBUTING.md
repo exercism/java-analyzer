@@ -28,6 +28,7 @@ Start by reading up on Exercism analyzers:
 
 To learn how the Java Analyzer works:
 
+- Read the [project documentation][project-documentation].
 - Browse [existing exercise analyzer implementations][browse-analyzers].
 
 ### Writing comments
@@ -46,3 +47,4 @@ See [the Analyzer comment guidelines][analyzer-comments-guidelines] for guidance
 [analyzer-docs-interface]: https://exercism.org/docs/building/tooling/analyzers/interface
 [community-docs]: https://exercism.org/docs/community/being-a-good-community-member
 [contributing-docs-github]: https://exercism.org/docs/building/github
+[project-documentation]: https://exercism.github.io/java-analyzer/

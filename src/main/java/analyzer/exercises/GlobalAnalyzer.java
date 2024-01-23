@@ -2,6 +2,7 @@ package analyzer.exercises;
 
 import analyzer.Analysis;
 import analyzer.Analyzer;
+import analyzer.Solution;
 import analyzer.comments.AvoidPrintStatements;
 import analyzer.comments.DoNotUseMainMethod;
 import com.github.javaparser.ast.CompilationUnit;
@@ -9,13 +10,16 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-import java.util.List;
-
+/**
+ * The {@link GlobalAnalyzer} contains checks that are exercise-agnostic,
+ * such as whether a solution is using print statements or a static {@code main} method.
+ * It extends from the {@link VoidVisitorAdapter} and uses the visitor pattern to traverse each compilation unit.
+ */
 public class GlobalAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
 
     @Override
-    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
-        for (CompilationUnit compilationUnit : compilationUnits) {
+    public void analyze(Solution solution, Analysis analysis) {
+        for (CompilationUnit compilationUnit : solution.getCompilationUnits()) {
             compilationUnit.accept(this, analysis);
         }
     }

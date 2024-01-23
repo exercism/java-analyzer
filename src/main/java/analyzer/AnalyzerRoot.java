@@ -6,21 +6,33 @@ import analyzer.exercises.hamming.HammingAnalyzer;
 import analyzer.exercises.lasagna.LasagnaAnalyzer;
 import analyzer.exercises.leap.LeapAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
-import com.github.javaparser.ast.CompilationUnit;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code AnalyzerRoot} is the initial entrypoint when analyzing a solution.
+ * Its job is to delegate the analysis of the parsed Java files to the global and exercise-specific analyzers.
+ */
 public class AnalyzerRoot {
 
-    public static Analysis analyze(String slug, List<CompilationUnit> compilationUnits) {
+    private AnalyzerRoot() {
+    }
+
+    /**
+     * Perform the analysis of a solution.
+     *
+     * @param solution The solution being analyzed.
+     * @return The aggregated analysis of all applicable analyzers.
+     */
+    public static Analysis analyze(Solution solution) {
         var analysis = new Analysis();
 
-        for (Analyzer analyzer : createAnalyzers(slug)) {
-            analyzer.analyze(compilationUnits, analysis);
+        for (Analyzer analyzer : createAnalyzers(solution.getSlug())) {
+            analyzer.analyze(solution, analysis);
         }
 
-        if (analysis.getComments().stream().anyMatch(x -> x.getType() != CommentType.CELEBRATORY)) {
+        if (analysis.getComments().stream().anyMatch(x -> x.getType() != Comment.Type.CELEBRATORY)) {
             analysis.addComment(new FeedbackRequest());
         }
 

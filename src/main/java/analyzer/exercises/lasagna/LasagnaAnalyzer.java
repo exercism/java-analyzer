@@ -2,6 +2,7 @@ package analyzer.exercises.lasagna;
 
 import analyzer.Analysis;
 import analyzer.Analyzer;
+import analyzer.Solution;
 import analyzer.comments.ExemplarSolution;
 import analyzer.comments.RemoveTodoComments;
 import com.github.javaparser.ast.CompilationUnit;
@@ -10,8 +11,12 @@ import com.github.javaparser.ast.comments.LineComment;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-import java.util.List;
-
+/**
+ * The {@link LasagnaAnalyzer} is the analyzer implementation for the {@code lasagna} concept exercise.
+ * It extends from the {@link VoidVisitorAdapter} and uses the visitor pattern to traverse each compilation unit.
+ *
+ * @see <a href="https://github.com/exercism/java/tree/main/exercises/concept/lasagna">The lasagna exercise on the Java track</a>
+ */
 public class LasagnaAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
     private static final String EXERCISE_NAME = "Lasagna";
     private static final String EXPECTED_MINUTES_IN_OVEN = "expectedMinutesInOven";
@@ -20,8 +25,8 @@ public class LasagnaAnalyzer extends VoidVisitorAdapter<Analysis> implements Ana
     private static final String TOTAL_TIME_IN_MINUTES = "totalTimeInMinutes";
 
     @Override
-    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
-        for (CompilationUnit compilationUnit : compilationUnits) {
+    public void analyze(Solution solution, Analysis analysis) {
+        for (CompilationUnit compilationUnit : solution.getCompilationUnits()) {
             compilationUnit.accept(this, analysis);
         }
 

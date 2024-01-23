@@ -1,7 +1,5 @@
 package analyzer.exercises.hamming;
 
-import static com.google.common.collect.ImmutableSet.toImmutableSet;
-
 import com.github.javaparser.Range;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
@@ -10,18 +8,11 @@ import com.github.javaparser.ast.expr.CharLiteralExpr;
 import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithRange;
-import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.stmt.ForEachStmt;
-import com.github.javaparser.ast.stmt.ForStmt;
-import com.github.javaparser.ast.stmt.Statement;
-import com.github.javaparser.ast.stmt.ThrowStmt;
-import com.github.javaparser.ast.stmt.WhileStmt;
+import com.github.javaparser.ast.stmt.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimaps;
-
-import static com.google.common.collect.MoreCollectors.toOptional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,17 +21,19 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import static com.google.common.collect.ImmutableSet.toImmutableSet;
+import static com.google.common.collect.MoreCollectors.toOptional;
+
 class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     private ClassOrInterfaceDeclaration hammingClass;
     private List<ConstructorDeclaration> constructors = ImmutableList.of();
     private ConstructorDeclaration constructor;
     private ListMultimap<String, MethodDeclaration> methods = ImmutableListMultimap.of();
-    private Set<String> methodsCalledByConstructor = new HashSet<>();
+    private final Set<String> methodsCalledByConstructor = new HashSet<>();
     private boolean constructorHasIfStatements;
     private boolean constructorThrowsIllegalArgumentDirectly;
     private boolean constructorMayCalculateDistanceDirectly;
-    private MethodDeclaration getHammingDistanceMethod;
-    private Set<String> methodsCalledByGetHammingDistance = new HashSet<>();
+    private final Set<String> methodsCalledByGetHammingDistance = new HashSet<>();
     private boolean getHammingDistanceMayCalculateDistanceDirectly;
 
     @Override
@@ -128,8 +121,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     private void walkGetHammingDistanceMethod(MethodDeclaration getHammingDistanceMethod) {
-        this.getHammingDistanceMethod = getHammingDistanceMethod;
-
         getHammingDistanceMethod.getBody().ifPresent(this::walkGetHammingDistanceMethod);
     }
 
@@ -176,14 +167,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
         return body.getStatements().stream()
             .filter(this::isMethodCall)
             .flatMap(this::getMethodCallNames);
-    }
-
-    public boolean hasHammingClass() {
-        return hammingClass != null;
-    }
-
-    public boolean hasGetHammingDistanceMethod() {
-        return getHammingDistanceMethod != null;
     }
 
     public boolean hasConstructor() {

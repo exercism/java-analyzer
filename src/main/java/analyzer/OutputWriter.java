@@ -7,6 +7,8 @@ import java.io.Writer;
 import java.util.Optional;
 
 /**
+ * The {@link OutputWriter} converts the analysis result into JSON output and writes it to the writers passed to the constructor.
+ *
  * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
  */
 public class OutputWriter {
@@ -68,8 +70,8 @@ public class OutputWriter {
     }
 
     private static int compareCommentsByType(Comment a, Comment b) {
-        var ordinalA = Optional.ofNullable(a.getType()).map(CommentType::ordinal).orElse(Integer.MAX_VALUE);
-        var ordinalB = Optional.ofNullable(b.getType()).map(CommentType::ordinal).orElse(Integer.MAX_VALUE);
+        var ordinalA = Optional.ofNullable(a.getType()).map(Comment.Type::ordinal).orElse(Integer.MAX_VALUE);
+        var ordinalB = Optional.ofNullable(b.getType()).map(Comment.Type::ordinal).orElse(Integer.MAX_VALUE);
         return Integer.compare(ordinalA, ordinalB);
     }
 }

@@ -1,13 +1,15 @@
 package analyzer.comments;
 
 import analyzer.Comment;
-import analyzer.CommentType;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 /**
+ * This comment indicates that a method in the solution is too long,
+ * and that it could benefit from being split up into multiple helper methods.
+ *
  * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/general/method_too_long.md">Markdown Template</a>
  */
 public class MethodTooLong extends Comment {
@@ -32,7 +34,7 @@ public class MethodTooLong extends Comment {
     }
 
     @Override
-    public CommentType getType() {
-        return CommentType.ACTIONABLE;
+    public Type getType() {
+        return Type.ACTIONABLE;
     }
 }

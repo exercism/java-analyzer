@@ -2,33 +2,25 @@ package analyzer.exercises.hamming;
 
 import analyzer.Analysis;
 import analyzer.Analyzer;
+import analyzer.Solution;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
-import analyzer.comments.UseProperClassName;
-import analyzer.comments.UseProperMethodName;
-import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
-import java.util.List;
 import java.util.Set;
 
+/**
+ * The {@link HammingAnalyzer} is the analyzer implementation for the {@code hamming} practice exercise.
+ *
+ * @see <a href="https://github.com/exercism/java/tree/main/exercises/practice/hamming">The hamming exercise on the Java track</a>
+ */
 public class HammingAnalyzer implements Analyzer {
 
     @Override
-    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
+    public void analyze(Solution solution, Analysis analysis) {
         HammingWalker walker = new HammingWalker();
 
-        compilationUnits.forEach(cu -> cu.walk(ClassOrInterfaceDeclaration.class, walker));
-
-        if (!walker.hasHammingClass()) {
-            analysis.addComment(new UseProperClassName("Hamming"));
-            return;
-        }
-
-        if (!walker.hasGetHammingDistanceMethod()) {
-            analysis.addComment(new UseProperMethodName("getHammingDistance"));
-            return;
-        }
+        solution.getCompilationUnits().forEach(cu -> cu.walk(ClassOrInterfaceDeclaration.class, walker));
 
         if (!walker.hasConstructor()) {
             analysis.addComment(new MustUseConstructor());
@@ -46,7 +38,7 @@ public class HammingAnalyzer implements Analyzer {
         }
 
         if (!walker.getHammingDistanceMethodMayCalculateDistance()
-            && !walker.constructorMayCalculateDistance()) {
+                && !walker.constructorMayCalculateDistance()) {
             analysis.addComment(new MustCalculateHammingDistance());
             return;
         }

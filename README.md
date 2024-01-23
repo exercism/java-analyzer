@@ -2,6 +2,8 @@
 
 The Java analyzer uses [Abstract Syntax Trees][ast-wiki] (ASTs) to analyze submitted solutions using the [`javaparser`][javaparser] library.
 
+The documentation for this project can be found at [exercism.github.io/java-analyzer/][documentation].
+
 ## Contributing
 
 If you want to contribute to the Java analyzer, please refer to the [Contributing Guide][contributing-guide].
@@ -62,4 +64,5 @@ bin/run-tests-in-docker.sh
 
 [ast-wiki]: https://en.wikipedia.org/wiki/Abstract_syntax_tree
 [contributing-guide]: https://github.com/exercism/java-analyzer/blob/main/CONTRIBUTING.md
-[javaparser]: https://github.com/javaparser/javaparser 
+[documentation]: https://exercism.github.io/java-analyzer/
+[javaparser]: https://github.com/javaparser/javaparser

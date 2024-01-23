@@ -1,6 +1,7 @@
 package analyzer.exercises;
 
-import analyzer.AnalyzerTest;
+import analyzer.AnalyzerRoot;
+import analyzer.SolutionFromString;
 import analyzer.comments.AvoidPrintStatements;
 import analyzer.comments.DoNotUseMainMethod;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,15 +11,13 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GlobalAnalyzerTest extends AnalyzerTest<GlobalAnalyzer> {
-    public GlobalAnalyzerTest() {
-        super(GlobalAnalyzer.class);
-    }
+public class GlobalAnalyzerTest {
 
     @MethodSource
     @ParameterizedTest
-    public void solutionsWithMainMethod(String solution) {
-        var actual = analyzeString(solution);
+    public void solutionsWithMainMethod(String code) {
+        var solution = new SolutionFromString("any-exercise", code);
+        var actual = AnalyzerRoot.analyze(solution);
         assertThat(actual.getComments()).contains(new DoNotUseMainMethod());
     }
 
@@ -41,8 +40,9 @@ public class GlobalAnalyzerTest extends AnalyzerTest<GlobalAnalyzer> {
 
     @MethodSource
     @ParameterizedTest
-    public void solutionsWithPrintStatements(String solution) {
-        var actual = analyzeString(solution);
+    public void solutionsWithPrintStatements(String code) {
+        var solution = new SolutionFromString("any-exercise", code);
+        var actual = AnalyzerRoot.analyze(solution);
         assertThat(actual.getComments()).contains(new AvoidPrintStatements());
     }
 

@@ -2,26 +2,23 @@ package analyzer.exercises.twofer;
 
 import analyzer.Analysis;
 import analyzer.Analyzer;
+import analyzer.Solution;
 import analyzer.comments.AvoidHardCodedTestCases;
-import analyzer.comments.UseProperClassName;
-import analyzer.comments.UseProperMethodName;
-import com.github.javaparser.ast.CompilationUnit;
 
-import java.util.List;
-
+/**
+ * The {@link TwoferAnalyzer} is the analyzer implementation for the {@code two-fer} practice exercise.
+ *
+ * @see <a href="https://github.com/exercism/java/tree/main/exercises/practice/two-fer">The two-fer exercise on the Java track</a>
+ */
 public class TwoferAnalyzer implements Analyzer {
 
     @Override
-    public void analyze(List<CompilationUnit> compilationUnits, Analysis analysis) {
+    public void analyze(Solution solution, Analysis analysis) {
         TwoferWalker walker = new TwoferWalker();
 
-        compilationUnits.forEach(cu -> cu.walk(walker));
+        solution.getCompilationUnits().forEach(cu -> cu.walk(walker));
 
-        if (!walker.hasClassTwofer) {
-            analysis.addComment(new UseProperClassName("Twofer"));
-        } else if (!walker.hasMethodTwofer) {
-            analysis.addComment(new UseProperMethodName("twofer"));
-        } else if (walker.hasHardCodedTestCases) {
+        if (walker.hasHardCodedTestCases) {
             analysis.addComment(new AvoidHardCodedTestCases());
         } else if (walker.usesLambda) {
             // could be used later for additional comments?

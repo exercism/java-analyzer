@@ -1,7 +1,6 @@
 package analyzer.exercises.lasagna;
 
 import analyzer.Comment;
-import analyzer.CommentType;
 
 import java.util.Map;
 
@@ -31,7 +30,7 @@ class ReuseCode extends Comment {
     }
 
     @Override
-    public CommentType getType() {
-        return CommentType.ACTIONABLE;
+    public Type getType() {
+        return Type.ACTIONABLE;
     }
 }

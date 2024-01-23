@@ -1,11 +1,10 @@
 package analyzer.exercises.hamming;
 
-import analyzer.AnalyzerTest;
+import analyzer.AnalyzerRoot;
 import analyzer.Comment;
+import analyzer.SolutionFromResourceFiles;
 import analyzer.comments.ConstructorTooLong;
 import analyzer.comments.MethodTooLong;
-import analyzer.comments.UseProperClassName;
-import analyzer.comments.UseProperMethodName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,15 +13,10 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HammingAnalyzerTest extends AnalyzerTest<HammingAnalyzer> {
-    public HammingAnalyzerTest() {
-        super(HammingAnalyzer.class);
-    }
+public class HammingAnalyzerTest {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
-                Arguments.of("NoHammingClass.java.txt", new Comment[]{new UseProperClassName("Hamming")}),
-                Arguments.of("NoGetHammingDistanceMethod.java.txt", new Comment[]{new UseProperMethodName("getHammingDistance")}),
                 Arguments.of("NoConstructor.java.txt", new Comment[]{new MustUseConstructor()}),
                 Arguments.of("NoConditionalInConstructor.java.txt", new Comment[]{new MustUseConditionalLogicInConstructor()}),
                 Arguments.of("DoesNotThrowInConstructor.java.txt", new Comment[]{new MustThrowInConstructor()}),
@@ -44,9 +38,10 @@ public class HammingAnalyzerTest extends AnalyzerTest<HammingAnalyzer> {
     @MethodSource("testCases")
     @ParameterizedTest(name = "{0}")
     public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var actual = analyzeResourceFile(getResourceFileName(solutionFile));
+        var solution = new SolutionFromResourceFiles("hamming", getResourceFileName(solutionFile));
+        var analysis = AnalyzerRoot.analyze(solution);
 
-        assertThat(actual.getComments()).containsExactly(expectedComments);
+        assertThat(analysis.getComments()).contains(expectedComments);
     }
 
     private static String getResourceFileName(String testFileName) {

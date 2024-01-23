@@ -29,10 +29,10 @@ public class OutputWriterTest {
         analysis.addComment(new TestComment("key_only"));
         analysis.addComment(new TestComment("key_and_single_param", Map.of("param1", "value1")));
         analysis.addComment(new TestComment("key_and_multiple_params", Map.of("param1", "value1", "param2", "value2")));
-        analysis.addComment(new TestComment("celebratory", CommentType.CELEBRATORY));
-        analysis.addComment(new TestComment("actionable", CommentType.ACTIONABLE));
-        analysis.addComment(new TestComment("essential", CommentType.ESSENTIAL));
-        analysis.addComment(new TestComment("informative", CommentType.INFORMATIVE));
+        analysis.addComment(new TestComment("celebratory", Comment.Type.CELEBRATORY));
+        analysis.addComment(new TestComment("actionable", Comment.Type.ACTIONABLE));
+        analysis.addComment(new TestComment("essential", Comment.Type.ESSENTIAL));
+        analysis.addComment(new TestComment("informative", Comment.Type.INFORMATIVE));
         analysis.setSummary("Lorum Ipsum");
         outputWriter.write(analysis);
 
@@ -103,10 +103,10 @@ public class OutputWriterTest {
 
     private static class TestComment extends Comment {
         private final String key;
-        private final CommentType type;
+        private final Type type;
         private final Map<String, String> parameters;
 
-        private TestComment(String key, CommentType type, Map<String, String> parameters) {
+        private TestComment(String key, Type type, Map<String, String> parameters) {
             this.key = Objects.requireNonNull(key);
             this.type = type;
             this.parameters = Objects.requireNonNull(parameters);
@@ -116,7 +116,7 @@ public class OutputWriterTest {
             this(key, null, Map.of());
         }
 
-        private TestComment(String key, CommentType type) {
+        private TestComment(String key, Type type) {
             this(key, type, Map.of());
         }
 
@@ -130,7 +130,7 @@ public class OutputWriterTest {
         }
 
         @Override
-        public CommentType getType() {
+        public Type getType() {
             return this.type;
         }
 
