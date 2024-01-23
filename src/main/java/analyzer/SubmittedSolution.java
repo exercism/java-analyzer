@@ -8,6 +8,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This represents a solution submitted by a student.
+ * It parses all Java files in the source root of the input directory.
+ */
 class SubmittedSolution implements Solution {
     private static final String SOURCE_ROOT_PATH = "src/main/java";
 
