@@ -1,14 +1,16 @@
-name: GitHub Pages
+name: Docs
 
 on:
   push:
-# TODO: uncomment before merging
-#    branches:
-#      - main
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    name: Build Javadoc
+    name: Build documentation
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -28,6 +30,7 @@ jobs:
         uses: actions/upload-pages-artifact@0252fc4ba7626f0298f0cf00902a25c6afc77fa8
         with:
           path: build/docs
+        if: ${{ github.ref == "refs/head/main" }}
 
   deploy:
     name: Deploy to GitHub Pages
@@ -39,6 +42,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-22.04
+    if: ${{ github.ref == "refs/head/main" }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
