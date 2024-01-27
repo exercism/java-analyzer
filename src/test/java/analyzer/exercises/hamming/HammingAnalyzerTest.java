@@ -25,7 +25,6 @@ public class HammingAnalyzerTest {
                 Arguments.of("MustUseCharAtOrCodePointAt.java.txt", new Comment[]{new MustUseStringCharAtOrCodePointAt()}),
                 Arguments.of("NestedValidation.java.txt", new Comment[]{new CalculateDistanceInConstructor()}),
                 Arguments.of("NestedCalculation.java.txt", new Comment[0]),
-                Arguments.of("ShouldUseStringIsEmpty.java.txt", new Comment[]{new ShouldUseStringIsEmpty()}),
                 Arguments.of("OptimalWithCalculationInGetHammingDistance.java.txt", new Comment[]{new CalculateDistanceInConstructor()}),
                 Arguments.of("OptimalWithCalculationDelegatedFromGetHammingDistance.java.txt", new Comment[]{new CalculateDistanceInConstructor()}),
                 Arguments.of("ConstructorTooLong.java.txt", new Comment[]{new ConstructorTooLong("Hamming")}),

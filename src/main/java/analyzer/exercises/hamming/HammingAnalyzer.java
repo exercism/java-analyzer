@@ -57,10 +57,6 @@ public class HammingAnalyzer implements Analyzer {
             analysis.addComment(new CalculateDistanceInConstructor());
         }
 
-        if (!walker.usesStringIsEmpty()) {
-            analysis.addComment(new ShouldUseStringIsEmpty());
-        }
-
         if (walker.shouldUseStreamFilterAndCount()) {
             analysis.addComment(new ShouldUseStreamFilterAndCount());
         }
