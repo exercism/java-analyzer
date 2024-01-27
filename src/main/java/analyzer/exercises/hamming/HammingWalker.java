@@ -279,10 +279,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
         return !hammingClass.findAll(CharLiteralExpr.class).isEmpty();
     }
 
-    public boolean usesStringIsEmpty() {
-        return usesMethod("isEmpty");
-    }
-
     public boolean usesStringCharAtOrCodePointAt() {
         return usesMethod("charAt") || usesMethod("codePointAt");
     }
