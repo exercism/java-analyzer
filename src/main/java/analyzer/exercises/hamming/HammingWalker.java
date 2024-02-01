@@ -9,26 +9,17 @@ import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithRange;
 import com.github.javaparser.ast.stmt.*;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Multimaps;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static com.google.common.collect.MoreCollectors.toOptional;
 
 class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     private ClassOrInterfaceDeclaration hammingClass;
-    private List<ConstructorDeclaration> constructors = ImmutableList.of();
+    private final Set<ConstructorDeclaration> constructors = new HashSet<>();
     private ConstructorDeclaration constructor;
-    private ListMultimap<String, MethodDeclaration> methods = ImmutableListMultimap.of();
+    private final Map<String, List<MethodDeclaration>> methods = new HashMap<>();
     private final Set<String> methodsCalledByConstructor = new HashSet<>();
     private boolean constructorHasIfStatements;
     private boolean constructorThrowsIllegalArgumentDirectly;
@@ -45,8 +36,8 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     private void walkHammingClass() {
-        methods = getMethodsByName();
-        constructors = hammingClass.getConstructors();
+        methods.putAll(getMethodsByName());
+        constructors.addAll(hammingClass.getConstructors());
 
         findConstructor().ifPresent(this::walkConstructor);
 
@@ -54,10 +45,10 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     }
 
-    private ListMultimap<String, MethodDeclaration> getMethodsByName() {
-        return Multimaps.index(
-            hammingClass.findAll(MethodDeclaration.class),
-            MethodDeclaration::getNameAsString);
+    private Map<String, List<MethodDeclaration>> getMethodsByName() {
+        return hammingClass.findAll(MethodDeclaration.class)
+                .stream()
+                .collect(Collectors.groupingBy(MethodDeclaration::getNameAsString));
     }
 
     private Optional<ConstructorDeclaration> findConstructor() {
@@ -74,28 +65,28 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
         if (statement.isIfStmt()) {
             constructorHasIfStatements = true;
         }
-        
+
         if (isThrowNewIllegalArgument(statement)) {
             constructorThrowsIllegalArgumentDirectly = true;
         }
-        
+
         if (statementMayCalculateHammingDistance(statement)) {
             constructorMayCalculateDistanceDirectly = true;
         }
 
         getMethodCallNames(statement)
-            .forEach(methodName ->
-                recursivelyAddMethodsCalled(methodName, methodsCalledByConstructor));
+                .forEach(methodName ->
+                        recursivelyAddMethodsCalled(methodName, methodsCalledByConstructor));
     }
 
     private boolean isThrowNewIllegalArgument(Statement statement) {
         return statement.findAll(ThrowStmt.class).stream()
-            .anyMatch(this::isCreatingIllegalArgumentException);
+                .anyMatch(this::isCreatingIllegalArgumentException);
     }
 
     private boolean isCreatingIllegalArgumentException(ThrowStmt throwStmt) {
         return throwStmt.getExpression().isObjectCreationExpr()
-            && throwStmt
+                && throwStmt
                 .getExpression()
                 .asObjectCreationExpr()
                 .getType()
@@ -109,15 +100,15 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     private Stream<String> getMethodCallNames(Statement statement) {
         return statement.findAll(MethodCallExpr.class).stream()
-            .map(MethodCallExpr::getNameAsString)
-            .distinct();
+                .map(MethodCallExpr::getNameAsString)
+                .distinct();
     }
 
     private Optional<MethodDeclaration> findGetHammingDistanceMethod() {
         return methods.get("getHammingDistance").stream()
-            // we only care about the one with no parameters
-            .filter(method -> method.getParameters().isEmpty())
-            .collect(toOptional());
+                // we only care about the one with no parameters
+                .filter(method -> method.getParameters().isEmpty())
+                .findFirst();
     }
 
     private void walkGetHammingDistanceMethod(MethodDeclaration getHammingDistanceMethod) {
@@ -134,39 +125,39 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
         }
 
         getMethodCallNames(statement)
-            .forEach(methodName ->
-                recursivelyAddMethodsCalled(methodName, methodsCalledByGetHammingDistance));
+                .forEach(methodName ->
+                        recursivelyAddMethodsCalled(methodName, methodsCalledByGetHammingDistance));
     }
 
     private void recursivelyAddMethodsCalled(
-        String methodName,
-        Set<String> methodsCalled) {
+            String methodName,
+            Set<String> methodsCalled) {
         if (methodsCalled.contains(methodName)) {
             return;
         }
         methodsCalled.add(methodName);
 
         getMethodsCalledBy(methodName)
-            .distinct()
-            .forEach(calledMethod ->
-                recursivelyAddMethodsCalled(calledMethod, methodsCalled));
+                .distinct()
+                .forEach(calledMethod ->
+                        recursivelyAddMethodsCalled(calledMethod, methodsCalled));
     }
 
     private Stream<String> getMethodsCalledBy(String methodName) {
-        return methods.get(methodName).stream()
-            .flatMap(this::getMethodsCalledBy);
+        return methods.getOrDefault(methodName, List.of()).stream()
+                .flatMap(this::getMethodsCalledBy);
     }
 
     private Stream<String> getMethodsCalledBy(MethodDeclaration method) {
         return method.getBody()
-            .map(this::getMethodsCalledBy)
-            .orElse(Stream.of());
+                .map(this::getMethodsCalledBy)
+                .orElse(Stream.of());
     }
 
     private Stream<String> getMethodsCalledBy(BlockStmt body) {
         return body.getStatements().stream()
-            .filter(this::isMethodCall)
-            .flatMap(this::getMethodCallNames);
+                .filter(this::isMethodCall)
+                .flatMap(this::getMethodCallNames);
     }
 
     public boolean hasConstructor() {
@@ -183,64 +174,64 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     public boolean constructorThrowsIllegalArgument() {
         return constructorThrowsIllegalArgumentDirectly
-            || constructorThrowsIllegarArgumentIndirectly();
+                || constructorThrowsIllegarArgumentIndirectly();
     }
 
     private boolean constructorThrowsIllegarArgumentIndirectly() {
         return methodsCalledByConstructor.stream()
-            .anyMatch(this::methodThrowsIllegalArgumentException);
+                .anyMatch(this::methodThrowsIllegalArgumentException);
     }
 
     private boolean methodThrowsIllegalArgumentException(String methodName) {
-        return methods.get(methodName).stream()
-            .anyMatch(this::methodThrowsIllegalArgumentException);
+        return methods.getOrDefault(methodName, List.of()).stream()
+                .anyMatch(this::methodThrowsIllegalArgumentException);
     }
 
     private boolean methodThrowsIllegalArgumentException(MethodDeclaration method) {
         return method.getBody()
-            .map(this::methodBodyThrowsIllegalArgumentException)
-            .orElse(false);
+                .map(this::methodBodyThrowsIllegalArgumentException)
+                .orElse(false);
     }
 
     private boolean methodBodyThrowsIllegalArgumentException(BlockStmt body) {
         return body.getStatements().stream()
-            .anyMatch(this::isThrowNewIllegalArgument);
+                .anyMatch(this::isThrowNewIllegalArgument);
     }
 
     public boolean constructorMayCalculateDistance() {
         return constructorMayCalculateDistanceDirectly
-            || constructorCallsMethodThatMayCalculateDistance();
+                || constructorCallsMethodThatMayCalculateDistance();
     }
 
     private boolean constructorCallsMethodThatMayCalculateDistance() {
         return methodsCalledByConstructor.stream()
-            .anyMatch(this::methodMayCalculateHammingDistance);
+                .anyMatch(this::methodMayCalculateHammingDistance);
     }
 
     public boolean getHammingDistanceMethodMayCalculateDistance() {
         return getHammingDistanceMayCalculateDistanceDirectly
-            || getHammingDistanceCallsMethodThatMayCalculateDistance();
+                || getHammingDistanceCallsMethodThatMayCalculateDistance();
     }
 
     private boolean getHammingDistanceCallsMethodThatMayCalculateDistance() {
         return methodsCalledByGetHammingDistance.stream()
-            .anyMatch(this::methodMayCalculateHammingDistance);
+                .anyMatch(this::methodMayCalculateHammingDistance);
     }
 
     private boolean methodMayCalculateHammingDistance(String methodName) {
-        return methods.get(methodName).stream()
-        .anyMatch(this::methodMayCalculateHammingDistance);
+        return methods.getOrDefault(methodName, List.of()).stream()
+                .anyMatch(this::methodMayCalculateHammingDistance);
     }
 
     private boolean methodMayCalculateHammingDistance(MethodDeclaration method) {
         return method.getBody()
-            .map(this::methodBodyMayCalculateHammingDistance)
-            .orElse(false);
+                .map(this::methodBodyMayCalculateHammingDistance)
+                .orElse(false);
     }
 
     private boolean methodBodyMayCalculateHammingDistance(BlockStmt body) {
         return body.getStatements().stream()
-            .anyMatch(this::statementMayCalculateHammingDistance);
+                .anyMatch(this::statementMayCalculateHammingDistance);
     }
 
     private boolean statementMayCalculateHammingDistance(Statement statement) {
@@ -249,8 +240,8 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     private boolean hasLoopStatement(Statement statement) {
         return !statement.findAll(ForStmt.class).isEmpty()
-            || !statement.findAll(ForEachStmt.class).isEmpty()
-            || !statement.findAll(WhileStmt.class).isEmpty();
+                || !statement.findAll(ForEachStmt.class).isEmpty()
+                || !statement.findAll(WhileStmt.class).isEmpty();
     }
 
     private boolean hasLambdaExpression(Statement statement) {
@@ -259,16 +250,17 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     public Set<String> getLongConstructors() {
         return constructors.stream()
-            .filter(this::isLongNode)
-            .map(ConstructorDeclaration::getNameAsString)
-            .collect(toImmutableSet());
+                .filter(this::isLongNode)
+                .map(ConstructorDeclaration::getNameAsString)
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     public Set<String> getLongMethods() {
         return methods.values().stream()
-            .filter(this::isLongNode)
-            .map(MethodDeclaration::getNameAsString)
-            .collect(toImmutableSet());
+                .flatMap(Collection::stream)
+                .filter(this::isLongNode)
+                .map(MethodDeclaration::getNameAsString)
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     private boolean isLongNode(NodeWithRange<?> node) {
@@ -289,6 +281,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     private boolean usesMethod(String methodName) {
         return methodsCalledByConstructor.contains(methodName)
-        || methodsCalledByGetHammingDistance.contains(methodName);
+                || methodsCalledByGetHammingDistance.contains(methodName);
     }
 }
