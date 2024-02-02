@@ -21,8 +21,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     private ConstructorDeclaration constructor;
     private final Map<String, List<MethodDeclaration>> methods = new HashMap<>();
     private final Set<String> methodsCalledByConstructor = new HashSet<>();
-    private boolean constructorHasIfStatements;
-    private boolean constructorThrowsIllegalArgumentDirectly;
     private boolean constructorMayCalculateDistanceDirectly;
     private final Set<String> methodsCalledByGetHammingDistance = new HashSet<>();
     private boolean getHammingDistanceMayCalculateDistanceDirectly;
@@ -62,13 +60,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     private void walkConstructorStatement(Statement statement) {
-        if (statement.isIfStmt()) {
-            constructorHasIfStatements = true;
-        }
-
-        if (isThrowNewIllegalArgument(statement)) {
-            constructorThrowsIllegalArgumentDirectly = true;
-        }
 
         if (statementMayCalculateHammingDistance(statement)) {
             constructorMayCalculateDistanceDirectly = true;
@@ -77,21 +68,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
         getMethodCallNames(statement)
                 .forEach(methodName ->
                         recursivelyAddMethodsCalled(methodName, methodsCalledByConstructor));
-    }
-
-    private boolean isThrowNewIllegalArgument(Statement statement) {
-        return statement.findAll(ThrowStmt.class).stream()
-                .anyMatch(this::isCreatingIllegalArgumentException);
-    }
-
-    private boolean isCreatingIllegalArgumentException(ThrowStmt throwStmt) {
-        return throwStmt.getExpression().isObjectCreationExpr()
-                && throwStmt
-                .getExpression()
-                .asObjectCreationExpr()
-                .getType()
-                .getNameAsString()
-                .equals("IllegalArgumentException");
     }
 
     private boolean isMethodCall(Statement statement) {
@@ -160,42 +136,8 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
                 .flatMap(this::getMethodCallNames);
     }
 
-    public boolean hasConstructor() {
-        return constructor != null;
-    }
-
-    public boolean constructorHasIfStatements() {
-        return constructorHasIfStatements;
-    }
-
     public boolean constructorHasMethodCalls() {
         return !methodsCalledByConstructor.isEmpty();
-    }
-
-    public boolean constructorThrowsIllegalArgument() {
-        return constructorThrowsIllegalArgumentDirectly
-                || constructorThrowsIllegarArgumentIndirectly();
-    }
-
-    private boolean constructorThrowsIllegarArgumentIndirectly() {
-        return methodsCalledByConstructor.stream()
-                .anyMatch(this::methodThrowsIllegalArgumentException);
-    }
-
-    private boolean methodThrowsIllegalArgumentException(String methodName) {
-        return methods.getOrDefault(methodName, List.of()).stream()
-                .anyMatch(this::methodThrowsIllegalArgumentException);
-    }
-
-    private boolean methodThrowsIllegalArgumentException(MethodDeclaration method) {
-        return method.getBody()
-                .map(this::methodBodyThrowsIllegalArgumentException)
-                .orElse(false);
-    }
-
-    private boolean methodBodyThrowsIllegalArgumentException(BlockStmt body) {
-        return body.getStatements().stream()
-                .anyMatch(this::isThrowNewIllegalArgument);
     }
 
     public boolean constructorMayCalculateDistance() {
@@ -269,10 +211,6 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
 
     public boolean usesCharacterLiterals() {
         return !hammingClass.findAll(CharLiteralExpr.class).isEmpty();
-    }
-
-    public boolean usesStringCharAtOrCodePointAt() {
-        return usesMethod("charAt") || usesMethod("codePointAt");
     }
 
     public boolean shouldUseStreamFilterAndCount() {

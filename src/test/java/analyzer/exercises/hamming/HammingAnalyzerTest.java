@@ -17,12 +17,7 @@ public class HammingAnalyzerTest {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
-                Arguments.of("NoConstructor.java.txt", new Comment[]{new MustUseConstructor()}),
-                Arguments.of("NoConditionalInConstructor.java.txt", new Comment[]{new MustUseConditionalLogicInConstructor()}),
-                Arguments.of("DoesNotThrowInConstructor.java.txt", new Comment[]{new MustThrowInConstructor()}),
-                Arguments.of("NoCalculationOfHammingDistance.java.txt", new Comment[]{new MustCalculateHammingDistance()}),
                 Arguments.of("UsesCharacterLiterals.java.txt", new Comment[]{new AvoidCharacterLiterals()}),
-                Arguments.of("MustUseCharAtOrCodePointAt.java.txt", new Comment[]{new MustUseStringCharAtOrCodePointAt()}),
                 Arguments.of("NestedValidation.java.txt", new Comment[]{new CalculateDistanceInConstructor()}),
                 Arguments.of("NestedCalculation.java.txt", new Comment[0]),
                 Arguments.of("OptimalWithCalculationInGetHammingDistance.java.txt", new Comment[]{new CalculateDistanceInConstructor()}),

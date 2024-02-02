@@ -22,34 +22,8 @@ public class HammingAnalyzer implements Analyzer {
 
         solution.getCompilationUnits().forEach(cu -> cu.walk(ClassOrInterfaceDeclaration.class, walker));
 
-        if (!walker.hasConstructor()) {
-            analysis.addComment(new MustUseConstructor());
-            return;
-        }
-
-        if (!walker.constructorHasIfStatements() && !walker.constructorHasMethodCalls()) {
-            analysis.addComment(new MustUseConditionalLogicInConstructor());
-            return;
-        }
-
-        if (!walker.constructorThrowsIllegalArgument()) {
-            analysis.addComment(new MustThrowInConstructor());
-            return;
-        }
-
-        if (!walker.getHammingDistanceMethodMayCalculateDistance()
-                && !walker.constructorMayCalculateDistance()) {
-            analysis.addComment(new MustCalculateHammingDistance());
-            return;
-        }
-
         if (walker.usesCharacterLiterals()) {
             analysis.addComment(new AvoidCharacterLiterals());
-            return;
-        }
-
-        if (!walker.usesStringCharAtOrCodePointAt()) {
-            analysis.addComment(new MustUseStringCharAtOrCodePointAt());
             return;
         }
 
