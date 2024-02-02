@@ -12,15 +12,8 @@ class Hamming {
 
     
     private void validate(String leftStrand, String rightStrand) {
-    	validateNotNull(leftStrand, rightStrand);
     	validateSameLength(leftStrand, rightStrand);
     }
-
-	private void validateNotNull(String leftStrand, String rightStrand) {
-		if (leftStrand == null || rightStrand == null) {
-			throw new IllegalArgumentException("Either left or right stand is null");
-		}
-	}
 
 	private void validateSameLength(String leftStrand, String rightStrand) {
 		if (leftStrand.length() != rightStrand.length()) {
