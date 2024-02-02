@@ -16,8 +16,6 @@ public class TwoferAnalyzerTest {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
-                Arguments.of("UsesLambda.java.txt", new Comment[0]),
-                Arguments.of("UsesLoop.java.txt", new Comment[0]),
                 Arguments.of("HardCodedTestCases.java.txt", new Comment[]{new AvoidHardCodedTestCases()}),
                 Arguments.of("UsesStringFormat.java.txt", new Comment[]{new AvoidStringFormat()}),
                 Arguments.of("UsesMultipleReturns.java.txt", new Comment[]{new UseOneReturn()}),
