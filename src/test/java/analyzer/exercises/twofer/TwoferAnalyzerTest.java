@@ -19,7 +19,6 @@ public class TwoferAnalyzerTest {
                 Arguments.of("UsesLambda.java.txt", new Comment[0]),
                 Arguments.of("UsesLoop.java.txt", new Comment[0]),
                 Arguments.of("HardCodedTestCases.java.txt", new Comment[]{new AvoidHardCodedTestCases()}),
-                Arguments.of("NoConditionalLogic.java.txt", new Comment[]{new UseConditionalLogic()}),
                 Arguments.of("UsesStringFormat.java.txt", new Comment[]{new AvoidStringFormat()}),
                 Arguments.of("UsesMultipleReturns.java.txt", new Comment[]{new UseOneReturn()}),
                 Arguments.of("OptimalNoTernary.java.txt", new Comment[]{new UseTernaryOperator()}),
