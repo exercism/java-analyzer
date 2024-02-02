@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 class TwoferWalker implements Consumer<Node> {
     boolean hasHardCodedTestCases;
     boolean usesIfStatement;
-    boolean usesConditional;
     boolean hasMethodCall;
     boolean usesFormat;
     int returnCount;

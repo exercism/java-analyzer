@@ -27,6 +27,11 @@ public class HammingAnalyzer implements Analyzer {
             return;
         }
 
+        if (!walker.usesStringCharAtOrCodePointAt()) {
+            analysis.addComment(new MustUseStringCharAtOrCodePointAt());
+            return;
+        }
+
         if (!walker.constructorMayCalculateDistance()) {
             analysis.addComment(new CalculateDistanceInConstructor());
         }
