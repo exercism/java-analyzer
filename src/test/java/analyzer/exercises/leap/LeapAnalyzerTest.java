@@ -1,47 +1,36 @@
 package analyzer.exercises.leap;
 
 import analyzer.AnalyzerRoot;
-import analyzer.Comment;
 import analyzer.SolutionFromResourceFiles;
-import analyzer.comments.AvoidHardCodedTestCases;
-import org.junit.jupiter.api.Test;
+import org.approvaltests.Approvals;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static analyzer.TestOutputSerializer.printable;
 
-public class LeapAnalyzerTest {
+class LeapAnalyzerTest {
 
-    @Test
-    public void optimalSolution() {
-        var solution = new SolutionFromResourceFiles("leap", getResourceFileName("OptimalSolution.java"));
-        var analysis = AnalyzerRoot.analyze(solution);
-        assertThat(analysis.getComments()).isEmpty();
-    }
-
-    private static Stream<Arguments> testCases() {
+    private static Stream<String> scenarios() {
         return Stream.of(
-                Arguments.of("HardCodedTestCases.java", new AvoidHardCodedTestCases()),
-                Arguments.of("UsingGregorianCalendar.java", new NoBuiltInMethods()),
-                Arguments.of("UsingIfStatements.java", new AvoidConditionalLogic()),
-                Arguments.of("UsingJavaTime.java", new NoBuiltInMethods()),
-                Arguments.of("UsingTernary.java", new AvoidConditionalLogic()),
-                Arguments.of("UsingTooManyChecks.java", new UseMinimumNumberOfChecks())
+                "OptimalSolution",
+                "HardCodedTestCases",
+                "UsingGregorianCalendar",
+                "UsingIfStatements",
+                "UsingJavaTime",
+                "UsingTernary",
+                "UsingTooManyChecks"
         );
     }
 
     @ParameterizedTest(name = "{0}")
-    @MethodSource("testCases")
-    public void testCommentsOnSolution(String filename, Comment expectedComment) {
-        var solution = new SolutionFromResourceFiles("leap", getResourceFileName(filename));
-        var analysis = AnalyzerRoot.analyze(solution);
-        assertThat(analysis.getComments()).contains(expectedComment);
-    }
+    @MethodSource("scenarios")
+    void analysis(String scenario) {
+        var resourceFileName = "/scenarios/leap/" + scenario + ".java";
+        var solution = new SolutionFromResourceFiles("leap", resourceFileName);
+        var output = AnalyzerRoot.analyze(solution);
 
-    private static String getResourceFileName(String testFileName) {
-        return "/analyzer/exercises/leap/" + testFileName;
+        Approvals.verify(printable(output.analysis()), Approvals.NAMES.withParameters(scenario));
     }
 }

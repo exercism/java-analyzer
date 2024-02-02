@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.hamming.must_throw_in_constructor",
+      "params": {},
+      "type": "essential"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

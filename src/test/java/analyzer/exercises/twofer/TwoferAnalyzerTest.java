@@ -1,42 +1,37 @@
 package analyzer.exercises.twofer;
 
 import analyzer.AnalyzerRoot;
-import analyzer.Comment;
 import analyzer.SolutionFromResourceFiles;
-import analyzer.comments.AvoidHardCodedTestCases;
+import org.approvaltests.Approvals;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static analyzer.TestOutputSerializer.printable;
 
 public class TwoferAnalyzerTest {
 
-    private static Stream<Arguments> testCases() {
+    private static Stream<String> scenarios() {
         return Stream.of(
-                Arguments.of("UsesLambda.java.txt", new Comment[0]),
-                Arguments.of("UsesLoop.java.txt", new Comment[0]),
-                Arguments.of("HardCodedTestCases.java.txt", new Comment[]{new AvoidHardCodedTestCases()}),
-                Arguments.of("NoConditionalLogic.java.txt", new Comment[]{new UseConditionalLogic()}),
-                Arguments.of("UsesStringFormat.java.txt", new Comment[]{new AvoidStringFormat()}),
-                Arguments.of("UsesMultipleReturns.java.txt", new Comment[]{new UseOneReturn()}),
-                Arguments.of("OptimalNoTernary.java.txt", new Comment[]{new UseTernaryOperator()}),
-                Arguments.of("Optimal.java.txt", new Comment[0])
+                "UsesLambda",
+                "UsesLoop",
+                "HardCodedTestCases",
+                "NoConditionalLogic",
+                "UsesStringFormat",
+                "UsesMultipleReturns",
+                "OptimalNoTernary",
+                "Optimal"
         );
     }
 
-    @MethodSource("testCases")
+    @MethodSource("scenarios")
     @ParameterizedTest(name = "{0}")
-    public void testCommentsOnSolution(String solutionFile, Comment... expectedComments) {
-        var solution = new SolutionFromResourceFiles("two-fer", getResourceFileName(solutionFile));
-        var actual = AnalyzerRoot.analyze(solution);
+    public void analysis(String scenario) {
+        var resourceFileName = "/scenarios/twofer/" + scenario + ".java";
+        var solution = new SolutionFromResourceFiles("two-fer", resourceFileName);
+        var output = AnalyzerRoot.analyze(solution);
 
-        assertThat(actual.getComments()).contains(expectedComments);
-    }
-
-    private static String getResourceFileName(String testFileName) {
-        return "/analyzer/exercises/twofer/" + testFileName;
+        Approvals.verify(printable(output.analysis()), Approvals.NAMES.withParameters(scenario));
     }
 }

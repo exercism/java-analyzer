@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.two-fer.use_ternary_operator",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

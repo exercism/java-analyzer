@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.two-fer.use_one_return",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

@@ -1,43 +1,34 @@
 package analyzer.exercises.lasagna;
 
 import analyzer.AnalyzerRoot;
-import analyzer.Comment;
 import analyzer.SolutionFromResourceFiles;
-import analyzer.comments.ExemplarSolution;
-import analyzer.comments.RemoveTodoComments;
+import org.approvaltests.Approvals;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static analyzer.TestOutputSerializer.printable;
 
-public class LasagnaAnalyzerTest {
+class LasagnaAnalyzerTest {
 
-    private static Stream<Arguments> testCases() {
+    private static Stream<String> scenarios() {
         return Stream.of(
-                Arguments.of("ExemplarSolution.java", List.of(new ExemplarSolution("Lasagna"))),
-                Arguments.of("ExemplarSolutionWithTodoComments.java", List.of(new RemoveTodoComments())),
-                Arguments.of("NoReuseOfExpectedMinutesInOven.java",
-                        List.of(new ReuseCode("remainingMinutesInOven", "expectedMinutesInOven"))),
-                Arguments.of("NoReuseOfPreparationTimeInMinutes.java",
-                        List.of(new ReuseCode("totalTimeInMinutes", "preparationTimeInMinutes"))),
-                Arguments.of("NoReuseOfBothMethods.java",
-                        List.of(
-                                new ReuseCode("remainingMinutesInOven", "expectedMinutesInOven"),
-                                new ReuseCode("totalTimeInMinutes", "preparationTimeInMinutes")
-                        )
-                )
+                "ExemplarSolution",
+                "ExemplarSolutionWithTodoComments",
+                "NoReuseOfExpectedMinutesInOven",
+                "NoReuseOfPreparationTimeInMinutes",
+                "NoReuseOfBothMethods"
         );
     }
 
     @ParameterizedTest(name = "{0}")
-    @MethodSource("testCases")
-    public void testCommentsOnSolution(String filename, List<Comment> expectedComments) {
-        var solution = new SolutionFromResourceFiles("lasagna", "/analyzer/exercises/lasagna/" + filename);
-        var analysis = AnalyzerRoot.analyze(solution);
-        assertThat(analysis.getComments()).contains(expectedComments.toArray(Comment[]::new));
+    @MethodSource("scenarios")
+    void analysis(String scenario) {
+        var resourceFileName = "/scenarios/lasagna/" + scenario + ".java";
+        var solution = new SolutionFromResourceFiles("lasagna", resourceFileName);
+        var output = AnalyzerRoot.analyze(solution);
+
+        Approvals.verify(printable(output.analysis()), Approvals.NAMES.withParameters(scenario));
     }
 }

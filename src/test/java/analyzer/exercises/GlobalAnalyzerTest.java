@@ -18,7 +18,7 @@ public class GlobalAnalyzerTest {
     public void solutionsWithMainMethod(String code) {
         var solution = new SolutionFromString("any-exercise", code);
         var actual = AnalyzerRoot.analyze(solution);
-        assertThat(actual.getComments()).contains(new DoNotUseMainMethod());
+        assertThat(actual.analysis().comments()).contains(new DoNotUseMainMethod());
     }
 
     private static Stream<String> solutionsWithMainMethod() {
@@ -43,7 +43,7 @@ public class GlobalAnalyzerTest {
     public void solutionsWithPrintStatements(String code) {
         var solution = new SolutionFromString("any-exercise", code);
         var actual = AnalyzerRoot.analyze(solution);
-        assertThat(actual.getComments()).contains(new AvoidPrintStatements());
+        assertThat(actual.analysis().comments()).contains(new AvoidPrintStatements());
     }
 
     private static Stream<String> solutionsWithPrintStatements() {

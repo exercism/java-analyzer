@@ -1,7 +1,7 @@
 package analyzer.exercises.lasagna;
 
-import analyzer.Analysis;
 import analyzer.Analyzer;
+import analyzer.OutputCollector;
 import analyzer.Solution;
 import analyzer.comments.ExemplarSolution;
 import analyzer.comments.RemoveTodoComments;
@@ -17,7 +17,7 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
  *
  * @see <a href="https://github.com/exercism/java/tree/main/exercises/concept/lasagna">The lasagna exercise on the Java track</a>
  */
-public class LasagnaAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
+public class LasagnaAnalyzer extends VoidVisitorAdapter<OutputCollector> implements Analyzer {
     private static final String EXERCISE_NAME = "Lasagna";
     private static final String EXPECTED_MINUTES_IN_OVEN = "expectedMinutesInOven";
     private static final String REMAINING_MINUTES_IN_OVEN = "remainingMinutesInOven";
@@ -25,29 +25,29 @@ public class LasagnaAnalyzer extends VoidVisitorAdapter<Analysis> implements Ana
     private static final String TOTAL_TIME_IN_MINUTES = "totalTimeInMinutes";
 
     @Override
-    public void analyze(Solution solution, Analysis analysis) {
+    public void analyze(Solution solution, OutputCollector output) {
         for (CompilationUnit compilationUnit : solution.getCompilationUnits()) {
-            compilationUnit.accept(this, analysis);
+            compilationUnit.accept(this, output);
         }
 
-        if (analysis.getComments().isEmpty()) {
-            analysis.addComment(new ExemplarSolution(EXERCISE_NAME));
+        if (output.getComments().isEmpty()) {
+            output.addComment(new ExemplarSolution(EXERCISE_NAME));
         }
     }
 
     @Override
-    public void visit(MethodDeclaration node, Analysis analysis) {
+    public void visit(MethodDeclaration node, OutputCollector output) {
         if (node.getNameAsString().equals(REMAINING_MINUTES_IN_OVEN)
                 && doesNotCallMethod(node, EXPECTED_MINUTES_IN_OVEN)) {
-            analysis.addComment(new ReuseCode(REMAINING_MINUTES_IN_OVEN, EXPECTED_MINUTES_IN_OVEN));
+            output.addComment(new ReuseCode(REMAINING_MINUTES_IN_OVEN, EXPECTED_MINUTES_IN_OVEN));
         }
 
         if (node.getNameAsString().equals(TOTAL_TIME_IN_MINUTES)
                 && doesNotCallMethod(node, PREPARATION_TIME_IN_MINUTES)) {
-            analysis.addComment(new ReuseCode(TOTAL_TIME_IN_MINUTES, PREPARATION_TIME_IN_MINUTES));
+            output.addComment(new ReuseCode(TOTAL_TIME_IN_MINUTES, PREPARATION_TIME_IN_MINUTES));
         }
 
-        super.visit(node, analysis);
+        super.visit(node, output);
     }
 
     private static boolean doesNotCallMethod(MethodDeclaration node, String otherMethodName) {
@@ -55,9 +55,9 @@ public class LasagnaAnalyzer extends VoidVisitorAdapter<Analysis> implements Ana
     }
 
     @Override
-    public void visit(LineComment node, Analysis analysis) {
+    public void visit(LineComment node, OutputCollector output) {
         if (node.getContent().contains("TODO")) {
-            analysis.addComment(new RemoveTodoComments());
+            output.addComment(new RemoveTodoComments());
         }
     }
 }

@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.hamming.must_calculate_hamming_distance",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

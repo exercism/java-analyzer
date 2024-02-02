@@ -5,13 +5,13 @@ package analyzer;
  */
 public interface Analyzer {
     /**
-     * Analyze the given solution and append analysis results to the given analysis.
+     * Analyze the given solution and append analysis results to the given output..
      * The {@code analyze} method of each analyzer is invoked once for the whole submitted solution.
      *
      * @param solution The solution that should be analyzed.
-     * @param analysis The analysis instance used to collect results.
+     * @param output   The output collector instance used to collect analyzer results.
      *                 This instance is shared across all analyzers, and should be used to add comments and tags,
      *                 or set a summary.
      */
-    void analyze(Solution solution, Analysis analysis);
+    void analyze(Solution solution, OutputCollector output);
 }

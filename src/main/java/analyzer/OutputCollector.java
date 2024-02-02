@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class is used to collect analysis results in the form of comments, tags and an optional summary.
+ * This class is used to collect analyzer output in the form of comments, tags and an optional summary.
  *
  * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
  */
-public class Analysis {
+public class OutputCollector {
     private String summary;
     private final Set<Comment> comments = new LinkedHashSet<>();
     private final Set<String> tags = new LinkedHashSet<>();

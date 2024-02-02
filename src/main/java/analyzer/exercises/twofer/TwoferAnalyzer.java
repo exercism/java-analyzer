@@ -1,6 +1,6 @@
 package analyzer.exercises.twofer;
 
-import analyzer.Analysis;
+import analyzer.OutputCollector;
 import analyzer.Analyzer;
 import analyzer.Solution;
 import analyzer.comments.AvoidHardCodedTestCases;
@@ -13,26 +13,26 @@ import analyzer.comments.AvoidHardCodedTestCases;
 public class TwoferAnalyzer implements Analyzer {
 
     @Override
-    public void analyze(Solution solution, Analysis analysis) {
+    public void analyze(Solution solution, OutputCollector output) {
         TwoferWalker walker = new TwoferWalker();
 
         solution.getCompilationUnits().forEach(cu -> cu.walk(walker));
 
         if (walker.hasHardCodedTestCases) {
-            analysis.addComment(new AvoidHardCodedTestCases());
+            output.addComment(new AvoidHardCodedTestCases());
         } else if (walker.usesLambda) {
             // could be used later for additional comments?
         } else if (walker.usesLoops) {
             // could be used later for additional comments?
         } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
-            analysis.addComment(new UseConditionalLogic());
+            output.addComment(new UseConditionalLogic());
         } else if (walker.usesFormat) {
-            analysis.addComment(new AvoidStringFormat());
+            output.addComment(new AvoidStringFormat());
         } else if (walker.returnCount > 1) {
-            analysis.addComment(new UseOneReturn());
+            output.addComment(new UseOneReturn());
         } else {
             if (walker.usesIfStatement) {
-                analysis.addComment(new UseTernaryOperator());
+                output.addComment(new UseTernaryOperator());
             }
         }
     }

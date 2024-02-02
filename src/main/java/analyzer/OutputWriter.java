@@ -1,77 +1,37 @@
 package analyzer;
 
-import org.json.JSONObject;
-
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
-import java.util.Optional;
+import java.nio.file.Path;
 
 /**
  * The {@link OutputWriter} converts the analysis result into JSON output and writes it to the writers passed to the constructor.
  *
  * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
  */
-public class OutputWriter {
-    private static final int JSON_INDENTATION = 2;
+class OutputWriter {
+    private final Path outputPath;
 
-    private final Writer analysisWriter;
-    private final Writer tagsWriter;
-
-    public OutputWriter(Writer analysisWriter, Writer tagsWriter) {
-        this.analysisWriter = analysisWriter;
-        this.tagsWriter = tagsWriter;
+    OutputWriter(Path outputPath) {
+        this.outputPath = outputPath;
     }
 
-    public void write(Analysis analysis) throws IOException {
-        writeAnalysis(analysis);
-        writeTags(analysis);
+    void write(Output output) throws IOException {
+        writeAnalysis(output.analysis());
+        writeTags(output.tags());
     }
 
-    private void writeAnalysis(Analysis analysis) throws IOException {
-        var json = new JSONObject();
+    private void writeAnalysis(Output.Analysis analysis) throws IOException {
+        write(OutputSerializer.serialize(analysis), this.outputPath.resolve("analysis.json"));
+    }
 
-        if (analysis.getSummary() != null) {
-            json.put("summary", analysis.getSummary());
+    private void writeTags(Output.Tags tags) throws IOException {
+        write(OutputSerializer.serialize(tags), this.outputPath.resolve("tags.json"));
+    }
+
+    private void write(String contents, Path path) throws IOException {
+        try (var writer = new FileWriter(path.toFile())) {
+            writer.write(contents);
         }
-
-        analysis.getComments()
-                .stream()
-                .sorted(OutputWriter::compareCommentsByType)
-                .forEachOrdered(comment -> json.append("comments", serialize(comment)));
-
-        this.analysisWriter.write(json.toString(JSON_INDENTATION));
-    }
-
-    private void writeTags(Analysis analysis) throws IOException {
-        var json = new JSONObject();
-        for (String tag : analysis.getTags()) {
-            json.append("tags", tag);
-        }
-
-        this.tagsWriter.write(json.toString(JSON_INDENTATION));
-    }
-
-    private static JSONObject serialize(Comment comment) {
-        var json = new JSONObject();
-        json.put("comment", comment.getKey());
-
-        if (comment.getType() != null) {
-            json.put("type", comment.getType().name().toLowerCase());
-        }
-
-        if (comment.getParameters().isEmpty()) {
-            return json;
-        }
-
-        var paramsJson = new JSONObject();
-        comment.getParameters().forEach(paramsJson::put);
-        json.put("params", paramsJson);
-        return json;
-    }
-
-    private static int compareCommentsByType(Comment a, Comment b) {
-        var ordinalA = Optional.ofNullable(a.getType()).map(Comment.Type::ordinal).orElse(Integer.MAX_VALUE);
-        var ordinalB = Optional.ofNullable(b.getType()).map(Comment.Type::ordinal).orElse(Integer.MAX_VALUE);
-        return Integer.compare(ordinalA, ordinalB);
     }
 }

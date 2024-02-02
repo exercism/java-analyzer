@@ -1,7 +1,6 @@
 package analyzer;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -38,13 +37,9 @@ public class AnalyzerCli {
             System.exit(-1);
         }
 
+        var outputWriter = new OutputWriter(Path.of(outputDirectory));
         var solution = new SubmittedSolution(slug, Path.of(inputDirectory));
-        var analysis = AnalyzerRoot.analyze(solution);
-
-        try (var analysisWriter = new FileWriter(Path.of(outputDirectory, "analysis.json").toFile());
-             var tagsWriter = new FileWriter(Path.of(outputDirectory, "tags.json").toFile())) {
-            var output = new OutputWriter(analysisWriter, tagsWriter);
-            output.write(analysis);
-        }
+        var output = AnalyzerRoot.analyze(solution);
+        outputWriter.write(output);
     }
 }

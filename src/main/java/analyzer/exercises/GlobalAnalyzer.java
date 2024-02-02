@@ -1,6 +1,6 @@
 package analyzer.exercises;
 
-import analyzer.Analysis;
+import analyzer.OutputCollector;
 import analyzer.Analyzer;
 import analyzer.Solution;
 import analyzer.comments.AvoidPrintStatements;
@@ -15,31 +15,31 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
  * such as whether a solution is using print statements or a static {@code main} method.
  * It extends from the {@link VoidVisitorAdapter} and uses the visitor pattern to traverse each compilation unit.
  */
-public class GlobalAnalyzer extends VoidVisitorAdapter<Analysis> implements Analyzer {
+public class GlobalAnalyzer extends VoidVisitorAdapter<OutputCollector> implements Analyzer {
 
     @Override
-    public void analyze(Solution solution, Analysis analysis) {
+    public void analyze(Solution solution, OutputCollector output) {
         for (CompilationUnit compilationUnit : solution.getCompilationUnits()) {
-            compilationUnit.accept(this, analysis);
+            compilationUnit.accept(this, output);
         }
     }
 
     @Override
-    public void visit(MethodDeclaration node, Analysis analysis) {
+    public void visit(MethodDeclaration node, OutputCollector outputCollector) {
         if (isMainMethod(node)) {
-            analysis.addComment(new DoNotUseMainMethod());
+            outputCollector.addComment(new DoNotUseMainMethod());
         }
 
-        super.visit(node, analysis);
+        super.visit(node, outputCollector);
     }
 
     @Override
-    public void visit(MethodCallExpr node, Analysis analysis) {
+    public void visit(MethodCallExpr node, OutputCollector outputCollector) {
         if (isPrintStatement(node)) {
-            analysis.addComment(new AvoidPrintStatements());
+            outputCollector.addComment(new AvoidPrintStatements());
         }
 
-        super.visit(node, analysis);
+        super.visit(node, outputCollector);
     }
 
     private static boolean isMainMethod(MethodDeclaration node) {

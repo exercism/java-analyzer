@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.hamming.must_use_string_char_at_or_code_point_at",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

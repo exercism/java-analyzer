@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.two-fer.use_conditional_logic",
+      "params": {},
+      "type": "essential"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}
