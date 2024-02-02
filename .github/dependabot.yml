@@ -5,13 +5,19 @@ updates:
     directory: "/"
     schedule:
       interval: daily
+    labels:
+      - "x:size/tiny"
 
   - package-ecosystem: gradle
     directory: "/"
     schedule:
-      interval: monthly
+      interval: weekly
+    labels:
+      - "x:size/small"
 
   - package-ecosystem: docker
     directory: "/"
     schedule:
-      interval: monthly
+      interval: weekly
+    labels:
+      - "x:size/small"
