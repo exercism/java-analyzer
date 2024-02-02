@@ -4,10 +4,6 @@
     "type": "actionable"
   },
   {
-    "comment": "java.hamming.should_use_string_is_empty",
-    "type": "informative"
-  },
-  {
     "comment": "java.general.feedback_request",
     "type": "informative"
   }
