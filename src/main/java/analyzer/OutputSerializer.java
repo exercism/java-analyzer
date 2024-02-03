@@ -12,10 +12,6 @@ class OutputSerializer {
             .setPrettyPrinting()
             .create();
 
-    static String serialize(Output output) {
-        return GSON.toJson(output);
-    }
-
     static String serialize(Output.Analysis analysis) {
         return GSON.toJson(analysis);
     }

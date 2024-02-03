@@ -26,17 +26,17 @@ public class AnalyzerRoot {
      * @return The aggregated output of all applicable analyzers.
      */
     public static Output analyze(Solution solution) {
-        var collector = new OutputCollector();
+        var outputBuilder = new OutputBuilder();
 
         for (Analyzer analyzer : createAnalyzers(solution.getSlug())) {
-            analyzer.analyze(solution, collector);
+            analyzer.analyze(solution, outputBuilder);
         }
 
-        if (collector.getComments().stream().anyMatch(x -> x.getType() != Comment.Type.CELEBRATORY)) {
-            collector.addComment(new FeedbackRequest());
+        if (outputBuilder.getComments().stream().anyMatch(x -> x.getType() != Comment.Type.CELEBRATORY)) {
+            outputBuilder.addComment(new FeedbackRequest());
         }
 
-        return new Output(collector);
+        return outputBuilder.build();
     }
 
     private static List<Analyzer> createAnalyzers(String slug) {

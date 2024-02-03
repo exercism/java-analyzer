@@ -1,18 +1,13 @@
 package analyzer;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This class is used to collect analyzer output in the form of comments, tags and an optional summary.
  *
  * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
  */
-public class OutputCollector {
-    private String summary;
-    private final Set<Comment> comments = new LinkedHashSet<>();
-    private final Set<String> tags = new LinkedHashSet<>();
+public interface OutputCollector {
 
     /**
      * The summary is a short description of the complete analysis result.
@@ -20,9 +15,7 @@ public class OutputCollector {
      *
      * @return The summary if set, {@code null} otherwise.
      */
-    public String getSummary() {
-        return summary;
-    }
+    String getSummary();
 
     /**
      * Set the summary of the analysis.
@@ -31,9 +24,7 @@ public class OutputCollector {
      *
      * @param summary The summary to set.
      */
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
+    void setSummary(String summary);
 
     /**
      * Retrieve a copy of the comments added to this analysis.
@@ -41,9 +32,7 @@ public class OutputCollector {
      *
      * @return List of comments.
      */
-    public List<Comment> getComments() {
-        return List.copyOf(comments);
-    }
+    List<Comment> getComments();
 
     /**
      * Retrieve a copy of the tags added to this analysis.
@@ -51,9 +40,7 @@ public class OutputCollector {
      *
      * @return List of tags.
      */
-    public List<String> getTags() {
-        return List.copyOf(tags);
-    }
+    List<String> getTags();
 
     /**
      * Add a new comment to the analysis.
@@ -61,9 +48,7 @@ public class OutputCollector {
      *
      * @param comment The comment to add.
      */
-    public void addComment(Comment comment) {
-        comments.add(comment);
-    }
+    void addComment(Comment comment);
 
     /**
      * Add a new tag to the analysis.
@@ -71,7 +56,5 @@ public class OutputCollector {
      *
      * @param tag The tag to add.
      */
-    public void addTag(String tag) {
-        tags.add(tag);
-    }
+    void addTag(String tag);
 }
