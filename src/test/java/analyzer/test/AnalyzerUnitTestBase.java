@@ -9,11 +9,14 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.function.Supplier;
 
-public abstract class AnalyzerUnitTestBase<T extends Analyzer> {
-    private final Supplier<T> createAnalyzer;
-    private T analyzer;
+/**
+ * Base class for unit testing individual analyzers.
+ */
+public abstract class AnalyzerUnitTestBase {
+    private final Supplier<Analyzer> createAnalyzer;
+    private Analyzer analyzer;
 
-    protected AnalyzerUnitTestBase(Supplier<T> createAnalyzer) {
+    protected AnalyzerUnitTestBase(Supplier<Analyzer> createAnalyzer) {
         this.createAnalyzer = createAnalyzer;
     }
 

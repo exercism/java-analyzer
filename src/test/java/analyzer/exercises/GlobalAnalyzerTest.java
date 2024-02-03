@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GlobalAnalyzerTest extends AnalyzerUnitTestBase<GlobalAnalyzer> {
+class GlobalAnalyzerTest extends AnalyzerUnitTestBase {
     GlobalAnalyzerTest() {
         super(GlobalAnalyzer::new);
     }

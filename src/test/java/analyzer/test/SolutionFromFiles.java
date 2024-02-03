@@ -9,7 +9,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolutionFromFiles implements Solution {
+/**
+ * Helper to create a solution from one or more files.
+ */
+public final class SolutionFromFiles implements Solution {
     private final String slug;
     private final List<CompilationUnit> compilationUnits;
 

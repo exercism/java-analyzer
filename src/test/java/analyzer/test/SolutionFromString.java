@@ -6,7 +6,10 @@ import com.github.javaparser.ast.CompilationUnit;
 
 import java.util.List;
 
-public class SolutionFromString implements Solution {
+/**
+ * Helper to create a solution from a string containing Java code.
+ */
+public final class SolutionFromString implements Solution {
     private final String slug;
     private final CompilationUnit compilationUnit;
 
