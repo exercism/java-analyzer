@@ -1,4 +1,6 @@
-package analyzer;
+package analyzer.test;
+
+import analyzer.Comment;
 
 import java.util.Map;
 import java.util.Optional;

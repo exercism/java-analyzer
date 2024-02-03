@@ -1,5 +1,6 @@
-package analyzer;
+package analyzer.test;
 
+import analyzer.Solution;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 

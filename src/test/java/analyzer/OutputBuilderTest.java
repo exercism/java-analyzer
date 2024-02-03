@@ -1,6 +1,7 @@
 package analyzer;
 
 import analyzer.comments.ExemplarSolution;
+import analyzer.test.FakeComment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

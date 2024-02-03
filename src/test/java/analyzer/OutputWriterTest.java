@@ -1,5 +1,6 @@
 package analyzer;
 
+import analyzer.test.FakeComment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
