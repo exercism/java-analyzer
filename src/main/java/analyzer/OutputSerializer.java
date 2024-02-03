@@ -6,6 +6,11 @@ import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Serializer to convert the analyzer output to JSON.
+ *
+ * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
+ */
 class OutputSerializer {
     private static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(Comment.class, new CommentJsonSerializer())

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * The {@link OutputWriter} converts the analysis result into JSON output and writes it to the writers passed to the constructor.
+ * The {@link OutputWriter} serializes the analyzer output and writes it files in the given output path.
  *
  * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
  */

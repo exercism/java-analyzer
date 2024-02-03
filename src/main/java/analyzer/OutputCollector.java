@@ -3,7 +3,7 @@ package analyzer;
 import java.util.List;
 
 /**
- * This class is used to collect analyzer output in the form of comments, tags and an optional summary.
+ * This interface is used to collect analyzer output in the form of comments, tags and an optional summary.
  *
  * @see <a href="https://exercism.org/docs/building/tooling/analyzers/interface">The analyzer interface in the Exercism documentation</a>
  */
