@@ -97,4 +97,20 @@ class AnalyzerIntegrationTest {
 
         Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "Optimal",
+            "ComparingBooleanWithLiteral",
+            "ReturningBooleanLiteral",
+            "UsingIfStatement",
+            "UsingUnnecessaryParenthesis",
+    })
+    public void annalynsinfiltration(String scenario) throws IOException {
+        var path = Path.of("annalynsinfiltration", scenario + ".java");
+        var solution = new SolutionFromFiles("annalyns-infiltration", SCENARIOS.resolve(path));
+        var output = AnalyzerRoot.analyze(solution);
+
+        Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
+    }
 }

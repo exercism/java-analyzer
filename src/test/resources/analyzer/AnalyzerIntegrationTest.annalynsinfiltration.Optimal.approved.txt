@@ -1,0 +1,11 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.exemplar",
+      "params": {
+        "exerciseName": "Annalyn\u0027s Infiltration"
+      },
+      "type": "celebratory"
+    }
+  ]
+}
