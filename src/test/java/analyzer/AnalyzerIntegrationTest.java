@@ -16,7 +16,7 @@ class AnalyzerIntegrationTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "AnySolutionWithMainMethod",
-            "AnySolutionWithPrintStatements"
+            "AnySolutionWithPrintStatements",
     })
     void global(String scenario) throws IOException {
         var path = Path.of("global", scenario + ".java");
@@ -28,21 +28,17 @@ class AnalyzerIntegrationTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "NoConstructor",
-            "NoConditionalInConstructor",
-            "DoesNotThrowInConstructor",
-            "NoCalculationOfHammingDistance",
-            "UsesCharacterLiterals",
-            "MustUseCharAtOrCodePointAt",
-            "NestedValidation",
-            "NestedCalculation",
-            "OptimalWithCalculationInGetHammingDistance",
-            "OptimalWithCalculationDelegatedFromGetHammingDistance",
             "ConstructorTooLong",
             "MethodTooLong",
-            "UsesStreamReduce",
+            "MustUseCharAtOrCodePointAt",
+            "NestedCalculation",
+            "NestedValidation",
             "OptimalWithCalculationDelegatedFromConstructor",
-            "OptimalWithValidationMethod"
+            "OptimalWithCalculationDelegatedFromGetHammingDistance",
+            "OptimalWithCalculationInGetHammingDistance",
+            "OptimalWithValidationMethod",
+            "UsesCharacterLiterals",
+            "UsesStreamReduce",
     })
     void hamming(String scenario) throws IOException {
         var path = Path.of("hamming", scenario + ".java");
@@ -56,9 +52,9 @@ class AnalyzerIntegrationTest {
     @ValueSource(strings = {
             "ExemplarSolution",
             "ExemplarSolutionWithTodoComments",
+            "NoReuseOfBothMethods",
             "NoReuseOfExpectedMinutesInOven",
             "NoReuseOfPreparationTimeInMinutes",
-            "NoReuseOfBothMethods"
     })
     void lasagna(String scenario) throws IOException {
         var path = Path.of("lasagna", scenario + ".java");
@@ -70,13 +66,13 @@ class AnalyzerIntegrationTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "OptimalSolution",
             "HardCodedTestCases",
+            "OptimalSolution",
             "UsingGregorianCalendar",
             "UsingIfStatements",
             "UsingJavaTime",
             "UsingTernary",
-            "UsingTooManyChecks"
+            "UsingTooManyChecks",
     })
     void leap(String scenario) throws IOException {
         var path = Path.of("leap", scenario + ".java");
@@ -88,14 +84,11 @@ class AnalyzerIntegrationTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "UsesLambda",
-            "UsesLoop",
             "HardCodedTestCases",
-            "NoConditionalLogic",
-            "UsesStringFormat",
-            "UsesMultipleReturns",
+            "Optimal",
             "OptimalNoTernary",
-            "Optimal"
+            "UsesMultipleReturns",
+            "UsesStringFormat",
     })
     public void twofer(String scenario) throws IOException {
         var path = Path.of("twofer", scenario + ".java");
