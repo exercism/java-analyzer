@@ -19,7 +19,7 @@ public class TwoferAnalyzer implements Analyzer {
         solution.getCompilationUnits().forEach(cu -> cu.walk(walker));
 
         if (walker.hasHardCodedTestCases) {
-            analysis.addComment(new AvoidHardCodedTestCases());
+            output.addComment(new AvoidHardCodedTestCases());
         } else if (walker.usesFormat) {
             output.addComment(new AvoidStringFormat());
         } else if (walker.returnCount > 1) {
