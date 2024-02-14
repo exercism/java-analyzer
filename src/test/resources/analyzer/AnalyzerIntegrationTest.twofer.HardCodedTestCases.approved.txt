@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.avoid_hard_coded_test_cases",
+      "params": {},
+      "type": "essential"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

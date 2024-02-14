@@ -1,0 +1,16 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.constructor_too_long",
+      "params": {
+        "constructorNames": "Hamming"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

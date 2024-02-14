@@ -1,0 +1,25 @@
+{
+  "authors": [
+    "sanderploegsma"
+  ],
+  "files": {
+    "solution": [
+      "src/main/java/Class1.java",
+      "src/main/java/Class2.java",
+      "src/main/java/Class3.java"
+    ],
+    "test": [
+      "src/test/java/TestClass1.java",
+      "src/test/java/TestClass2.java"
+    ],
+    "exemplar": [
+      ".meta/src/reference/java/ReferenceClass1.java",
+      ".meta/src/reference/java/ReferenceClass2.java",
+      ".meta/src/reference/java/ReferenceClass3.java"
+    ],
+    "invalidator": [
+      "build.gradle"
+    ]
+  },
+  "blurb": "Imaginary exercise for analyzer unit tests"
+}

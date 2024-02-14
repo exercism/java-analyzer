@@ -1,0 +1,16 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.method_too_long",
+      "params": {
+        "methodNames": "calculateHammingDistance"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

@@ -23,20 +23,20 @@ public class AnalyzerRoot {
      * Perform the analysis of a solution.
      *
      * @param solution The solution being analyzed.
-     * @return The aggregated analysis of all applicable analyzers.
+     * @return The aggregated output of all applicable analyzers.
      */
-    public static Analysis analyze(Solution solution) {
-        var analysis = new Analysis();
+    public static Output analyze(Solution solution) {
+        var outputBuilder = new OutputBuilder();
 
         for (Analyzer analyzer : createAnalyzers(solution.getSlug())) {
-            analyzer.analyze(solution, analysis);
+            analyzer.analyze(solution, outputBuilder);
         }
 
-        if (analysis.getComments().stream().anyMatch(x -> x.getType() != Comment.Type.CELEBRATORY)) {
-            analysis.addComment(new FeedbackRequest());
+        if (outputBuilder.getComments().stream().anyMatch(x -> x.getType() != Comment.Type.CELEBRATORY)) {
+            outputBuilder.addComment(new FeedbackRequest());
         }
 
-        return analysis;
+        return outputBuilder.build();
     }
 
     private static List<Analyzer> createAnalyzers(String slug) {

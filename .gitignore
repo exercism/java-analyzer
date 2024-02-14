@@ -8,5 +8,7 @@ build
 .project
 .classpath
 
+src/test/**/*.received.txt
+
 tests/**/*/analysis.json
 tests/**/*/tags.json
