@@ -5,6 +5,7 @@ import analyzer.exercises.GlobalAnalyzer;
 import analyzer.exercises.hamming.HammingAnalyzer;
 import analyzer.exercises.lasagna.LasagnaAnalyzer;
 import analyzer.exercises.leap.LeapAnalyzer;
+import analyzer.exercises.needforspeed.NeedForSpeedAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class AnalyzerRoot {
             case "lasagna" -> analyzers.add(new LasagnaAnalyzer());
             case "leap" -> analyzers.add(new LeapAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
+            case "need-for-speed" -> analyzers.add(new NeedForSpeedAnalyzer());
         }
 
         return List.copyOf(analyzers);
