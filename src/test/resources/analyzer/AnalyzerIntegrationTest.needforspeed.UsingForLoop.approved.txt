@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.needforspeed.avoid_loops",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}
