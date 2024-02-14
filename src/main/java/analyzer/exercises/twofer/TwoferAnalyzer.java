@@ -20,12 +20,6 @@ public class TwoferAnalyzer implements Analyzer {
 
         if (walker.hasHardCodedTestCases) {
             analysis.addComment(new AvoidHardCodedTestCases());
-        } else if (walker.usesLambda) {
-            // could be used later for additional comments?
-        } else if (walker.usesLoops) {
-            // could be used later for additional comments?
-        } else if (!walker.hasMethodCall && !(walker.usesIfStatement || walker.usesConditional)) {
-            analysis.addComment(new UseConditionalLogic());
         } else if (walker.usesFormat) {
             analysis.addComment(new AvoidStringFormat());
         } else if (walker.returnCount > 1) {
