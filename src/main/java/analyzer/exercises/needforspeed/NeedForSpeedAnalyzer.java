@@ -18,7 +18,7 @@ import analyzer.comments.ExemplarSolution;
  * @see <a href="https://github.com/exercism/java/tree/main/exercises/concept/need-for-speed">The need-for-speed exercise on the Java track</a>
  */
 public class NeedForSpeedAnalyzer implements Analyzer {
-    private static final String EXERCISE_NAME = "NeedForSpeed";
+    private static final String EXERCISE_NAME = "Need for Speed";
 
     @Override
     public void analyze(Solution solution, OutputCollector output) {
