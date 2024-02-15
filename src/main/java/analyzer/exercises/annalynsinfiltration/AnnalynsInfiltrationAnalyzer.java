@@ -54,7 +54,7 @@ public class AnnalynsInfiltrationAnalyzer extends VoidVisitorAdapter<OutputColle
                 if (childNode instanceof EnclosedExpr
                         && ((EnclosedExpr) childNode).getInner() instanceof BinaryExpr
                         && ((BinaryExpr) ((EnclosedExpr) childNode).getInner()).getOperator().equals(BinaryExpr.Operator.AND)) {
-                    output.addComment(new AvoidUnnecessaryParenthesis());
+                    output.addComment(new RedundantParentheses());
                 }
             }
         }

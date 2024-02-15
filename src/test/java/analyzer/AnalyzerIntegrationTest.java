@@ -104,7 +104,7 @@ class AnalyzerIntegrationTest {
             "ComparingBooleanWithLiteral",
             "ReturningBooleanLiteral",
             "UsingIfStatement",
-            "UsingUnnecessaryParenthesis",
+            "UsingRedundantParenthesis",
     })
     public void annalynsinfiltration(String scenario) throws IOException {
         var path = Path.of("annalynsinfiltration", scenario + ".java");

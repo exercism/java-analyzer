@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.annalyns-infiltration.avoid_unnecessary_parenthesis",
+      "comment": "java.annalyns-infiltration.some_parentheses_are_redundant",
       "params": {},
       "type": "informative"
     },
