@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.needforspeed.avoid_conditional_logic",
+      "comment": "java.need-for-speed.avoid_conditional_logic",
       "params": {},
       "type": "actionable"
     },

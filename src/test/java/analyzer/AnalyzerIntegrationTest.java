@@ -107,8 +107,8 @@ class AnalyzerIntegrationTest {
             "UsingWhileLoop",
     })
     void needforspeed(String scenario) throws IOException {
-        var path = Path.of("needforspeed", scenario + ".java");
-        var solution = new SolutionFromFiles("needforspeed", SCENARIOS.resolve(path));
+        var path = Path.of("need-for-speed", scenario + ".java");
+        var solution = new SolutionFromFiles("need-for-speed", SCENARIOS.resolve(path));
         var output = AnalyzerRoot.analyze(solution);
 
         Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));

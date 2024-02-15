@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.needforspeed.avoid_loops",
+      "comment": "java.need-for-speed.avoid_loops",
       "params": {},
       "type": "actionable"
     },

@@ -49,8 +49,8 @@ public class AnalyzerRoot {
             case "hamming" -> analyzers.add(new HammingAnalyzer());
             case "lasagna" -> analyzers.add(new LasagnaAnalyzer());
             case "leap" -> analyzers.add(new LeapAnalyzer());
-            case "two-fer" -> analyzers.add(new TwoferAnalyzer());
             case "need-for-speed" -> analyzers.add(new NeedForSpeedAnalyzer());
+            case "two-fer" -> analyzers.add(new TwoferAnalyzer());
         }
 
         return List.copyOf(analyzers);
