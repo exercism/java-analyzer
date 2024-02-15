@@ -1,0 +1,14 @@
+{
+    "comments": [
+      {
+        "comment": "java.need-for-speed.avoid_conditional_logic",
+        "params": {},
+        "type": "actionable"
+      },
+      {
+        "comment": "java.general.feedback_request",
+        "params": {},
+        "type": "informative"
+      }
+    ]
+}
