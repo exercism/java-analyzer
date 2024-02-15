@@ -3,7 +3,7 @@
     {
       "comment": "java.general.exemplar",
       "params": {
-        "exerciseName": "Need For Speed"
+        "exerciseName": "Need for Speed"
       },
       "type": "celebratory"
     }
