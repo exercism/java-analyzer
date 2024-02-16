@@ -2,6 +2,7 @@ package analyzer;
 
 import analyzer.comments.FeedbackRequest;
 import analyzer.exercises.GlobalAnalyzer;
+import analyzer.exercises.annalynsinfiltration.AnnalynsInfiltrationAnalyzer;
 import analyzer.exercises.hamming.HammingAnalyzer;
 import analyzer.exercises.lasagna.LasagnaAnalyzer;
 import analyzer.exercises.leap.LeapAnalyzer;
@@ -46,6 +47,7 @@ public class AnalyzerRoot {
         analyzers.add(new GlobalAnalyzer());
 
         switch (slug) {
+            case "annalyns-infiltration" -> analyzers.add(new AnnalynsInfiltrationAnalyzer());
             case "hamming" -> analyzers.add(new HammingAnalyzer());
             case "lasagna" -> analyzers.add(new LasagnaAnalyzer());
             case "leap" -> analyzers.add(new LeapAnalyzer());
