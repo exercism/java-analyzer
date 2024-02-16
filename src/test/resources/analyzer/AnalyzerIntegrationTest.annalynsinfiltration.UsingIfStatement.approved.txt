@@ -1,0 +1,19 @@
+{
+  "comments": [
+    {
+      "comment": "java.annalyns-infiltration.avoid_if_statements",
+      "params": {},
+      "type": "essential"
+    },
+    {
+      "comment": "java.annalyns-infiltration.avoid_boolean_literal_returns",
+      "params": {},
+      "type": "essential"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

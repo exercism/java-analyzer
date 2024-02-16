@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.annalyns-infiltration.some_parentheses_are_redundant",
+      "params": {},
+      "type": "informative"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}
