@@ -1,0 +1,11 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.exemplar",
+      "params": {
+        "exerciseName": "Need for Speed"
+      },
+      "type": "celebratory"
+    }
+  ]
+}

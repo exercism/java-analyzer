@@ -6,6 +6,7 @@ import analyzer.exercises.annalynsinfiltration.AnnalynsInfiltrationAnalyzer;
 import analyzer.exercises.hamming.HammingAnalyzer;
 import analyzer.exercises.lasagna.LasagnaAnalyzer;
 import analyzer.exercises.leap.LeapAnalyzer;
+import analyzer.exercises.needforspeed.NeedForSpeedAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class AnalyzerRoot {
             case "hamming" -> analyzers.add(new HammingAnalyzer());
             case "lasagna" -> analyzers.add(new LasagnaAnalyzer());
             case "leap" -> analyzers.add(new LeapAnalyzer());
+            case "need-for-speed" -> analyzers.add(new NeedForSpeedAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
         }
 
