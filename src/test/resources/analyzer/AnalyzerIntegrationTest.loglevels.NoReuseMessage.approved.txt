@@ -1,0 +1,17 @@
+{
+  "comments": [
+    {
+      "comment": "java.log-levels.reuse_code",
+      "params": {
+        "callingMethod": "reformat",
+        "methodToCall": "message"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "comments": [
+    {
+      "comment": "java.log-levels.use_substring_method",
+      "params": {
+        "callingMethod": "message",
+        "methodToCall": "substring"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

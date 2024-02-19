@@ -1,0 +1,23 @@
+{
+    "authors": [
+      "mirkoperillo"
+    ],
+    "files": {
+      "solution": [
+        "src/main/java/LogLevels.java"
+      ],
+      "test": [
+        "src/test/java/LogLevelsTest.java"
+      ],
+      "exemplar": [
+        ".meta/src/reference/java/LogLevels.java"
+      ],
+      "invalidator": [
+        "build.gradle"
+      ]
+    },
+    "forked_from": [
+      "csharp/log-levels"
+    ],
+    "blurb": "Learn about strings by processing logs."
+}
