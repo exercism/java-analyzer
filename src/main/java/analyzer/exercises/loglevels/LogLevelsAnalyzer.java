@@ -42,6 +42,12 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
     public void visit(MethodDeclaration node, OutputCollector output) {
         if (containsHarcodedString(node)) {
             output.addComment(new DoNotHardcodeLogLevels());
+            return;
+        }
+        
+        if (!node.getNameAsString().equals(REFORMAT) && doesNotCallMethod(node, SUBSTRING)) {
+            output.addComment(new UseSubstringMethod());
+            return;
         }
 
         if (node.getNameAsString().equals(REFORMAT) && doesNotCallMethod(node, MESSAGE)) {
@@ -52,16 +58,8 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
             output.addComment(new ReuseCode(REFORMAT, LOG_LEVEL));
         }
 
-        if (node.getNameAsString().equals(MESSAGE) && doesNotCallMethod(node, SUBSTRING)) {
-            output.addComment(new UseSubstringMethod(MESSAGE, SUBSTRING));
-        }
-        
-        if (node.getNameAsString().equals(LOG_LEVEL) && doesNotCallMethod(node, SUBSTRING)) {
-            output.addComment(new UseSubstringMethod(LOG_LEVEL, SUBSTRING));
-        }
-
-        if (node.getNameAsString().equals(REFORMAT) && !doesNotCallMethod(node, FORMAT)) {
-            output.addComment(new AvoidUsingStringFormat());
+        if (node.getNameAsString().equals(REFORMAT) && callsMethod(node, FORMAT)) {
+            output.addComment(new PreferStringConcatenation());
         }
 
         super.visit(node, output);
@@ -77,5 +75,9 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
 
     private static boolean doesNotCallMethod(MethodDeclaration node, String otherMethodName) {
         return node.findAll(MethodCallExpr.class, x -> x.getNameAsString().contains(otherMethodName)).isEmpty();
+    }
+
+    private static boolean callsMethod(MethodDeclaration node, String otherMethodName) {
+        return !node.findAll(MethodCallExpr.class, x -> x.getNameAsString().contains(otherMethodName)).isEmpty();
     }
 }

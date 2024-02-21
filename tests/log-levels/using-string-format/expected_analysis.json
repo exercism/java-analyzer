@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.log-levels.avoid_using_string_format",
+      "comment": "java.log-levels.prefer_string_concatenation",
       "params": {},
       "type": "informative"
     },
