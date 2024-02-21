@@ -69,8 +69,8 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
 
     private static boolean containsHarcodedString(MethodDeclaration node) {
         List<StringLiteralExpr> hardcodedStrings = node.findAll(StringLiteralExpr.class,
-                x -> x.getValue().equals("[ERROR]:") || x.getValue().equals("[WARNING]:")
-                        || x.getValue().equals("[INFO]:"));
+                x -> x.getValue().contains("ERROR") || x.getValue().contains("WARNING")
+                        || x.getValue().contains("INFO"));
 
         return hardcodedStrings.size() > 1;
     }
