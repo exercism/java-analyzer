@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.two-fer.avoid_string_format",
+      "comment": "java.two-fer.use_ternary_operator",
       "params": {},
       "type": "actionable"
     },
