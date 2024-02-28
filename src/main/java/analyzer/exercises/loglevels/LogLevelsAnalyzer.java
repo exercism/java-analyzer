@@ -9,7 +9,9 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import analyzer.Analyzer;
 import analyzer.OutputCollector;
 import analyzer.Solution;
+import analyzer.comments.AvoidHardCodedTestCases;
 import analyzer.comments.ExemplarSolution;
+import analyzer.comments.PreferStringConcatenation;
 
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
     @Override
     public void visit(MethodDeclaration node, OutputCollector output) {
         if (containsHarcodedString(node)) {
-            output.addComment(new DoNotHardcodeLogLevels());
+            output.addComment(new AvoidHardCodedTestCases());
             return;
         }
         

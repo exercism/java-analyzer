@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.log-levels.do_not_hardcode_log_levels",
+      "comment": "java.general.avoid_hard_coded_test_cases",
       "params": {},
       "type": "essential"
     },
