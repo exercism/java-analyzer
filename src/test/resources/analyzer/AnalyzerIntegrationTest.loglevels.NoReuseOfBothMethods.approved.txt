@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.log-levels.reuse_code",
+      "comment": "java.general.reuse_code",
       "params": {
         "callingMethod": "reformat",
         "methodToCall": "message"
@@ -9,7 +9,7 @@
       "type": "actionable"
     },
     {
-      "comment": "java.log-levels.reuse_code",
+      "comment": "java.general.reuse_code",
       "params": {
         "callingMethod": "reformat",
         "methodToCall": "logLevel"

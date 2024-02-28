@@ -12,6 +12,7 @@ import analyzer.Solution;
 import analyzer.comments.AvoidHardCodedTestCases;
 import analyzer.comments.ExemplarSolution;
 import analyzer.comments.PreferStringConcatenation;
+import analyzer.comments.ReuseCode;
 
 import java.util.List;
 
