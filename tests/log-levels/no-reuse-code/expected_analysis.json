@@ -3,8 +3,8 @@
     {
       "comment": "java.general.reuse_code",
       "params": {
-        "callingMethod": "remainingMinutesInOven",
-        "methodToCall": "expectedMinutesInOven"
+        "callingMethod": "reformat",
+        "methodToCall": "logLevel"
       },
       "type": "actionable"
     },

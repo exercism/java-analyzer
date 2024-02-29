@@ -5,6 +5,8 @@ import analyzer.OutputCollector;
 import analyzer.Solution;
 import analyzer.comments.ExemplarSolution;
 import analyzer.comments.RemoveTodoComments;
+import analyzer.comments.ReuseCode;
+
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.comments.LineComment;

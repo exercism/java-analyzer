@@ -1,0 +1,25 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.reuse_code",
+      "params": {
+        "callingMethod": "reformat",
+        "methodToCall": "message"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.reuse_code",
+      "params": {
+        "callingMethod": "reformat",
+        "methodToCall": "logLevel"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}
