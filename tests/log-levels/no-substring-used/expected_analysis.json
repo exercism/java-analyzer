@@ -1,11 +1,8 @@
 {
   "comments": [
     {
-      "comment": "java.general.reuse_code",
-      "params": {
-        "callingMethod": "remainingMinutesInOven",
-        "methodToCall": "expectedMinutesInOven"
-      },
+      "comment": "java.log-levels.use_substring_method",
+      "params": {},
       "type": "actionable"
     },
     {

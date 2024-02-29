@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.lasagna.reuse_code",
+      "comment": "java.general.reuse_code",
       "params": {
         "callingMethod": "remainingMinutesInOven",
         "methodToCall": "expectedMinutesInOven"
@@ -9,7 +9,7 @@
       "type": "actionable"
     },
     {
-      "comment": "java.lasagna.reuse_code",
+      "comment": "java.general.reuse_code",
       "params": {
         "callingMethod": "totalTimeInMinutes",
         "methodToCall": "preparationTimeInMinutes"
