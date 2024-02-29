@@ -1,9 +1,9 @@
 {
   "comments": [
     {
-      "comment": "java.two-fer.avoid_string_format",
+      "comment": "java.general.prefer_string_concatenation",
       "params": {},
-      "type": "actionable"
+      "type": "informative"
     },
     {
       "comment": "java.general.feedback_request",

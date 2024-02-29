@@ -1,9 +1,9 @@
 {
   "comments": [
     {
-      "comment": "java.general.prefer_string_concatenation",
+      "comment": "java.two-fer.use_ternary_operator",
       "params": {},
-      "type": "informative"
+      "type": "actionable"
     },
     {
       "comment": "java.general.feedback_request",

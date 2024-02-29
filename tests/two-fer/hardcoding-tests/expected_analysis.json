@@ -1,9 +1,9 @@
 {
   "comments": [
     {
-      "comment": "java.general.prefer_string_concatenation",
+      "comment": "java.general.avoid_hard_coded_test_cases",
       "params": {},
-      "type": "informative"
+      "type": "essential"
     },
     {
       "comment": "java.general.feedback_request",
