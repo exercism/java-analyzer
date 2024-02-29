@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.two-fer.prefer_string_concatenation",
+      "comment": "java.general.prefer_string_concatenation",
       "params": {},
       "type": "informative"
     },

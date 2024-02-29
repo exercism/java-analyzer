@@ -16,6 +16,7 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import analyzer.Analyzer;
 import analyzer.Solution;
 import analyzer.comments.AvoidHardCodedTestCases;
+import analyzer.comments.PreferStringConcatenation;
 
 /**
  * The {@link TwoferAnalyzer} is the analyzer implementation for the {@code two-fer} practice exercise.
