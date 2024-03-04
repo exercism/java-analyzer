@@ -149,4 +149,21 @@ class AnalyzerIntegrationTest {
 
         Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "ExemplarSolution",
+            "NotUsingBitwiseAnd",
+            "NotUsingBitwiseNot",
+            "NotUsingBitwiseOr",
+            "NotUsingBitwiseXor",
+            "NotUsingUnsignedRightShift"
+    })
+    void secrets(String scenario) throws IOException {
+        var path = Path.of("secrets", scenario + ".java");
+        var solution = new SolutionFromFiles("secrets", SCENARIOS.resolve(path));
+        var output = AnalyzerRoot.analyze(solution);
+
+        Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
+    }
 }
