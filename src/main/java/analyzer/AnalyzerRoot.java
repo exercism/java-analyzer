@@ -55,8 +55,8 @@ public class AnalyzerRoot {
             case "leap" -> analyzers.add(new LeapAnalyzer());
             case "log-levels" -> analyzers.add(new LogLevelsAnalyzer());
             case "need-for-speed" -> analyzers.add(new NeedForSpeedAnalyzer());
-            case "two-fer" -> analyzers.add(new TwoferAnalyzer());
             case "secrets" -> analyzers.add(new SecretsAnalyzer());
+            case "two-fer" -> analyzers.add(new TwoferAnalyzer());
         }
 
         return List.copyOf(analyzers);

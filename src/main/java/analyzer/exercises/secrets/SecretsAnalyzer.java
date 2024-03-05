@@ -3,7 +3,10 @@ package analyzer.exercises.secrets;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.BinaryExpr;
+import com.github.javaparser.ast.expr.ConditionalExpr;
 import com.github.javaparser.ast.expr.UnaryExpr;
+import com.github.javaparser.ast.stmt.IfStmt;
+import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import analyzer.Analyzer;
@@ -38,46 +41,53 @@ public class SecretsAnalyzer extends VoidVisitorAdapter<OutputCollector> impleme
     @Override
     public void visit(MethodDeclaration node, OutputCollector output) {
 
-        if (node.getNameAsString().equals(SHIFT_BACK) && doesNotImplementUnsignedRightShift(node)) {
-            output.addComment(new ImplementOperator(">>>", SHIFT_BACK));
+        if (node.getNameAsString().equals(SHIFT_BACK) && doesNotUseOperator(node, BinaryExpr.Operator.UNSIGNED_RIGHT_SHIFT)) {
+            output.addComment(new UseBitwiseOperator(">>>", SHIFT_BACK));
+            return;
         }
 
-        if (node.getNameAsString().equals(SET_BITS) && doesNotImplementBitwiseOr(node)) {
-            output.addComment(new ImplementOperator("|", SET_BITS));
+        if (node.getNameAsString().equals(SET_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_OR)) {
+            output.addComment(new UseBitwiseOperator("|", SET_BITS));
+            return;
         }
 
-        if (node.getNameAsString().equals(FLIP_BITS) && doesNotImplementBitwiseXor(node)) {
-            output.addComment(new ImplementOperator("^", FLIP_BITS));
+        if (node.getNameAsString().equals(FLIP_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.XOR)) {
+            output.addComment(new UseBitwiseOperator("^", FLIP_BITS));
+            return;
         }
 
-        if (node.getNameAsString().equals(CLEAR_BITS) && doesNotImplementBitwiseAnd(node)) {
-            output.addComment(new ImplementOperator("&", CLEAR_BITS));
+        if (node.getNameAsString().equals(CLEAR_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND)) {
+            output.addComment(new UseBitwiseOperator("&", CLEAR_BITS));
+            return;
         }
 
-        if (node.getNameAsString().equals(CLEAR_BITS) && doesNotImplementBitwiseNot(node)) {
+        if (node.getNameAsString().equals(CLEAR_BITS) && !doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND) && doesNotImplementBitwiseNot(node)) {
             output.addComment(new PreferBitwiseNot());
+        }
+
+        if (hasConditional(node)) {
+            output.addComment(new AvoidConditionalLogic());
         }
 
         super.visit(node, output);
     }
 
-    private static boolean doesNotImplementBitwiseAnd(MethodDeclaration node) {
-        return node.findAll(BinaryExpr.class, x -> x.getOperator() == BinaryExpr.Operator.BINARY_AND).isEmpty();
-    }
-
-    private static boolean doesNotImplementBitwiseOr(MethodDeclaration node) {
-        return node.findAll(BinaryExpr.class, x -> x.getOperator() == BinaryExpr.Operator.BINARY_OR).isEmpty();
-    }
-
-    private static boolean doesNotImplementBitwiseXor(MethodDeclaration node) {
-        return node.findAll(BinaryExpr.class, x -> x.getOperator() == BinaryExpr.Operator.XOR).isEmpty();
+    private static boolean doesNotUseOperator(MethodDeclaration node, BinaryExpr.Operator operator) {
+        return node.findAll(BinaryExpr.class, x -> x.getOperator() == operator).isEmpty();
     }
 
     private static boolean doesNotImplementBitwiseNot(MethodDeclaration node) {
         return node.findAll(UnaryExpr.class, x -> x.getOperator() == UnaryExpr.Operator.BITWISE_COMPLEMENT).isEmpty();
     }
 
-    private static boolean doesNotImplementUnsignedRightShift(MethodDeclaration node) {
-        return node.findAll(BinaryExpr.class, x -> x.getOperator() == BinaryExpr.Operator.UNSIGNED_RIGHT_SHIFT).isEmpty();
+    private static boolean hasConditional(MethodDeclaration node) {
+        return node.getBody()
+                .map(body -> body.getStatements().stream()
+                        .anyMatch(SecretsAnalyzer::isConditionalExpresion))
+                .orElse(false);
+    }
+
+    private static boolean isConditionalExpresion(Statement statement) {
+        return !statement.findAll(IfStmt.class).isEmpty() || !statement.findAll(ConditionalExpr.class).isEmpty();
     }
 }

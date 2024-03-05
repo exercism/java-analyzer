@@ -5,20 +5,20 @@ import analyzer.Comment;
 import java.util.Map;
 
 /**
- * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/secrets/implement_operator.md">Markdown Template</a>
+ * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/secrets/use_bitwise_operator.md">Markdown Template</a>
  */
-class ImplementOperator extends Comment {
+class UseBitwiseOperator extends Comment {
     private final String operatorToUse;
     private final String calledMethod;
 
-    public ImplementOperator(String operatorToUse, String calledMethod) {
+    public UseBitwiseOperator(String operatorToUse, String calledMethod) {
         this.operatorToUse = operatorToUse;
         this.calledMethod = calledMethod;
     }
 
     @Override
     public String getKey() {
-        return "java.secrets.implement_operator";
+        return "java.secrets.use_bitwise_operator";
     }
 
     @Override
