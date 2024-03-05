@@ -3,7 +3,7 @@ package analyzer.exercises.secrets;
 import analyzer.Comment;
 
 /**
- * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/secrets/implement_operator.md">Markdown Template</a>
+ * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/secrets/prefer_bitwise_not.md">Markdown Template</a>
  */
 class PreferBitwiseNot extends Comment {
 
