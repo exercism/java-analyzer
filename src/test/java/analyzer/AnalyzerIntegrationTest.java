@@ -158,7 +158,8 @@ class AnalyzerIntegrationTest {
             "NotUsingBitwiseOr",
             "NotUsingBitwiseXor",
             "NotUsingUnsignedRightShift",
-            "UsingIfStatement"
+            "UsingIfStatement",
+            "NotUsingAnyOfTheExpectedOperators"
     })
     void secrets(String scenario) throws IOException {
         var path = Path.of("secrets", scenario + ".java");
