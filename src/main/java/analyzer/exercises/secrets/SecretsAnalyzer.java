@@ -26,6 +26,7 @@ public class SecretsAnalyzer extends VoidVisitorAdapter<OutputCollector> impleme
     private static final String SET_BITS = "setBits";
     private static final String FLIP_BITS = "flipBits";
     private static final String CLEAR_BITS = "clearBits";
+    private boolean essentialCommentAdded = false;
 
     @Override
     public void analyze(Solution solution, OutputCollector output) {
@@ -41,31 +42,31 @@ public class SecretsAnalyzer extends VoidVisitorAdapter<OutputCollector> impleme
     @Override
     public void visit(MethodDeclaration node, OutputCollector output) {
 
-        if (node.getNameAsString().equals(SHIFT_BACK) && doesNotUseOperator(node, BinaryExpr.Operator.UNSIGNED_RIGHT_SHIFT)) {
+        if (!essentialCommentAdded && node.getNameAsString().equals(SHIFT_BACK) && doesNotUseOperator(node, BinaryExpr.Operator.UNSIGNED_RIGHT_SHIFT)) {
             output.addComment(new UseBitwiseOperator(">>>", SHIFT_BACK));
-            return;
+            essentialCommentAdded = true;
         }
 
-        if (node.getNameAsString().equals(SET_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_OR)) {
+        if (!essentialCommentAdded && node.getNameAsString().equals(SET_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_OR)) {
             output.addComment(new UseBitwiseOperator("|", SET_BITS));
-            return;
+            essentialCommentAdded = true;
         }
 
-        if (node.getNameAsString().equals(FLIP_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.XOR)) {
+        if (!essentialCommentAdded && node.getNameAsString().equals(FLIP_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.XOR)) {
             output.addComment(new UseBitwiseOperator("^", FLIP_BITS));
-            return;
+            essentialCommentAdded = true;
         }
 
-        if (node.getNameAsString().equals(CLEAR_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND)) {
+        if (!essentialCommentAdded && node.getNameAsString().equals(CLEAR_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND)) {
             output.addComment(new UseBitwiseOperator("&", CLEAR_BITS));
-            return;
+            essentialCommentAdded = true;
         }
 
-        if (node.getNameAsString().equals(CLEAR_BITS) && !doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND) && doesNotImplementBitwiseNot(node)) {
+        if (!essentialCommentAdded && node.getNameAsString().equals(CLEAR_BITS) && !doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND) && doesNotImplementBitwiseNot(node)) {
             output.addComment(new PreferBitwiseNot());
         }
 
-        if (hasConditional(node)) {
+        if (!essentialCommentAdded && hasConditional(node)) {
             output.addComment(new AvoidConditionalLogic());
         }
 
