@@ -8,6 +8,7 @@ import analyzer.exercises.lasagna.LasagnaAnalyzer;
 import analyzer.exercises.leap.LeapAnalyzer;
 import analyzer.exercises.loglevels.LogLevelsAnalyzer;
 import analyzer.exercises.needforspeed.NeedForSpeedAnalyzer;
+import analyzer.exercises.secrets.SecretsAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
 
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class AnalyzerRoot {
             case "leap" -> analyzers.add(new LeapAnalyzer());
             case "log-levels" -> analyzers.add(new LogLevelsAnalyzer());
             case "need-for-speed" -> analyzers.add(new NeedForSpeedAnalyzer());
+            case "secrets" -> analyzers.add(new SecretsAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
         }
 
