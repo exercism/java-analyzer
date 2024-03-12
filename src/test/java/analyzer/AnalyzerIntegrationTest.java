@@ -168,4 +168,18 @@ class AnalyzerIntegrationTest {
 
         Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "ExemplarSolution",
+            "ExemplarSolutionWithTodoComments",
+            "NotUsingOverrideAnnotations"
+    })
+    void wizardsandwarriors(String scenario) throws IOException {
+        var path = Path.of("wizards-and-warriors", scenario + ".java");
+        var solution = new SolutionFromFiles("wizards-and-warriors", SCENARIOS.resolve(path));
+        var output = AnalyzerRoot.analyze(solution);
+
+        Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
+    }
 }
