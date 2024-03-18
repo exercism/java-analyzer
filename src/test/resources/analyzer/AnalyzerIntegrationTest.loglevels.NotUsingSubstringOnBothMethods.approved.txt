@@ -2,7 +2,16 @@
   "comments": [
     {
       "comment": "java.log-levels.use_substring_method",
-      "params": {},
+      "params": {
+        "onMethod": "message"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "java.log-levels.use_substring_method",
+      "params": {
+        "onMethod": "logLevel"
+      },
       "type": "actionable"
     },
     {

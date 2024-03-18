@@ -133,7 +133,8 @@ class AnalyzerIntegrationTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "ExemplarSolution",
-            "HardCodingLogLevels",
+            "HardCodingLogLevelsUpperCase",
+            "HardCodingLogLevelsLowerCase",
             "NoReuseLogLevel",
             "NoReuseMessage",
             "NoReuseOfBothMethods",

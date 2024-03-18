@@ -1,11 +1,9 @@
 {
   "comments": [
     {
-      "comment": "java.log-levels.use_substring_method",
-      "params": {
-        "onMethod": "logLevel"
-      },
-      "type": "actionable"
+      "comment": "java.general.avoid_hard_coded_test_cases",
+      "params": {},
+      "type": "essential"
     },
     {
       "comment": "java.general.feedback_request",
