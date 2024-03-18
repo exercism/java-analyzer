@@ -36,29 +36,29 @@ public class WizardsAndWarriorsAnalyzer implements Analyzer {
         }
     }
 
-    class WizardsAndWarriorsClassAnalyzer extends VoidVisitorAdapter<OutputCollector> {
+    static class WizardsAndWarriorsClassAnalyzer extends VoidVisitorAdapter<OutputCollector> {
 
         @Override
         public void visit(LineComment node, OutputCollector output) {
             if (node.getContent().contains("TODO")) {
                 output.addComment(new RemoveTodoComments());
             }
-    
+
             super.visit(node, output);
         }
-    
+
         @Override
         public void visit(ClassOrInterfaceDeclaration node, OutputCollector output) {
             if (doesNotHasOverrideAnnotationForEveryOverridedMethod(node)) {
                 output.addComment(new UseOverrideAnnotation());
             }
-    
+
             super.visit(node, output);
         }
-    
+
         private static boolean doesNotHasOverrideAnnotationForEveryOverridedMethod(ClassOrInterfaceDeclaration node) {
             List<AnnotationExpr> annotations = node.findAll(AnnotationExpr.class);
-    
+
             return annotations.size() < 3;
         }
     }
