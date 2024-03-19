@@ -8,10 +8,10 @@ import java.util.Map;
  * @see <a href="https://github.com/exercism/website-copy/blob/main/analyzer-comments/java/log-levels/use_substring_method.md">Markdown Template</a>
  */
 class UseSubstringMethod extends Comment {
-    private final String onMethod;
+    private final String inMethod;
 
-    public UseSubstringMethod(String onMethod) {
-        this.onMethod = onMethod;
+    public UseSubstringMethod(String inMethod) {
+        this.inMethod = inMethod;
     }
 
     @Override
@@ -22,8 +22,7 @@ class UseSubstringMethod extends Comment {
     @Override
     public Map<String, String> getParameters() {
         return Map.of(
-            "onMethod", this.onMethod
-        );
+                "inMethod", this.inMethod);
     }
 
     @Override

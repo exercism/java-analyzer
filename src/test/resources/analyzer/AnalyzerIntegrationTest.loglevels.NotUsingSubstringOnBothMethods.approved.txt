@@ -3,14 +3,14 @@
     {
       "comment": "java.log-levels.use_substring_method",
       "params": {
-        "onMethod": "message"
+        "inMethod": "message"
       },
       "type": "actionable"
     },
     {
       "comment": "java.log-levels.use_substring_method",
       "params": {
-        "onMethod": "logLevel"
+        "inMethod": "logLevel"
       },
       "type": "actionable"
     },
