@@ -173,7 +173,8 @@ class AnalyzerIntegrationTest {
     @ValueSource(strings = {
             "ExemplarSolution",
             "ExemplarSolutionWithTodoComments",
-            "NotUsingOverrideAnnotations"
+            "NotUsingOverrideAnnotations",
+            "UsingAditionalEqualsMethodOverrided"
     })
     void wizardsandwarriors(String scenario) throws IOException {
         var path = Path.of("wizards-and-warriors", scenario + ".java");

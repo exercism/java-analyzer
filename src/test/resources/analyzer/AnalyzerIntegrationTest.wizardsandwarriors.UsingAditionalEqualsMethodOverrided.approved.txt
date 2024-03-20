@@ -1,0 +1,11 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.exemplar",
+      "params": {
+        "exerciseName": "Wizards and Warriors"
+      },
+      "type": "celebratory"
+    }
+  ]
+}
