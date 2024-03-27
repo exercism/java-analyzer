@@ -47,9 +47,9 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
             output.addComment(new AvoidHardCodedTestCases());
             return;
         }
-        
+
         if (!node.getNameAsString().equals(REFORMAT) && doesNotCallMethod(node, SUBSTRING)) {
-            output.addComment(new UseSubstringMethod());
+            output.addComment(new UseSubstringMethod(node.getNameAsString()));
             return;
         }
 
@@ -69,9 +69,10 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
     }
 
     private static boolean containsHarcodedString(MethodDeclaration node) {
-        List<StringLiteralExpr> hardcodedStrings = node.findAll(StringLiteralExpr.class,
-                x -> x.getValue().contains("ERROR") || x.getValue().contains("WARNING")
-                        || x.getValue().contains("INFO"));
+        List<StringLiteralExpr> hardcodedStrings = node.findAll(StringLiteralExpr.class, x -> {
+            String value = x.getValue().toLowerCase();
+            return value.contains("error") || value.contains("warning") || value.contains("info");
+        });
 
         return hardcodedStrings.size() > 1;
     }
