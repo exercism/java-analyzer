@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.remove_todo_comments",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

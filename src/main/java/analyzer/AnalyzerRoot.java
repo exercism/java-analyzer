@@ -10,6 +10,7 @@ import analyzer.exercises.loglevels.LogLevelsAnalyzer;
 import analyzer.exercises.needforspeed.NeedForSpeedAnalyzer;
 import analyzer.exercises.secrets.SecretsAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
+import analyzer.exercises.wizardsandwarriors.WizardsAndWarriorsAnalyzer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,7 @@ public class AnalyzerRoot {
             case "need-for-speed" -> analyzers.add(new NeedForSpeedAnalyzer());
             case "secrets" -> analyzers.add(new SecretsAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
+            case "wizards-and-warriors" -> analyzers.add(new WizardsAndWarriorsAnalyzer());
         }
 
         return List.copyOf(analyzers);
