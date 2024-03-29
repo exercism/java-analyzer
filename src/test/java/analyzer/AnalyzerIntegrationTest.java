@@ -184,4 +184,25 @@ class AnalyzerIntegrationTest {
 
         Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "ExemplarSolution",
+            "NoReuseBonusForProductsSold",
+            "NoReuseBonusMultiplier",
+            "NoReuseSalaryMultiplier",
+            "NotReusingMethodsAtAll",
+            "NotUsingTernaryOperatorsAndNotReusingMethods",
+            "NotUsingTernaryOperatorsAtAll",
+            "NotUsingTernaryOperatorsOnBonusMultiplier",
+            "NotUsingTernaryOperatorsOnFinalSalary",
+            "NotUsingTernaryOperatorsOnSalaryMultiplier"
+    })
+    void salarycalculator(String scenario) throws IOException {
+        var path = Path.of("salary-calculator", scenario + ".java");
+        var solution = new SolutionFromFiles("salary-calculator", SCENARIOS.resolve(path));
+        var output = AnalyzerRoot.analyze(solution);
+
+        Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
+    }
 }

@@ -1,0 +1,17 @@
+{
+  "comments": [
+    {
+      "comment": "java.general.reuse_code",
+      "params": {
+        "callingMethod": "finalSalary",
+        "methodToCall": "salaryMultiplier"
+      },
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}
