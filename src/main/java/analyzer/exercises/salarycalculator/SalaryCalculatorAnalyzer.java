@@ -39,20 +39,24 @@ public class SalaryCalculatorAnalyzer extends VoidVisitorAdapter<OutputCollector
 
     @Override
     public void visit(MethodDeclaration node, OutputCollector output) {
-        if (!essentialCommentAdded && isMethodThatMustContainTernaryOperators(node) && doesNotHasTernaryOperators(node)) {
+        if (essentialCommentAdded) {
+            return;
+        }
+
+        if (isMethodThatMustContainTernaryOperators(node) && doesNotHasTernaryOperators(node)) {
             output.addComment(new UseTernaryOperators(node.getNameAsString()));
             essentialCommentAdded = true;
         }
 
-        if (!essentialCommentAdded && node.getNameAsString().equals(BONUS_FOR_PRODUCTS_SOLD) && doesNotCallMethod(node, BONUS_MULTIPLIER)) {
+        if (node.getNameAsString().equals(BONUS_FOR_PRODUCTS_SOLD) && doesNotCallMethod(node, BONUS_MULTIPLIER)) {
             output.addComment(new ReuseCode(BONUS_FOR_PRODUCTS_SOLD, BONUS_MULTIPLIER));
         }
 
-        if (!essentialCommentAdded && node.getNameAsString().equals(FINAL_SALARY) && doesNotCallMethod(node, SALARY_MULTIPLIER)) {
+        if (node.getNameAsString().equals(FINAL_SALARY) && doesNotCallMethod(node, SALARY_MULTIPLIER)) {
             output.addComment(new ReuseCode(FINAL_SALARY, SALARY_MULTIPLIER));
         }
 
-        if (!essentialCommentAdded && node.getNameAsString().equals(FINAL_SALARY) && doesNotCallMethod(node, BONUS_FOR_PRODUCTS_SOLD)) {
+        if (node.getNameAsString().equals(FINAL_SALARY) && doesNotCallMethod(node, BONUS_FOR_PRODUCTS_SOLD)) {
             output.addComment(new ReuseCode(FINAL_SALARY, BONUS_FOR_PRODUCTS_SOLD));
         }
 
