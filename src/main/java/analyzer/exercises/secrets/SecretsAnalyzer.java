@@ -41,32 +41,35 @@ public class SecretsAnalyzer extends VoidVisitorAdapter<OutputCollector> impleme
 
     @Override
     public void visit(MethodDeclaration node, OutputCollector output) {
+        if (essentialCommentAdded) {
+            return;
+        }
 
-        if (!essentialCommentAdded && node.getNameAsString().equals(SHIFT_BACK) && doesNotUseOperator(node, BinaryExpr.Operator.UNSIGNED_RIGHT_SHIFT)) {
+        if (node.getNameAsString().equals(SHIFT_BACK) && doesNotUseOperator(node, BinaryExpr.Operator.UNSIGNED_RIGHT_SHIFT)) {
             output.addComment(new UseBitwiseOperator(">>>", SHIFT_BACK));
             essentialCommentAdded = true;
         }
 
-        if (!essentialCommentAdded && node.getNameAsString().equals(SET_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_OR)) {
+        if (node.getNameAsString().equals(SET_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_OR)) {
             output.addComment(new UseBitwiseOperator("|", SET_BITS));
             essentialCommentAdded = true;
         }
 
-        if (!essentialCommentAdded && node.getNameAsString().equals(FLIP_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.XOR)) {
+        if (node.getNameAsString().equals(FLIP_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.XOR)) {
             output.addComment(new UseBitwiseOperator("^", FLIP_BITS));
             essentialCommentAdded = true;
         }
 
-        if (!essentialCommentAdded && node.getNameAsString().equals(CLEAR_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND)) {
+        if (node.getNameAsString().equals(CLEAR_BITS) && doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND)) {
             output.addComment(new UseBitwiseOperator("&", CLEAR_BITS));
             essentialCommentAdded = true;
         }
 
-        if (!essentialCommentAdded && node.getNameAsString().equals(CLEAR_BITS) && !doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND) && doesNotImplementBitwiseNot(node)) {
+        if (node.getNameAsString().equals(CLEAR_BITS) && !doesNotUseOperator(node, BinaryExpr.Operator.BINARY_AND) && doesNotImplementBitwiseNot(node)) {
             output.addComment(new PreferBitwiseNot());
         }
 
-        if (!essentialCommentAdded && hasConditional(node)) {
+        if (hasConditional(node)) {
             output.addComment(new AvoidConditionalLogic());
         }
 

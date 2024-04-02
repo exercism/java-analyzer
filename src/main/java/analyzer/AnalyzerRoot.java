@@ -8,6 +8,7 @@ import analyzer.exercises.lasagna.LasagnaAnalyzer;
 import analyzer.exercises.leap.LeapAnalyzer;
 import analyzer.exercises.loglevels.LogLevelsAnalyzer;
 import analyzer.exercises.needforspeed.NeedForSpeedAnalyzer;
+import analyzer.exercises.salarycalculator.SalaryCalculatorAnalyzer;
 import analyzer.exercises.secrets.SecretsAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
 import analyzer.exercises.wizardsandwarriors.WizardsAndWarriorsAnalyzer;
@@ -56,6 +57,7 @@ public class AnalyzerRoot {
             case "leap" -> analyzers.add(new LeapAnalyzer());
             case "log-levels" -> analyzers.add(new LogLevelsAnalyzer());
             case "need-for-speed" -> analyzers.add(new NeedForSpeedAnalyzer());
+            case "salary-calculator" -> analyzers.add(new SalaryCalculatorAnalyzer());
             case "secrets" -> analyzers.add(new SecretsAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
             case "wizards-and-warriors" -> analyzers.add(new WizardsAndWarriorsAnalyzer());
