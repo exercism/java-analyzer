@@ -1,8 +1,19 @@
 package scenarios.loglevels;
 
 public class LogLevels {
+
     public static String message(String logLine) {
-        return logLine.split("]: ")[1].trim();
+        int colonIndex = logLine.indexOf("]: ");
+        if (colonIndex == -1) {
+          return logLine; 
+        }
+      
+        StringBuilder messageBuilder = new StringBuilder();
+        for (int i = colonIndex + 3; i < logLine.length(); i++) {
+          messageBuilder.append(logLine.charAt(i));
+        }
+      
+        return messageBuilder.toString().trim();
     }
 
     public static String logLevel(String logLine) {

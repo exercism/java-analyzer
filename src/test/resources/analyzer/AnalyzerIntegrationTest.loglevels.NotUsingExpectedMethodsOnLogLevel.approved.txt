@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.log-levels.use_substring_method_v2",
+      "comment": "java.log-levels.use_one_of_the_expected_methods",
       "params": {
         "inMethod": "logLevel"
       },
