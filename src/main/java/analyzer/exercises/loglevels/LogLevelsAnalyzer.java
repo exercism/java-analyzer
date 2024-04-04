@@ -49,7 +49,7 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
         }
 
         if (!node.getNameAsString().equals(REFORMAT) && doesNotCallMethods(node, EXPECTED_METHODS)) {
-            output.addComment(new UseOneOfTheExpectedMethods(node.getNameAsString()));
+            output.addComment(new UseSubstringMethod(node.getNameAsString()));
             return;
         }
 
