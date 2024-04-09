@@ -27,8 +27,8 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
     private static final String REFORMAT = "reformat";
     private static final String MESSAGE = "message";
     private static final String LOG_LEVEL = "logLevel";
-    private static final String SUBSTRING = "substring";
     private static final String FORMAT = "format";
+    private static List<String> EXPECTED_METHODS = List.of("substring", "split");
 
     @Override
     public void analyze(Solution solution, OutputCollector output) {
@@ -48,7 +48,7 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
             return;
         }
 
-        if (!node.getNameAsString().equals(REFORMAT) && doesNotCallMethod(node, SUBSTRING)) {
+        if (!node.getNameAsString().equals(REFORMAT) && doesNotCallMethods(node, EXPECTED_METHODS)) {
             output.addComment(new UseSubstringMethod(node.getNameAsString()));
             return;
         }
@@ -79,6 +79,10 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
 
     private static boolean doesNotCallMethod(MethodDeclaration node, String otherMethodName) {
         return node.findAll(MethodCallExpr.class, x -> x.getNameAsString().contains(otherMethodName)).isEmpty();
+    }
+
+    private static boolean doesNotCallMethods(MethodDeclaration node, List<String> allowedMethods) {
+        return allowedMethods.stream().allMatch(method -> doesNotCallMethod(node, method));
     }
 
     private static boolean callsMethod(MethodDeclaration node, String otherMethodName) {

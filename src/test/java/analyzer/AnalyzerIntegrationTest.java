@@ -138,9 +138,9 @@ class AnalyzerIntegrationTest {
             "NoReuseLogLevel",
             "NoReuseMessage",
             "NoReuseOfBothMethods",
-            "NotUsingSubstringOnLogLevel",
-            "NotUsingSubstringOnMessage",
-            "NotUsingSubstringOnBothMethods",
+            "NotUsingExpectedMethodsOnLogLevel",
+            "NotUsingExpectedMethodsOnMessage",
+            "NotUsingExpectedMethodsOnLogLevelAndMessage",
             "UsingStringFormat"
     })
     void loglevels(String scenario) throws IOException {
