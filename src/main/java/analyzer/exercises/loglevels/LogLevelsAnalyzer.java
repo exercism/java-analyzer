@@ -29,6 +29,7 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
     private static final String LOG_LEVEL = "logLevel";
     private static final String FORMAT = "format";
     private static List<String> EXPECTED_METHODS = List.of("substring", "split");
+    private static final List<String> METHODS_TO_ANALYZE = List.of(MESSAGE, LOG_LEVEL, REFORMAT);
 
     @Override
     public void analyze(Solution solution, OutputCollector output) {
@@ -43,6 +44,10 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
 
     @Override
     public void visit(MethodDeclaration node, OutputCollector output) {
+        if (!METHODS_TO_ANALYZE.contains(node.getNameAsString())) {
+            return;
+        }
+
         if (containsHarcodedString(node)) {
             output.addComment(new AvoidHardCodedTestCases());
             return;
