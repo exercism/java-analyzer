@@ -42,7 +42,7 @@ class RaceTrack {
         this.distance = distance;
     }
 
-    public boolean tryFinishTrack(NeedForSpeed car) {
+    public boolean canFinishRace(NeedForSpeed car) {
         for (int i = 0; i < this.distance / car.getSpeed(); i++) {
             car.drive();
         }

@@ -62,7 +62,7 @@ public class NeedForSpeedAnalyzer implements Analyzer {
 
         @Override
         public void visit(MethodDeclaration node, OutputCollector output) {
-            if (node.getNameAsString().equals("tryFinishTrack") && hasLoop(node)) {
+            if (node.getNameAsString().equals("canFinishRace") && hasLoop(node)) {
                 output.addComment(new AvoidLoops());
             }
 
