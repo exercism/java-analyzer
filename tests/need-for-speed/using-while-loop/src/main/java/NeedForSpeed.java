@@ -36,7 +36,7 @@ class RaceTrack {
         this.distance = distance;
     }
 
-    public boolean tryFinishTrack(NeedForSpeed car) {
+    public boolean canFinishRace(NeedForSpeed car) {
         
         while (!car.batteryDrained()) {
             car.drive();
