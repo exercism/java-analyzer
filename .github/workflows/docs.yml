@@ -21,7 +21,7 @@ jobs:
           java-version: "21"
           distribution: "temurin"
       - name: Set up Python
-        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
         with:
           python-version: "3.11"
       - name: Build documentation
