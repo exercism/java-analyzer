@@ -64,17 +64,14 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
 
         int paramCount = node.getParameters().size();
 
-        // finds all methods with the name "describe" inside the current method
         List<MethodCallExpr> describeCalls = node.findAll(MethodCallExpr.class).stream()
                 .filter(m -> m.getNameAsString().equals(DESCRIBE))
                 .toList();
 
-        // if paramCount is 2, then is the case of describe(a,b) where I can call describe(a) and describe(b) and describe ("walking") or describe(a,b,"c").
         if (paramCount == 2) {
             return describeCalls.size() == 1 || describeCalls.size() == 3;
         }
 
-        // if paramCount is 3, then is the case of describe(a,b,c) where I can call describe(a) and describe(b) and describe (c).
         if (paramCount == 3) {
             return describeCalls.size() == 3;
         }
