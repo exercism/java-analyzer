@@ -50,7 +50,7 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
 
         }
 
-        if(useFormat(node)) {
+        if(useStringFormat(node)) {
 
             output.addComment(new PreferStringConcatenation());
 
@@ -82,7 +82,7 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
         return false;
     }
 
-    private static boolean useFormat(MethodDeclaration node) {
+    private static boolean useStringFormat(MethodDeclaration node) {
         return node.findAll(MethodCallExpr.class).stream()
                 .anyMatch(m -> m.getNameAsString().contains(FORMAT));
     }

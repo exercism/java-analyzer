@@ -205,4 +205,20 @@ class AnalyzerIntegrationTest {
 
         Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "ExemplarSolution",
+            "NotUseMethodOverloading",
+            "PartialUseOfMethodOverloading",
+            "UseStringFormat",
+            "UseStringFormatAndNotUseMethodOverloading",
+    })
+    void wizardsandwarriors2(String scenario) throws IOException {
+        var path = Path.of("wizards-and-warriors-2", scenario + ".java");
+        var solution = new SolutionFromFiles("wizards-and-warriors-2", SCENARIOS.resolve(path));
+        var output = AnalyzerRoot.analyze(solution);
+
+        Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
+    }
 }
