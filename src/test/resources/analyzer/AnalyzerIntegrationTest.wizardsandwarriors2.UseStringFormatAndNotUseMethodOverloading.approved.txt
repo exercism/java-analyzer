@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.wizards-and-warriors-2.use_method_overloading",
+      "comment": "java.wizards-and-warriors-2.use_overloaded_method",
       "params": {},
       "type": "actionable"
     },
