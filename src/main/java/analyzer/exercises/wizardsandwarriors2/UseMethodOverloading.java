@@ -9,7 +9,7 @@ public class UseMethodOverloading extends Comment{
 
     @Override
     public String getKey() {
-        return "java.wizards-and-warriors-2.use_overloaded_method";
+        return "java.wizards-and-warriors-2.use_method_overloading";
     }
 
     @Override

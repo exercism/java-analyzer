@@ -7,7 +7,6 @@ import analyzer.comments.ExemplarSolution;
 import analyzer.comments.PreferStringConcatenation;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.nodeTypes.NodeWithType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.List;
@@ -33,7 +32,6 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
 
         if (output.getComments().isEmpty()) {
             output.addComment(new ExemplarSolution(EXERCISE_NAME));
-            output.addTag("construct:method-overloading");
         }
     }
 
