@@ -12,7 +12,7 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import java.util.List;
 
 /**
- * The {@link WizardsAndWarriors2Analyzer} is the analyzer implementation for the {@code wizards-and-warriors-2} practice exercise.
+ * The {@link WizardsAndWarriors2Analyzer} is the analyzer implementation for the {@code wizards-and-warriors-2} concept exercise.
  *
  * @see <a href="https://github.com/exercism/java/tree/main/exercises/concept/wizards-and-warriors-2">The wizards-and-warriors exercise on the Java track</a>
  */
