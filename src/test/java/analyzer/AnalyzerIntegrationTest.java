@@ -68,6 +68,7 @@ class AnalyzerIntegrationTest {
     @ValueSource(strings = {
             "HardCodedTestCases",
             "OptimalSolution",
+            "OptimalTernary",
             "UsingGregorianCalendar",
             "UsingIfStatements",
             "UsingJavaTime",
