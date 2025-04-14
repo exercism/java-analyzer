@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.leap.avoid_conditional_logic",
+      "comment": "java.leap.avoid_if_statements",
       "params": {},
       "type": "actionable"
     },
