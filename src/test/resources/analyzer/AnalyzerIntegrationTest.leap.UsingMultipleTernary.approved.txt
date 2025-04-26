@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.leap.avoid_redundant_ternary",
+      "comment": "java.leap.avoid_multiple_ternary",
       "params": {},
       "type": "actionable"
     },

@@ -72,7 +72,7 @@ class AnalyzerIntegrationTest {
             "UsingGregorianCalendar",
             "UsingIfStatements",
             "UsingJavaTime",
-            "UsingTernary",
+            "UsingMultipleTernary",
             "UsingTooManyChecks",
     })
     void leap(String scenario) throws IOException {

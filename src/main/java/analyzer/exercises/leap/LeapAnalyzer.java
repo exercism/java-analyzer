@@ -76,8 +76,8 @@ public class LeapAnalyzer extends VoidVisitorAdapter<OutputCollector> implements
 
     @Override
     public void visit(ConditionalExpr node, OutputCollector output) {
-        if (node.getThenExpr().isBooleanLiteralExpr() || node.getElseExpr().isBooleanLiteralExpr()) {
-            output.addComment(new AvoidRedundantTernary());
+        if (node.getThenExpr().isConditionalExpr() || node.getElseExpr().isConditionalExpr()) {
+            output.addComment(new AvoidMultipleTernary());
         }
         super.visit(node, output);
     }
