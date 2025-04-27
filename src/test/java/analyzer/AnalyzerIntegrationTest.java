@@ -209,10 +209,10 @@ class AnalyzerIntegrationTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "ExemplarSolution",
-            "NotUseMethodOverloading",
-            "PartialUseOfMethodOverloading",
+            "NotReuseMethod",
+            "PartialReuseOfMethod",
             "UseStringFormat",
-            "UseStringFormatAndNotUseMethodOverloading",
+            "UseStringFormatAndNotReuseMethod",
     })
     void wizardsandwarriors2(String scenario) throws IOException {
         var path = Path.of("wizards-and-warriors-2", scenario + ".java");

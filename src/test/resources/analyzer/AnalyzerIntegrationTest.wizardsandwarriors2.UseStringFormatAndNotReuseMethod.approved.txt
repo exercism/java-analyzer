@@ -1,0 +1,24 @@
+{
+  "comments": [
+    {
+      "comment": "java.wizards-and-warriors-2.reuse_code_hardcoded_three_parameters",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.wizards-and-warriors-2.reuse_code_hardcoded_two_parameters",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.prefer_string_concatenation",
+      "params": {},
+      "type": "informative"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

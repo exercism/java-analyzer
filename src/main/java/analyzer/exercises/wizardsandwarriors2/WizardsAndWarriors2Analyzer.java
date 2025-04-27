@@ -42,9 +42,15 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
             return;
         }
 
-        if(node.getParameters().size() > 1 && !useOverload(node)) {
+        if(node.getParameters().size() == 2 && !reuseMethod(node)) {
 
-            output.addComment(new UseMethodOverloading());
+            output.addComment(new ReuseCodeHardcodedTwoParameters());
+
+        }
+
+        if(node.getParameters().size() == 3 && !reuseMethod(node)) {
+
+            output.addComment(new ReuseCodeHardcodedThreeParameters());
 
         }
 
@@ -54,11 +60,10 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
 
         }
 
-
         super.visit(node, output);
     }
 
-    private static boolean useOverload(MethodDeclaration node) {
+    private static boolean reuseMethod(MethodDeclaration node) {
 
         int paramCount = node.getParameters().size();
 
@@ -69,7 +74,6 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
         if (paramCount == 2) {
             return describeCalls.size() == 1 || describeCalls.size() == 3;
         }
-
         if (paramCount == 3) {
             return describeCalls.size() == 3;
         }

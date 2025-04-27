@@ -2,14 +2,11 @@ package analyzer.exercises.wizardsandwarriors2;
 
 import analyzer.Comment;
 
-/**
- * @author: chiarazarrella
- */
-public class UseMethodOverloading extends Comment{
+public class ReuseCodeHardcodedThreeParameters extends Comment {
 
     @Override
     public String getKey() {
-        return "java.wizards-and-warriors-2.use_method_overloading";
+        return "java.wizards-and-warriors-2.reuse_code_hardcoded_three_parameters";
     }
 
     @Override
@@ -17,4 +14,3 @@ public class UseMethodOverloading extends Comment{
         return Type.ACTIONABLE;
     }
 }
-
