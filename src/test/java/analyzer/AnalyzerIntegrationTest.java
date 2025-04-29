@@ -68,10 +68,11 @@ class AnalyzerIntegrationTest {
     @ValueSource(strings = {
             "HardCodedTestCases",
             "OptimalSolution",
+            "OptimalTernary",
             "UsingGregorianCalendar",
             "UsingIfStatements",
             "UsingJavaTime",
-            "UsingTernary",
+            "UsingMultipleTernary",
             "UsingTooManyChecks",
     })
     void leap(String scenario) throws IOException {

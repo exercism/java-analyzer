@@ -70,13 +70,15 @@ public class LeapAnalyzer extends VoidVisitorAdapter<OutputCollector> implements
 
     @Override
     public void visit(IfStmt node, OutputCollector output) {
-        output.addComment(new AvoidConditionalLogic());
+        output.addComment(new AvoidIfStatements());
         super.visit(node, output);
     }
 
     @Override
     public void visit(ConditionalExpr node, OutputCollector output) {
-        output.addComment(new AvoidConditionalLogic());
+        if (node.getThenExpr().isConditionalExpr() || node.getElseExpr().isConditionalExpr()) {
+            output.addComment(new AvoidMultipleTernary());
+        }
         super.visit(node, output);
     }
 
