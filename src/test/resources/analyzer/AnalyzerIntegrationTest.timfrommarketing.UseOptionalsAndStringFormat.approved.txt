@@ -1,0 +1,19 @@
+{
+  "comments": [
+    {
+      "comment": "java.tim-from-marketing.use_null_literal",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.prefer_string_concatenation",
+      "params": {},
+      "type": "informative"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}

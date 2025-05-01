@@ -10,6 +10,7 @@ import analyzer.exercises.loglevels.LogLevelsAnalyzer;
 import analyzer.exercises.needforspeed.NeedForSpeedAnalyzer;
 import analyzer.exercises.salarycalculator.SalaryCalculatorAnalyzer;
 import analyzer.exercises.secrets.SecretsAnalyzer;
+import analyzer.exercises.timfrommarketing.TimFromMarketingAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
 import analyzer.exercises.wizardsandwarriors.WizardsAndWarriorsAnalyzer;
 
@@ -59,6 +60,7 @@ public class AnalyzerRoot {
             case "need-for-speed" -> analyzers.add(new NeedForSpeedAnalyzer());
             case "salary-calculator" -> analyzers.add(new SalaryCalculatorAnalyzer());
             case "secrets" -> analyzers.add(new SecretsAnalyzer());
+            case "tim-from-marketing" -> analyzers.add(new TimFromMarketingAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
             case "wizards-and-warriors" -> analyzers.add(new WizardsAndWarriorsAnalyzer());
         }
