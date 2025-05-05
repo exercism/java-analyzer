@@ -6,6 +6,7 @@ import analyzer.Solution;
 import analyzer.comments.ExemplarSolution;
 import analyzer.comments.PreferStringConcatenation;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -22,6 +23,9 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
     private static final String GAME_MASTER = "GameMaster";
     private static final String DESCRIBE = "describe";
     private static final String FORMAT = "format";
+    private static final String DESTINATION = "Destination";
+    private static final String TRAVEL_METHOD = "TravelMethod";
+    private static final String CHARACTER = "Character";
 
     @Override
     public void analyze(Solution solution, OutputCollector output) {
@@ -42,39 +46,33 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
             return;
         }
 
-        if(node.getParameters().size() == 2 && !reuseMethod(node)) {
-
+        if(node.getParameters().size() == 2 && !reuseMethod(node, 2)) {
             output.addComment(new ReuseCodeHardcodedTwoParameters());
-
         }
 
-        if(node.getParameters().size() == 3 && !reuseMethod(node)) {
-
+        if(node.getParameters().size() == 3 && !reuseMethod(node, 3)) {
             output.addComment(new ReuseCodeHardcodedThreeParameters());
-
         }
 
         if(useStringFormat(node)) {
-
             output.addComment(new PreferStringConcatenation());
-
         }
 
         super.visit(node, output);
     }
 
-    private static boolean reuseMethod(MethodDeclaration node) {
+    private static boolean reuseMethod(MethodDeclaration node, int paramCount) {
 
-        int paramCount = node.getParameters().size();
-
+        List<String> params = node.getParameters().stream().map(Parameter::getTypeAsString).toList();
         List<MethodCallExpr> describeCalls = node.findAll(MethodCallExpr.class).stream()
                 .filter(m -> m.getNameAsString().equals(DESCRIBE))
                 .toList();
 
-        if (paramCount == 2) {
+        if (paramCount == 2 && params.contains(DESTINATION) && params.contains(CHARACTER)) {
             return describeCalls.size() == 1 || describeCalls.size() == 3;
         }
-        if (paramCount == 3) {
+
+        if (paramCount == 3 && params.contains(DESTINATION) && params.contains(TRAVEL_METHOD) && params.contains(CHARACTER)) {
             return describeCalls.size() == 3;
         }
 
