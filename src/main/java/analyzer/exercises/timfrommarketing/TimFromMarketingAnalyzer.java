@@ -24,7 +24,6 @@ public class TimFromMarketingAnalyzer extends VoidVisitorAdapter<OutputCollector
 
         if (output.getComments().isEmpty()) {
             output.addComment(new ExemplarSolution(EXERCISE_NAME));
-
         }
     }
 
