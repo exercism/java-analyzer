@@ -13,6 +13,7 @@ import analyzer.exercises.secrets.SecretsAnalyzer;
 import analyzer.exercises.timfrommarketing.TimFromMarketingAnalyzer;
 import analyzer.exercises.twofer.TwoferAnalyzer;
 import analyzer.exercises.wizardsandwarriors.WizardsAndWarriorsAnalyzer;
+import analyzer.exercises.wizardsandwarriors2.WizardsAndWarriors2Analyzer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,6 @@ public class AnalyzerRoot {
      */
     public static Output analyze(Solution solution) {
         var outputBuilder = new OutputBuilder();
-
         for (Analyzer analyzer : createAnalyzers(solution.getSlug())) {
             analyzer.analyze(solution, outputBuilder);
         }
@@ -50,7 +50,6 @@ public class AnalyzerRoot {
         var analyzers = new ArrayList<Analyzer>();
 
         analyzers.add(new GlobalAnalyzer());
-
         switch (slug) {
             case "annalyns-infiltration" -> analyzers.add(new AnnalynsInfiltrationAnalyzer());
             case "hamming" -> analyzers.add(new HammingAnalyzer());
@@ -63,6 +62,7 @@ public class AnalyzerRoot {
             case "tim-from-marketing" -> analyzers.add(new TimFromMarketingAnalyzer());
             case "two-fer" -> analyzers.add(new TwoferAnalyzer());
             case "wizards-and-warriors" -> analyzers.add(new WizardsAndWarriorsAnalyzer());
+            case "wizards-and-warriors-2" -> analyzers.add(new WizardsAndWarriors2Analyzer());
         }
 
         return List.copyOf(analyzers);
