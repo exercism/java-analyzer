@@ -2,11 +2,11 @@ package analyzer.exercises.wizardsandwarriors2;
 
 import analyzer.Comment;
 
-public class ReuseCodeHardcodedThreeParameters extends Comment {
+public class ReuseCodeFromDescribeTwoParams extends Comment {
 
     @Override
     public String getKey() {
-        return "java.wizards-and-warriors-2.reuse_code_hardcoded_three_parameters";
+        return "java.wizards-and-warriors-2.reuse_code_from_describe_two_params";
     }
 
     @Override

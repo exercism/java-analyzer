@@ -23,9 +23,9 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
     private static final String GAME_MASTER = "GameMaster";
     private static final String DESCRIBE = "describe";
     private static final String FORMAT = "format";
-    private static final String DESTINATION = "Destination";
-    private static final String TRAVEL_METHOD = "TravelMethod";
-    private static final String CHARACTER = "Character";
+    private static final String DESTINATION_TYPE = "Destination";
+    private static final String TRAVEL_METHOD_TYPE = "TravelMethod";
+    private static final String CHARACTER_TYPE = "Character";
 
     @Override
     public void analyze(Solution solution, OutputCollector output) {
@@ -47,11 +47,11 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
         }
 
         if(node.getParameters().size() == 2 && !reuseMethod(node, 2)) {
-            output.addComment(new ReuseCodeHardcodedTwoParameters());
+            output.addComment(new ReuseCodeFromDescribeTwoParams());
         }
 
         if(node.getParameters().size() == 3 && !reuseMethod(node, 3)) {
-            output.addComment(new ReuseCodeHardcodedThreeParameters());
+            output.addComment(new ReuseCodeFromDescribeThreeParams());
         }
 
         if(useStringFormat(node)) {
@@ -63,16 +63,16 @@ public class WizardsAndWarriors2Analyzer extends VoidVisitorAdapter<OutputCollec
 
     private static boolean reuseMethod(MethodDeclaration node, int paramCount) {
 
-        List<String> params = node.getParameters().stream().map(Parameter::getTypeAsString).toList();
+        List<String> paramsType = node.getParameters().stream().map(Parameter::getTypeAsString).toList();
         List<MethodCallExpr> describeCalls = node.findAll(MethodCallExpr.class).stream()
                 .filter(m -> m.getNameAsString().equals(DESCRIBE))
                 .toList();
 
-        if (paramCount == 2 && params.contains(DESTINATION) && params.contains(CHARACTER)) {
+        if (paramCount == 2 && paramsType.contains(DESTINATION_TYPE) && paramsType.contains(CHARACTER_TYPE)) {
             return describeCalls.size() == 1 || describeCalls.size() == 3;
         }
 
-        if (paramCount == 3 && params.contains(DESTINATION) && params.contains(TRAVEL_METHOD) && params.contains(CHARACTER)) {
+        if (paramCount == 3 && paramsType.contains(DESTINATION_TYPE) && paramsType.contains(TRAVEL_METHOD_TYPE) && paramsType.contains(CHARACTER_TYPE)) {
             return describeCalls.size() == 3;
         }
 
