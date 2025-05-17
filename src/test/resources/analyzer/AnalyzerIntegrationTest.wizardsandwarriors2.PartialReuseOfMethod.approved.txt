@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "comment": "java.wizards-and-warriors-2.reuse_code_hardcoded_two_parameters",
+      "comment": "java.wizards-and-warriors-2.reuse_code_from_describe_two_params",
       "params": {},
       "type": "actionable"
     },
