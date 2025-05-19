@@ -1,0 +1,19 @@
+{
+  "comments": [
+    {
+      "comment": "java.wizards-and-warriors-2.reuse_code_from_describe_three_params",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.wizards-and-warriors-2.reuse_code_from_describe_two_params",
+      "params": {},
+      "type": "actionable"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}
