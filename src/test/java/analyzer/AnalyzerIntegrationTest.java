@@ -157,7 +157,8 @@ class AnalyzerIntegrationTest {
             "NotUsingExpectedMethodsOnLogLevel",
             "NotUsingExpectedMethodsOnMessage",
             "NotUsingExpectedMethodsOnLogLevelAndMessage",
-            "UsingStringFormat"
+            "UsingStringFormat",
+            "UsingExtraHelperMethod"
     })
     void loglevels(String scenario) throws IOException {
         var path = Path.of("log-levels", scenario + ".java");
