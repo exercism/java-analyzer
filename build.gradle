@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     implementation "com.google.code.gson:gson:2.13.2"
-    implementation "com.github.javaparser:javaparser-core:3.27.0"
+    implementation "com.github.javaparser:javaparser-core:3.27.1"
 
     testImplementation platform("org.junit:junit-bom:5.11.4")
     testImplementation "org.junit.jupiter:junit-jupiter"
