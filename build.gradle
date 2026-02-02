@@ -29,13 +29,13 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-shadowJar {
+def analyzerJar = shadowJar {
     mergeServiceFiles()
     archiveFileName.set("java-analyzer.jar")
 }
 
-artifacts {
-    archives shadowJar
+tasks.named("assemble") {
+    dependsOn(analyzerJar)
 }
 
 test {
