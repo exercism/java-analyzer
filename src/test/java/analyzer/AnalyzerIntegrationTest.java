@@ -38,6 +38,8 @@ class AnalyzerIntegrationTest {
             "OptimalWithCalculationInGetHammingDistance",
             "OptimalWithValidationMethod",
             "UsesCharacterLiterals",
+            "UsesHelperMethodInLambda",
+            "UsesHelperMethodInMethodRef",
             "UsesStreamReduce",
     })
     void hamming(String scenario) throws IOException {

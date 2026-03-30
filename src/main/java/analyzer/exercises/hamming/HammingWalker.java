@@ -7,6 +7,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.CharLiteralExpr;
 import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.expr.MethodReferenceExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithRange;
 import com.github.javaparser.ast.stmt.*;
 
@@ -75,9 +76,12 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     }
 
     private Stream<String> getMethodCallNames(Statement statement) {
-        return statement.findAll(MethodCallExpr.class).stream()
-                .map(MethodCallExpr::getNameAsString)
-                .distinct();
+        Stream<String> methodCalled = statement.findAll(MethodCallExpr.class).stream()
+                .map(MethodCallExpr::getNameAsString);
+        Stream<String> methodRefs = statement.findAll(MethodReferenceExpr.class).stream()
+                .map(MethodReferenceExpr::getIdentifier);
+
+        return Stream.concat(methodCalled, methodRefs).distinct();
     }
 
     private Optional<MethodDeclaration> findGetHammingDistanceMethod() {
