@@ -78,8 +78,8 @@ class HammingWalker implements Consumer<ClassOrInterfaceDeclaration> {
     private Stream<String> getMethodCallNames(Statement statement) {
         Stream<String> methodCalled = statement.findAll(MethodCallExpr.class).stream()
                 .map(MethodCallExpr::getNameAsString);
-        Stream<String> methodRefs =  statement.findAll(MethodReferenceExpr.class).stream()
-                        .map(MethodReferenceExpr::getIdentifier);
+        Stream<String> methodRefs = statement.findAll(MethodReferenceExpr.class).stream()
+                .map(MethodReferenceExpr::getIdentifier);
 
         return Stream.concat(methodCalled, methodRefs).distinct();
     }
