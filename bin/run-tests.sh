@@ -14,7 +14,8 @@
 exit_code=0
 
 # Iterate over all test directories
-for test_dir in $(find tests -name expected_analysis.json | rev | cut -d '/' -f 2- | rev); do
+for file in $(find tests -name expected_analysis.json); do
+    test_dir="${file%/expected_analysis.json}"
     test_dir_path=$(realpath "${test_dir}")
     test_slug=$(echo "${test_dir}" | awk -F/ '{ print $2 }')
 
