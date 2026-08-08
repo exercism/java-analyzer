@@ -28,6 +28,22 @@ class AnalyzerIntegrationTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
+            "ExemplarSolution",
+            "NotReusingMethod",
+            "NotUsingHelperMethod",
+            "UsingMagicNumber",
+            "UsingReturnInElseStatement",
+    })
+    void carsassemble(String scenario) throws IOException {
+        var path = Path.of("cars-assemble", scenario + ".java");
+        var solution = new SolutionFromFiles("cars-assemble", SCENARIOS.resolve(path));
+        var output = AnalyzerRoot.analyze(solution);
+
+        Approvals.verify(serialize(output.analysis()), Approvals.NAMES.withParameters(scenario));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
             "ConstructorTooLong",
             "MethodTooLong",
             "MustUseCharAtOrCodePointAt",
