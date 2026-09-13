@@ -1,0 +1,14 @@
+{
+  "comments": [
+    {
+      "comment": "java.cars-assemble.prefer_storing_constant_in_field",
+      "params": {},
+      "type": "informative"
+    },
+    {
+      "comment": "java.general.feedback_request",
+      "params": {},
+      "type": "informative"
+    }
+  ]
+}
