@@ -27,7 +27,8 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
     private static final String REFORMAT = "reformat";
     private static final String MESSAGE = "message";
     private static final String LOG_LEVEL = "logLevel";
-    private static final String FORMAT = "format";
+    private static final String STRING_FORMAT = "format";
+    private static final String STRING_FORMATTED = "formatted";
     private static List<String> EXPECTED_METHODS = List.of("substring", "split");
 
     @Override
@@ -61,7 +62,8 @@ public class LogLevelsAnalyzer extends VoidVisitorAdapter<OutputCollector> imple
             output.addComment(new ReuseCode(REFORMAT, LOG_LEVEL));
         }
 
-        if (node.getNameAsString().equals(REFORMAT) && callsMethod(node, FORMAT)) {
+        if (node.getNameAsString().equals(REFORMAT)
+                && (callsMethod(node, STRING_FORMAT) || callsMethod(node, STRING_FORMATTED))) {
             output.addComment(new PreferStringConcatenation());
         }
 
