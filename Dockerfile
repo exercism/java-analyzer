@@ -4,7 +4,7 @@ WORKDIR /app
 COPY --chown=gradle:gradle . /app
 RUN gradle -i --stacktrace clean build shadowJar
 
-FROM eclipse-temurin:26.0.2_10-jdk@sha256:c0fe66ea21e972724000cf402f8081c7841d960839f69cb0754f40b40f74b2cc
+FROM eclipse-temurin:26.0.2.1_1-jdk@sha256:c7a2be9d6fbbc4984b855cee02359b0e808f0ab5bcbede818970417e2407ab64
 
 WORKDIR /opt/analyzer
 COPY bin/run.sh bin/run.sh
